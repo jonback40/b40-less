@@ -114,6 +114,32 @@
 }
 
 
+// Set the admin bar and user bar to have fluid dimensions
+.javelin-fluid-toolbars() {
+    #javelin_userBar ul,
+    #javelin_userBarSpacer,
+    #javelin_adminBarSpacer,
+    #javelin_adminBarWrapper {
+        width: auto !important;
+        max-width: @grid-container-default;
+    }
+    
+    #javelin-userbar.self({
+        ul {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: right;
+            float: none;
+            
+            li {
+                display: inline-block;
+                float: none;
+            }
+        }
+    });
+}
+
+
 // Apply styling rules to the awkward and ill-formed legacy pager without dealing with the strange selectors involved
 .javelin-legacy-pager(@size; @item-offset @default-bg; @default-color; @hover-bg; @hover-color; @active-bg; @active-color; @border-radius: 0;) {
     // Apply spacing between each pager item
