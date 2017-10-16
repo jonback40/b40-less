@@ -1,0 +1,20 @@
+//
+// Icons
+// ----------------------------------------------------------------------------------------------------
+
+
+.icon {
+    .text-hide();
+    
+    width: @icon-width-base;
+    height: @icon-height-base;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    
+    & when not (@icon-sprite-path = false) {
+        background-image: ~"url(@{icon-sprite-path})";
+    }
+}

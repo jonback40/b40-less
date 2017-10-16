@@ -1,0 +1,190 @@
+//
+// Tabs
+// ----------------------------------------------------------------------------------------------------
+
+
+// Tabs
+.cms-tabs {
+    &:extend(.clearfix all);
+    
+    margin-bottom: @line-height-computed;
+}
+
+.cms-tabs-list,
+.cms-tabs-content {
+    &:extend(.border-box-sizing all);
+}
+
+.cms-tabs-list {
+    line-height: 1.25;
+    
+    ul {
+        &:extend(.clearfix all);
+        
+        .list-unstyled();
+        
+        margin-bottom: 0;
+        border-bottom: @tabs-list-border;
+    }
+    
+    li {
+        & when (@component-animations = true) {
+            .transition(background-color @animation-duration-base @animation-timing-function-base);
+        }
+        
+        background-color: @tabs-item-bg;
+        border: @tabs-item-border;
+        border-bottom: 0;
+        
+        @media (@screen-md-up) {
+            float: left;
+        }
+        
+        & when (@tabs-item-offset-horz > 0) {
+            &:not(:first-child) {
+                margin-left: @tabs-item-offset-horz;
+            }
+            
+            &:not(:last-child) {
+                margin-right: @tabs-item-offset-horz;
+            }
+        }
+        
+        & when (@tabs-list-border-radius > 0) {
+            &:first-child {
+                border-radius: @tabs-list-border-radius 0 0 @tabs-list-border-radius;
+            }
+            &:last-child {
+                border-radius: 0 @tabs-list-border-radius @tabs-list-border-radius 0;
+            }
+        }
+        
+        &:hover,
+        &:focus {
+            background-color: @tabs-item-hover-bg;
+        }
+        
+        &.active {
+            background-color: @tabs-item-active-bg;
+        }
+    }
+    
+    a {
+        & when (@component-animations = true) {
+            .transition(color @animation-duration-base @animation-timing-function-base);
+        }
+        
+        padding: @tabs-item-padding;
+        color: @tabs-item-color;
+        display: block;
+        
+        & when not (@tabs-item-font-size = inherit) {
+            font-size: @tabs-item-font-size;
+        }
+        
+        &:hover,
+        &:focus {
+            color: @tabs-item-hover-color;
+        }
+    }
+    
+    .active {
+        a {
+            color: @tabs-item-active-color;
+        }
+    }
+    
+    
+    // Variant sides
+    @media (@screen-md-up) {
+        &.left,
+        &.right {
+            width: @tabs-list-width;
+            
+            ul {
+                border: @tabs-list-border;
+                
+                & when (@tabs-list-border-radius > 0) {
+                    border-radius: @tabs-list-border-radius;
+                }
+            }
+            
+            li {
+                margin-left: 0;
+                margin-right: 0;
+                border: 0;
+                border-bottom: @tabs-item-border;
+                float: none;
+                
+                & when (@tabs-list-border-radius > 0) {
+                    &:first-child {
+                        border-radius: @tabs-list-border-radius @tabs-list-border-radius 0 0;
+                    }
+                    &:last-child {
+                        border-radius: 0 0 @tabs-list-border-radius @tabs-list-border-radius;
+                    }
+                }
+                
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+        &.left {
+            float: left;
+        }
+        &.right {
+            float: right;
+        }
+    }
+}
+
+.cms-tabs-content {
+    @media (@screen-md-up) {
+        // variant sides
+        .left + &,
+        .right + & {
+            width: @tabs-content-width;
+        }
+        .left + & {
+            float: right;
+        }
+        .right + & {
+            float: left;
+        }
+    }
+}
+
+.cms-tabs-panel {
+    padding: @tabs-panel-padding;
+    display: none;
+    
+    &.active {
+        display: block;
+    }
+    
+    .common-blocks({
+        &:last-child {
+            margin-bottom: 0;
+        }
+    });
+    
+    img {
+        .img-responsive();
+    }
+    
+    & when (@tabs-panel-fade = true) {
+        .inner {
+            .transition(opacity @animation-duration-base @animation-timing-function-base);
+            
+            opacity: 0;
+        }
+        
+        // states for animation and display
+        &.in {
+            .inner {
+                opacity: 1;
+            }
+        }
+    }
+}

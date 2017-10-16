@@ -1,0 +1,74 @@
+//
+// Canvas Panels
+// ----------------------------------------------------------------------------------------------------
+
+
+// ####################################################################################################
+//
+// 05.18.16 - This component is now DEPRECATED in favor of using 'page-nav' classes.
+//
+// ####################################################################################################
+
+
+.canvas,
+.canvas-left,
+.canvas-right {
+    .transition-transform(@canvas-panel-transition-duration @canvas-panel-transition-timing-function);
+}
+
+.canvas {
+    background-color: @canvas-main-bg;
+    box-shadow: @canvas-main-box-shadow;
+    position: relative;
+    z-index: 2 !important;
+    
+    .canvas-left-is-open & {
+        .translateX(@canvas-left-width);
+    }
+    .canvas-right-is-open & {
+        .translateX(-@canvas-right-width);
+    }
+}
+
+.canvas-left,
+.canvas-right {
+    padding-top: @canvas-panel-padding-vert;
+    padding-bottom: @canvas-panel-padding-vert;
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    bottom: 0;
+    z-index: 1 !important;
+    
+    -webkit-overflow-scrolling: touch;
+    
+    .canvas-left-is-open &,
+    .canvas-right-is-open & {
+        .translateX(0);
+    }
+    
+    .is-admin & {
+        top: @adminbar-height;
+    }
+    .is-user & {
+        top: @userbar-height;
+    }
+}
+
+.canvas-left {
+    .translateX(-(100% - @canvas-left-width));
+    
+    width: @canvas-left-width;
+    background-color: @canvas-left-bg;
+    color: @canvas-left-color;
+    left: 0;
+}
+
+.canvas-right {
+    .translateX((100% - @canvas-right-width));
+    
+    width: @canvas-right-width;
+    background-color: @canvas-right-bg;
+    color: @canvas-right-color;
+    right: 0;
+}

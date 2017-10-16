@@ -1,0 +1,93 @@
+//
+// Responsive Visibility
+// ----------------------------------------------------------------------------------------------------
+
+
+// (MODIFIED) Source: http://getbootstrap.com/
+
+
+.visible-xs,
+.visible-sm,
+.visible-md,
+.visible-lg,
+.visible-xl,
+.visible-nav-down,
+.visible-nav-up {
+    .invisibility();
+}
+
+
+// Visible
+.visible-xs {
+    @media (@screen-xs-down) {
+        .visibility();
+    }
+}
+.visible-sm {
+    @media (@screen-sm-between) {
+        .visibility();
+    }
+}
+.visible-md {
+    @media (@screen-md-between) {
+        .visibility();
+    }
+}
+.visible-lg {
+    @media (@screen-lg-between) {
+        .visibility();
+    }
+}
+.visible-xl {
+    @media (@screen-xl-up) {
+        .visibility();
+    }
+}
+.visible-nav-down {
+    @media (@page-nav-breakpoint-down) {
+        .visibility();
+    }
+}
+.visible-nav-up {
+    @media (@page-nav-breakpoint-up) {
+        .visibility();
+    }
+}
+
+
+// Hidden
+.hidden-xs {
+    @media (@screen-xs-down) {
+        .invisibility();
+    }
+}
+.hidden-sm {
+    @media (@screen-sm-between) {
+        .invisibility();
+    }
+}
+.hidden-md {
+    @media (@screen-md-between) {
+        .invisibility();
+    }
+}
+.hidden-lg {
+    @media (@screen-lg-between) {
+        .invisibility();
+    }
+}
+.hidden-xl {
+    @media (@screen-xl-up) {
+        .invisibility();
+    }
+}
+.hidden-nav-down {
+    @media (@page-nav-breakpoint-down) {
+        .invisibility();
+    }
+}
+.hidden-nav-up {
+    @media (@page-nav-breakpoint-up) {
+        .invisibility();
+    }
+}

@@ -1,0 +1,18 @@
+//
+// Mixin: Fixed Toolbar
+// ----------------------------------------------------------------------------------------------------
+
+
+.fixed-toolbar(@adminbar-top: @adminbar-height; @userbar-top: @userbar-height) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    
+    .is-admin & {
+        top: @adminbar-top;
+    }
+    .is-user & {
+        top: @userbar-top;
+    }
+}

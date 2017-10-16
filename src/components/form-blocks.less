@@ -1,0 +1,25 @@
+//
+// Form Blocks
+// ----------------------------------------------------------------------------------------------------
+
+
+// Form groups
+//
+// Designed to help with the organization and spacing of vertical forms.
+.form-group {
+    &:extend(.clearfix all);
+    
+    margin-bottom: @form-group-spacing;
+    
+    .form-control + .form-control {
+        margin-top: 10px;
+    }
+}
+
+
+// Form section
+//
+// Add spacing between consecutive form-section elements (typically used on a div or fieldset)
+.form-section + .form-section {
+    margin-top: @form-section-spacing;
+}

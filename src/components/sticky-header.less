@@ -1,0 +1,37 @@
+//
+// Sticky Header
+// ----------------------------------------------------------------------------------------------------
+
+
+.sticky-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    
+    
+    // Handle sticky positioning
+    .page-scroll-in & {
+        .transition-transform(@animation-duration-base; @animation-timing-function-base);
+        
+        position: fixed;
+    }
+    
+    .page-scroll-before & {
+        .translateY(-100%);
+    }
+    
+    .page-scroll-after & {
+        .translateY(0%);
+    }
+    
+    
+    // Adjust top position when logged in
+    .page-scroll-after.is-user & {
+        top: @userbar-height;
+    }
+    
+    .page-scroll-after.is-admin & {
+        top: @adminbar-height;
+    }
+}

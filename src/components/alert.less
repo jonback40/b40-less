@@ -1,0 +1,72 @@
+//
+// Alert
+// ----------------------------------------------------------------------------------------------------
+
+
+.alert {
+    margin-bottom: @line-height-computed;
+    padding: @alert-padding;
+    border: @alert-border;
+    position: relative;
+    
+    & when (@alert-border-radius > 0) {
+        border-radius: @alert-border-radius;
+    }
+    
+    // Improve alignment and spacing of inner content
+    p,
+    ul,
+    ol {
+        margin-bottom: @alert-content-offset-vert;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    hr {
+        margin-top: @alert-content-offset-vert;
+        margin-bottom: @alert-content-offset-vert;
+    }
+}
+
+
+// Provide a class for headings to match alerts
+.alert-title {
+    color: inherit;
+}
+
+
+// Provide a class for links to match alerts
+.alert-link {
+    font-weight: @alert-link-font-weight;
+    
+    &:hover,
+    &:focus {
+        & when (@alert-link-hover-underline = true) {
+            text-decoration: underline;
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Color Variations
+.alert-info {
+    .alert-color(@alert-info-bg; @alert-info-border; @alert-info-color);
+}
+.alert-success {
+    .alert-color(@alert-success-bg; @alert-success-border; @alert-success-color);
+}
+.alert-warning {
+    .alert-color(@alert-warning-bg; @alert-warning-border; @alert-warning-color);
+}
+.alert-danger {
+    .alert-color(@alert-danger-bg; @alert-danger-border; @alert-danger-color);
+}

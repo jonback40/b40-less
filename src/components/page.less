@@ -1,0 +1,390 @@
+//
+// Common Page Elements
+// ----------------------------------------------------------------------------------------------------
+
+
+// Page Container Elements
+.page,
+.page-footer,
+.page-header,
+.page-hero,
+.page-main,
+.page-nav,
+.page-title {
+    &:extend(.border-box-sizing all);
+    
+    position: relative;
+}
+
+.page,
+.page-footer,
+.page-hero,
+.page-main,
+.page-title {
+    // We use !important because Javelin sets arbitrary z-indexes on divs
+    // in IE, which causes layering inconsistencies.
+    z-index: 1 !important;
+}
+
+.page-header,
+.page-nav {
+    &:extend(.clearfix all); // these containers typically contain floated elements
+    
+    z-index: 2 !important;
+}
+
+.page {
+    & when (@page-top-buffer > 0) {
+        padding-top: @page-top-buffer;
+    }
+    
+    // Make media elements like images and iframes responsive in mobile or responsive mode
+    & when (@is-mobile = true) {
+        .javelin-responsive-media(javelin_textItem);
+        .javelin-responsive-media(javelin_faqItem);
+    }
+    
+    & when (@is-responsive = true) {
+        .javelin-responsive-media(javelin_textItem);
+        .javelin-responsive-media(javelin_faqItem);
+    }
+}
+
+.page-title when (iscolor(@page-title-bg)) {
+    background-color: @page-title-bg;
+}
+
+.page-footer {
+    padding-bottom: @page-end-buffer;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Convenient mixins for 'page-nav' elements so we can easily manage differences in
+// code used for @is-mobile and @is-responsive.
+.__make-fixed-when-active() {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.__make-page-nav-spacer() {
+    .nav-is-active & {
+        height: @page-nav-header-height;
+    }
+}
+
+.__make-page-nav-wrapper() {
+    &,
+    .page-nav {
+        > .container,
+        > .container-fluid {
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    
+    // This element is assumed to be nested within a container
+    .page-nav-header {
+        padding-left: floor(@grid-gutter-width / 2);
+        padding-right: floor(@grid-gutter-width / 2);
+    }
+}
+
+.__make-page-nav-header() {
+    height: @page-nav-header-height;
+    position: relative;
+    z-index: 20 !important;
+}
+
+.__make-page-nav-body() {
+    .transition-transform(@page-nav-animation-duration @page-nav-animation-timing-function; opacity @page-nav-animation-duration @page-nav-animation-timing-function);
+    
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    top: @page-nav-header-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10 !important;
+    
+    .nav-is-active & {
+        display: block;
+    }
+    
+    .is-admin & {
+        top: @adminbar-height;
+    }
+    
+    .is-user & {
+        top: @userbar-height;
+    }
+}
+
+.__make-page-nav-content() {
+    .overflow-scroll(y);
+    
+    max-height: 100%;
+}
+
+
+// Page Navigation Elements (used in mobile or responsive development)
+.nav-is-active .fixed-when-active {
+    & when (@is-mobile = true) {
+        .__make-fixed-when-active();
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .__make-fixed-when-active();
+        }
+    }
+}
+
+.page-nav-spacer {
+    & when (@is-mobile = true) {
+        .__make-page-nav-spacer();
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .__make-page-nav-spacer();
+        }
+    }
+}
+
+.page-nav-wrapper {
+    & when (@is-mobile = true) {
+        .__make-page-nav-wrapper();
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .__make-page-nav-wrapper();
+        }
+    }
+}
+
+.page-nav-left {
+    & when (@is-mobile = true) {
+        float: left;
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-up) {
+            float: left;
+        }
+    }
+}
+
+.page-nav-right {
+    & when (@is-mobile = true) {
+        float: right;
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-up) {
+            float: right;
+        }
+    }
+}
+
+.page-nav-header {
+    &:extend(.clearfix all);
+    
+    & when (@is-mobile = true) {
+        .__make-page-nav-header();
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .__make-page-nav-header();
+        }
+    }
+}
+
+.page-nav-body {
+    & when (@is-mobile = true) {
+        .__make-page-nav-body();
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .__make-page-nav-body();
+        }
+    }
+}
+
+.page-nav-content {
+    & when (@is-mobile = true) {
+        .__make-page-nav-content();
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .__make-page-nav-content();
+        }
+    }
+}
+
+.page-nav-slide-up,
+.page-nav-slide-down,
+.page-nav-slide-left,
+.page-nav-slide-right,
+.page-nav-fade {
+    & when (@is-mobile = true) {
+        display: block;
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            display: block;
+        }
+    }
+}
+
+.page-nav-slide-up {
+    & when (@is-mobile = true) {
+        .translateY(100%);
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .translateY(100%);
+        }
+    }
+}
+
+// Top positioning throws off the positioning of translations. So we start the
+// 'down' transition out just a bit further than the others. Otherwise the bottom
+// edge of the 'page-nav-slide-down' element will show at the top of the viewport
+// when the navigation is inactive.
+.page-nav-slide-down {
+    & when (@is-mobile = true) {
+        .translateY(-125%);
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .translateY(-125%);
+        }
+    }
+}
+
+.page-nav-slide-up,
+.page-nav-slide-down {
+    & when (@is-mobile = true) {
+        .nav-is-active & {
+            .translateY(0);
+        }
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .nav-is-active & {
+                .translateY(0);
+            }
+        }
+    }
+}
+
+.page-nav-slide-left {
+    & when (@is-mobile = true) {
+        .translateX(100%);
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .translateX(100%);
+        }
+    }
+}
+
+.page-nav-slide-right {
+    & when (@is-mobile = true) {
+        .translateX(-100%);
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .translateX(-100%);
+        }
+    }
+}
+
+.page-nav-slide-left,
+.page-nav-slide-right {
+    & when (@is-mobile = true) {
+        .nav-is-active & {
+            .translateX(0);
+        }
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            .nav-is-active & {
+                .translateX(0);
+            }
+        }
+    }
+}
+
+.page-nav-fade {
+    & when (@is-mobile = true) {
+        opacity: 0;
+        
+        .nav-is-active & {
+            opacity: 1;
+        }
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            opacity: 0;
+            
+            .nav-is-active & {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Remove bottom margin from primary logo element
+.logo {
+    h2& {
+        margin-bottom: 0;
+    }
+}
+
+
+// Easily maintain which element controls the minimum height of the default content area on the page
+.default-region {
+    min-height: @page-height-buffer;
+}
+
+
+// Page title generated by Javelin
+.pageTitle {
+    margin-bottom: @page-title-offset-vert;
+    color: @page-title-color;
+    font-size: @page-title-font-size;
+    line-height: @page-title-line-height;
+    font-family: @page-title-font-family;
+    
+    & when not (@page-title-text-transform = none) {
+        text-transform: @page-title-text-transform;
+    }
+}
+
+
+// Normalize link colors on Back40 credit lines
+.b40-credit {
+    a {
+        color: @b40-credit-link-color;
+        
+        &:hover {
+            color: @b40-credit-link-hover-color;
+        }
+    }
+}

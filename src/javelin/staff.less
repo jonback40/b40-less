@@ -1,0 +1,342 @@
+//
+// Javelin: Staff Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-staff {
+    
+    // views
+    .index-view(@rules) {
+        .javelin_staff {
+            @rules();
+        }
+    }
+    .details-view(@rules) {
+        .javelin_staffModule {
+            @rules();
+        }
+    }
+    
+    
+    // index view
+    .list(@rules) {
+        .javelin_staffItems {
+            @rules();
+        }
+    }
+    .item(@rules) {
+        .javelin_staffItem {
+            @rules();
+        }
+    }
+    .item-name(@rules) {
+        .javelin_staffItems .javelin_staffItemName {
+            @rules();
+        }
+    }
+    .item-jobtitle(@rules) {
+        .javelin_staffItems .javelin_staffItemTitle {
+            @rules();
+        }
+    }
+    .item-image(@rules) {
+        .javelin_staffItems .javelin_staffItemImage {
+            @rules();
+        }
+    }
+    .item-summary(@rules) {
+        .javelin_staffItems .javelin_staffItemSummary {
+            @rules();
+        }
+    }
+    
+    
+    // details view
+    .details-name(@rules) {
+        .javelin_staffModule .javelin_staffName {
+            @rules();
+        }
+    }
+    .details-jobtitle(@rules) {
+        .javelin_staffModule .javelin_staffTitle {
+            @rules();
+        }
+    }
+    .details-image(@rules) {
+        .javelin_staffModule .javelin_staffImage {
+            @rules();
+        }
+    }
+    .details-email(@rules) {
+        .javelin_staffModule .javelin_staffEmail {
+            @rules();
+        }
+    }
+    .details-address(@rules) {
+        .javelin_staffModule .javelin_staffAddress {
+            @rules();
+        }
+    }
+    .details-city(@rules) {
+        .javelin_staffModule .javelin_staffCity {
+            @rules();
+        }
+    }
+    .details-state(@rules) {
+        .javelin_staffModule .javelin_staffState {
+            @rules();
+        }
+    }
+    .details-zip(@rules) {
+        .javelin_staffModule .javelin_staffZip {
+            @rules();
+        }
+    }
+    .details-phone-titles(@rules) {
+        .javelin_staffModule .javelin_staffPhoneWorkTitle,
+        .javelin_staffModule .javelin_staffPhoneMobileTitle,
+        .javelin_staffModule .javelin_staffPhoneOtherTitle,
+        .javelin_staffModule .javelin_staffPhoneFaxTitle {
+            @rules();
+        }
+    }
+    .details-phone-numbers(@rules) {
+        .javelin_staffModule .javelin_staffPhoneWork,
+        .javelin_staffModule .javelin_staffPhoneMobile,
+        .javelin_staffModule .javelin_staffPhoneOther,
+        .javelin_staffModule .javelin_staffPhoneFax {
+            @rules();
+        }
+    }
+    .details-body(@rules) {
+        .javelin_staffModule .javelin_staffBody {
+            @rules();
+        }
+    }
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Index View
+.javelin_staffItems {
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.javelin_staffItem {
+    &:extend(.clearfix all);
+    
+    width: auto;
+    margin-right: 0;
+    margin-bottom: @staff-item-offset-vert;
+    text-align: left;
+    float: none;
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+    
+    .javelin_staffItemName {
+        // this element is not an H3 in Javelin, but it should be
+        .h3();
+        
+        margin-bottom: @staff-item-name-offset-vert;
+        
+        & when not (@staff-item-name-font-size = inherit) {
+            font-size: @staff-item-name-font-size;
+        }
+    }
+    .javelin_staffItemTitle {
+        font-style: normal;
+        font-size: @staff-item-jobtitle-font-size;
+        
+        & when (@staff-item-jobtitle-offset-vert > 0) {
+            margin-bottom: @staff-item-jobtitle-offset-vert;
+        }
+    }
+    .javelin_staffItemSummary p {
+        margin-bottom: 0;
+        
+        & when not (@staff-item-summary-font-size = inherit) {
+            font-size: @staff-item-summary-font-size;
+        }
+    }
+}
+
+.javelin_staffItemImage {
+    margin-right: 0;
+    
+    & when (@is-mobile = true) {
+        margin-bottom: @staff-item-image-offset-vert;
+        float: none;
+    }
+}
+
+& when (@is-responsive = false) {
+    & when (@is-mobile = true) {
+        .javelin_staffItemImage {
+            margin-bottom: floor(@grid-gutter-width / 2);
+        }
+    }
+    & when (@is-mobile = false) {
+        .javelin_staffItemImage {
+            float: left;
+        }
+        
+        .javelin_staffItemImage + .javelin_staffItemName,
+        .javelin_staffItemImage + .javelin_staffItemName + .javelin_staffItemTitle,
+        .javelin_staffItemImage + .javelin_staffItemName + .javelin_staffItemTitle + .javelin_staffItemSummary {
+            padding-left: (@staff-item-thumb-width + @grid-gutter-width);
+        }
+    }
+}
+& when (@is-responsive = true) {
+    .javelin_staffItemImage {
+        margin-bottom: @staff-item-image-offset-vert;
+        float: none;
+    }
+    
+    @media (@page-nav-breakpoint-up) {
+        .javelin_staffItemImage {
+            float: left;
+        }
+        
+        .javelin_staffItemImage + .javelin_staffItemName,
+        .javelin_staffItemImage + .javelin_staffItemName + .javelin_staffItemTitle,
+        .javelin_staffItemImage + .javelin_staffItemName + .javelin_staffItemTitle + .javelin_staffItemSummary {
+            padding-left: (@staff-item-thumb-width + @grid-gutter-width);
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Details View
+.javelin_staffModule {
+    &:extend(.clearfix all);
+    
+    & when (@is-responsive = false) {
+        & when (@is-mobile = false) {
+            padding-left: 40%;
+        }
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-up) {
+            padding-left: 40%;
+        }
+    }
+}
+
+.javelin_staffName {
+    margin-bottom: @staff-details-name-offset-vert;
+    
+    & when not (@staff-details-name-font-size = inherit) {
+        font-size: @staff-details-name-font-size;
+    }
+}
+
+.javelin_staffImage {
+    &:extend(.border-box-sizing all);
+    
+    text-align: center;
+    
+    img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 0;
+    }
+    
+    & when (@is-responsive = false) {
+        & when (@is-mobile = true) {
+            float: none;
+        }
+        & when (@is-mobile = false) {
+            width: 66.5%;
+            margin-left: -66.5%;
+            padding-right: @grid-gutter-width;
+            float: left;
+        }
+    }
+    & when (@is-responsive = true) {
+        margin-bottom: @staff-item-image-offset-vert;
+        float: none;
+        
+        @media (@page-nav-breakpoint-up) {
+            width: 66.5%;
+            margin-left: -66.5%;
+            padding-right: @grid-gutter-width;
+            float: left;
+        }
+    }
+}
+
+.javelin_staffTitle {
+    margin-bottom: @staff-details-jobtitle-offset-vert;
+    font-style: @staff-details-jobtitle-font-style;
+    display: block;
+    
+    & when not (@staff-details-jobtitle-font-size = inherit) {
+        font-size: @staff-details-jobtitle-font-size;
+    }
+}
+
+.javelin_staffCity,
+.javelin_staffState,
+.javelin_staffZip {
+    margin-bottom: @staff-details-citystate-offset-vert;
+}
+
+.javelin_staffPhoneWorkTitle,
+.javelin_staffPhoneMobileTitle,
+.javelin_staffPhoneOtherTitle,
+.javelin_staffPhoneOtherTitle,
+.javelin_staffPhoneFaxTitle {
+    width: 150px;
+    font-weight: bold;
+    
+    & when (@is-responsive = false) {
+        & when (@is-mobile = false) {
+            float: left;
+        }
+    }
+    & when (@is-responsive = true) {
+        float: left;
+    }
+}
+
+.javelin_staffPhoneWork,
+.javelin_staffPhoneMobile,
+.javelin_staffPhoneOther,
+.javelin_staffPhoneOther,
+.javelin_staffPhoneFax {
+    & when (@is-responsive = false) {
+        & when (@is-mobile = false) {
+            padding-left: (150px + @grid-gutter-width);
+        }
+    }
+    & when (@is-responsive = true) {
+        padding-left: (150px + @grid-gutter-width);
+    }
+}
+
+.javelin_staffBody {
+    padding-top: @staff-details-body-offset-vert;
+}
+
+.javelin_staffZip + .javelin_staffBody {
+    padding-top: 0;
+}

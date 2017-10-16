@@ -1,0 +1,142 @@
+//
+// Javelin: Twitter Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-twitter {
+    
+    .self(@rules) {
+        .javelin_twitter {
+            @rules();
+        }
+    }
+    
+    .header(@rules) {
+        .javelin_twitterHeader {
+            @rules();
+        }
+    }
+    
+    .footer(@rules) {
+        .javelin_twitterFooter {
+            @rules();
+        }
+    }
+    
+    .usericon(@rules) {
+        .javelin_twitterHeader > a:first-child {
+            @rules();
+        }
+    }
+    
+    .userimage(@rules) {
+        .javelin_twitterUserImage {
+            @rules();
+        }
+    }
+    
+    .screenname(@rules) {
+        .javelin_twitterHeader_screenName {
+            @rules();
+        }
+    }
+    
+    .username(@rules) {
+        .javelin_twitterHeader_userName {
+            @rules();
+        }
+    }
+    
+    .tweets(@rules) {
+        .javelin_twitterTweets {
+            @rules();
+        }
+    }
+    
+    .tweet(@rules) {
+        .javelin_twitterTweets li {
+            @rules();
+        }
+    }
+    
+    .tweet-text(@rules) {
+        .javelin_twitterTweetText {
+            @rules();
+        }
+    }
+    
+    .tweet-meta(@rules) {
+        .javelin_twitterTweetMeta {
+            @rules();
+        }
+    }
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+.javelin_twitter {
+    font-size: inherit;
+}
+
+.javelin_twitterHeader {
+    &:extend(.clearfix all);
+    
+    margin-bottom: @twitter-header-offset-vert;
+    padding-left: (@twitter-usericon-width + floor(@grid-gutter-width / 2));
+    position: relative;
+    
+    br {
+        display: none;
+    }
+}
+
+.javelin_twitterHeader > a:first-child {
+    width: @twitter-usericon-width;
+    height: @twitter-usericon-height;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.javelin_twitterHeader_screenName,
+.javelin_twitterHeader_userName {
+    line-height: floor(@twitter-usericon-height / 2);
+    display: block;
+}
+
+.javelin_twitterUserImage {
+    width: 100% !important;
+    height: 100% !important;
+    margin-right: 0;
+    float: none;
+}
+
+.javelin_twitterTweets {
+    margin-left: 0;
+    margin-bottom: 0;
+    
+    li {
+        margin-top: 0;
+        margin-bottom: @twitter-tweet-offset-vert;
+        line-height: @twitter-tweet-line-height;
+        
+        & when not (@twitter-tweet-font-size = inherit) {
+            font-size: @twitter-tweet-font-size;
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.javelin_twitterTweetMeta {
+    font-size: @twitter-meta-font-size;
+}

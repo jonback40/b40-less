@@ -1,0 +1,99 @@
+//
+// Javelin: Weather Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-weather {
+    
+    .title(@rules) {
+        .javelin_weatherTitle {
+            @rules();
+        }
+    }
+    
+    .time(@rules) {
+        .javelin_weatherTime {
+            @rules();
+        }
+    }
+    
+    .icon(@rules) {
+        .javelin_weatherImg {
+            @rules();
+        }
+    }
+    
+    .temp(@rules) {
+        .javelin_weatherTemp {
+            @rules();
+        }
+    }
+    
+    .current(@rules) {
+        .javelin_weatherCurrent {
+            @rules();
+        }
+    }
+    
+    .forecast(@rules) {
+        .javelin_weatherForecast {
+            @rules();
+        }
+    }
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+.javelin_weather {
+    font-size: @weather-font-size;
+    
+    > br {
+        display: none;
+    }
+    
+    p {
+        line-height: @weather-line-height;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    & when (@weather-padding > 0) {
+        padding: @weather-padding;
+    }
+    & when (iscolor(@weather-bg)) {
+        background-color: @weather-bg;
+    }
+    & when (@weather-border-size > 0) {
+        border: @weather-border;
+    }
+    & when (@weather-border-radius > 0) {
+        border-radius: @weather-border-radius;
+    }
+}
+
+.javelin_weatherTime {
+    font-size: @weather-time-font-size;
+}
+
+.javelin_weatherImg {
+    margin-right: @weather-icon-offset-horz;
+    float: left;
+}
+
+.javelin_weatherTemp {
+    font-size: @weather-temp-font-size;
+    line-height: 52px !important; // 52px is the height of the icon that comes from Javelin
+    
+    & when (iscolor(@weather-temp-color)) {
+        color: @weather-temp-color;
+    }
+}

@@ -1,0 +1,124 @@
+//
+// Javelin: Gallery Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-gallery {
+    
+    .self(@rules) {
+        .javelin_gallery {
+            @rules();
+        }
+    }
+    
+    .list(@rules) {
+        .javelin_galleryItems {
+            @rules();
+        }
+    }
+    
+    .item(@rules) {
+        .javelin_gallery li.javelin_galleryItem {
+            @rules();
+        }
+    }
+    
+    .image(@rules) {
+        .javelin_galleryItemImage {
+            @rules();
+        }
+    }
+    
+    .caption(@rules) {
+        .javelin_galleryItemCaption {
+            @rules();
+        }
+    }
+    
+    .description(@rules) {
+        .javelin_galleryItemDescription {
+            @rules();
+        }
+    }
+    
+    .set-columns(@count) {
+        li.javelin_galleryItem {
+            &:nth-child(@{count}n+1) {
+                clear: left;
+            }
+            &:nth-child(@{count}n+@{count}) {
+                clear: right;
+            }
+        }
+    }
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+.javelin_gallery {
+    // positioning and setting a z-index will allow the settings menu to stay on top of the module content when logged in
+    
+    // UPDATE - 11.19.2014: This is actually preventing UI controls for gallery items from displaying properly
+    
+    // position: relative;
+    // z-index: 1 !important;
+}
+
+.javelin_galleryItems {
+    .make-grid-row((@gallery-offset-horz * 2));
+    
+    margin-bottom: 0;
+}
+
+.javelin_gallery {
+    li.javelin_galleryItem {
+        // We're using margins to put space between items instead of padding to allow a user to configure the layout without using CSS
+        .make-grid-column-default(0);
+        
+        // The top margin can NOT be set to anything but zero otherwise the Javelin UI controls will not position properly
+        margin: 0 @gallery-offset-horz @gallery-offset-vert @gallery-offset-horz;
+        list-style: none;
+        
+        // Unset relative position set by grid column mixin so the module admin controls will position correctly in Javelin
+        position: static;
+    }
+    
+    // Optionally require all instances of gallery modules to enforce a specific number of columns per row
+    & when (isnumber(@gallery-column-count)) and (@gallery-column-count > 0) {
+        #javelin-gallery.set-columns(@gallery-column-count);
+    }
+}
+
+.javelin_galleryItemImage {
+    margin-left: -@gallery-offset-horz;
+    margin-right: -@gallery-offset-horz;
+    
+    img {
+        .img-responsive();
+        
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}
+
+.javelin_galleryItemCaption {
+    padding: @gallery-caption-padding-vert @gallery-caption-padding-horz;
+    line-height: @gallery-caption-line-height;
+    text-align: @gallery-caption-align;
+    
+    & when not (@gallery-caption-font-size = inherit) {
+        font-size: @gallery-caption-font-size;
+    }
+    
+    & when not (@gallery-caption-font-family = inherit) {
+        font-family: @gallery-caption-font-family;
+    }
+}

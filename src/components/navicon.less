@@ -1,0 +1,129 @@
+//
+// Navicon
+// ----------------------------------------------------------------------------------------------------
+
+
+.navicon {
+    & when (@component-animations) {
+        .transition(~"background-color @{navstack-animation-duration} @{navstack-animation-timing-function}");
+    }
+    
+    width: @navicon-width;
+    height: @navicon-height;
+    padding: 0;
+    background-color: @navicon-bg;
+    border: 0;
+    outline: none; // remove focus outline from webkit
+    text-align: center;
+    line-height: 1;
+    position: absolute;
+    top: @navicon-offset-top;
+    right: @navicon-offset-right;
+    z-index: 50 !important;
+    
+    & when (iscolor(@navicon-gradient-start)) {
+        #gradient.vertical(@navicon-gradient-start; @navicon-gradient-stop);
+    }
+    
+    & when (@navicon-border-radius > 0) {
+        border-radius: @navicon-border-radius;
+    }
+    
+    &:hover,
+    &:focus {
+        box-shadow: none;
+        
+        & when (iscolor(@navicon-bg-hover)) {
+            background-color: @navicon-bg-hover;
+        }
+        
+        & when (iscolor(@navicon-gradient-start-hover)) {
+            #gradient.vertical(@navicon-gradient-start-hover; @navicon-gradient-stop-hover);
+        }
+    }
+    
+    .nav-is-active & {
+        & when (iscolor(@navicon-bg-active)) {
+            background-color: @navicon-bg-active;
+        }
+        
+        & when (iscolor(@navicon-gradient-start-active)) {
+            #gradient.vertical(@navicon-gradient-start-active; @navicon-gradient-stop-active);
+        }
+    }
+    
+    // Add the grid gutter spacing to the 'right' position of the navicon when it is being used with responsive page-nav
+    .page-nav-wrapper & {
+        & when (@is-mobile = true) {
+            right: (@navicon-offset-right + floor(@grid-gutter-width / 2));
+        }
+        & when (@is-responsive = true) {
+            @media (@page-nav-breakpoint-down) {
+                right: (@navicon-offset-right + floor(@grid-gutter-width / 2));
+            }
+        }
+    }
+}
+
+.navicon-bar {
+    width: @navicon-bar-width;
+    height: @navicon-bar-height;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: @navicon-bar-color;
+    display: block;
+    
+    & when (@navicon-bar-border-radius > 0) {
+        border-radius: @navicon-bar-border-radius;
+    }
+    
+    + .navicon-bar {
+        margin-top: @navicon-bar-offset-vert;
+    }
+    
+    .navicon:hover,
+    .navicon:focus {
+        background-color: @navicon-bar-hover-color;
+    }
+    
+    .nav-is-active & {
+        & when (iscolor(@navicon-bar-active-color)) {
+            background-color: @navicon-bar-active-color;
+        }
+    }
+}
+
+.navicon-dismissible {
+    .navicon-bar {
+        & when (@component-animations) {
+            .transition-transform(~"@{animation-duration-base} @{animation-timing-function-base}"; ~"opacity @{animation-duration-base} @{animation-timing-function-base}, top @{animation-duration-base} @{animation-timing-function-base}");  
+        }
+        
+        .transform-origin(50% 50%);
+        
+        opacity: 1;
+        position: relative;
+        top: 0;
+    }
+    
+    .nav-is-active & {
+        .navicon-bar {
+            opacity: 0;
+        }
+        
+        .navicon-bar:first-child,
+        .sr + .navicon-bar {
+            .rotate(45deg);
+            
+            opacity: 1;
+            top: (@navicon-bar-height + @navicon-bar-offset-vert); //8px
+        }
+        
+        .navicon-bar:last-child {
+            .rotate(-45deg);
+            
+            opacity: 1;
+            top: -(@navicon-bar-height + @navicon-bar-offset-vert); //-8px
+        }
+    }
+}

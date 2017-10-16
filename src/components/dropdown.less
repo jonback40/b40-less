@@ -1,0 +1,178 @@
+//
+// Dropdown
+// ----------------------------------------------------------------------------------------------------
+
+
+// Required Script:  /public/scripts/less/less.dropdown.min.js
+
+
+.dropdown {
+    background-color: @dropdown-bg;
+    border: @dropdown-border;
+    font-size: @dropdown-font-size;
+    line-height: @dropdown-line-height;
+    font-family: @dropdown-font-family;
+    text-align: left;
+    position: relative;
+    z-index: 1000;
+    
+    & when (@dropdown-border-radius > 0) {
+        border-radius: @dropdown-border-radius;
+    }
+    
+    // We're keeping the active state styles nested right here so we have the specificity of '.dropdown.active'
+    // as opposed to a generic '.active' parent selector
+    &.active {
+        & when (@dropdown-border-radius > 0) {
+            border-radius: @dropdown-border-radius @dropdown-border-radius 0 0;
+        }
+        
+        .dropdown-options {
+            display: block;
+        }
+        
+        .dropdown-label when (@dropdown-border-radius > 0) {
+            border-radius: @dropdown-border-radius @dropdown-border-radius 0 0;
+            box-shadow: @dropdown-options-box-shadow;
+        }
+        
+        .dropdown-label-text {
+            opacity: .5;
+        }
+    }
+}
+
+
+// The currently selected value displayed at the top of the dropdown
+.dropdown-label {
+    padding: @dropdown-label-padding;
+    background-color: @dropdown-label-bg;
+    color: @dropdown-label-color;
+    cursor: pointer;
+    position: relative;
+    z-index: 20 !important;
+    
+    // Undo styling from the label tag
+    margin-bottom: 0;
+    font-weight: normal;
+    display: block;
+    
+    & when (@dropdown-border-radius > 0) {
+        border-radius: @dropdown-border-radius;
+    }
+}
+
+.dropdown-label-text {
+    &:extend(.border-box-sizing all);
+    
+    .text-overflow();
+    
+    & when (@component-animations = true) {
+        .transition(opacity @animation-duration-base @animation-timing-function-base);
+    }
+    
+    width: 100%;
+    padding-right: (@dropdown-caret-width + 10px); // 10px is just to ensure some space between the text label and the caret
+    display: block;
+}
+
+.dropdown-caret {
+    .text-hide();
+    
+    width: @dropdown-caret-width;
+    height: @dropdown-caret-height;
+    margin-top: -(floor(@dropdown-caret-height / 2));
+    background: none;
+    position: absolute;
+    top: 50%;
+    right: @dropdown-label-padding-horz;
+    
+    &::after {
+        .triangle(bottom; @dropdown-caret-width; @dropdown-caret-height; @dropdown-caret-color);
+        
+        content: "";
+        display: block;
+    }
+}
+
+.dropdown-optgroup {
+    padding: @dropdown-optgroup-padding;
+    background-color: @dropdown-optgroup-bg;
+    color: @dropdown-optgroup-color;
+    font-size: @dropdown-optgroup-font-size;
+    
+    & when not (@dropdown-optgroup-font-family = inherit) {
+        font-family: @dropdown-optgroup-font-family;
+    }
+}
+
+.dropdown-options {
+    &:extend(.border-box-sizing all);
+    
+    .overflow-scroll(y);
+    
+    max-height: @dropdown-options-max-height;
+    background-color: @dropdown-options-bg;
+    border: @dropdown-options-border;
+    border-top: 0;
+    box-shadow: @dropdown-options-box-shadow;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10 !important;
+    
+    & when (@dropdown-border-radius > 0) {
+        border-radius: 0 0 @dropdown-border-radius @dropdown-border-radius;
+    }
+    
+    & when (@dropdown-border-width > 0) {
+        left: -@dropdown-border-width;
+        right: -@dropdown-border-width;
+    }
+    
+    & when (@dropdown-options-border-width > 0) {
+        margin-top: -@dropdown-options-border-width;
+    }
+    
+    ul {
+        .list-unstyled();
+        
+        margin-bottom: 0;
+    }
+}
+
+.dropdown-option {
+    padding: @dropdown-option-padding;
+    background-color: @dropdown-option-bg;
+    border-top: @dropdown-option-border-width solid @dropdown-option-border-color;
+    color: @dropdown-option-color;
+    cursor: pointer;
+    
+    &:last-child when (@dropdown-border-radius > 0) {
+        border-radius: 0 0 @dropdown-border-radius @dropdown-border-radius;
+    }
+    
+    &:hover {
+        background-color: @dropdown-option-bg-hover;
+        color: @dropdown-option-color-hover;
+    }
+    
+    &.active {
+        background-color: @dropdown-option-bg-active;
+        color: @dropdown-option-color-active;
+        
+        &:last-child when (@dropdown-border-radius > 0) {
+            border-radius: 0 0 @dropdown-border-radius @dropdown-border-radius;
+        }
+    }
+}
+
+.dropdown-slug {
+    & when (iscolor(@dropdown-slug-color)) {
+        color: @dropdown-slug-color;
+    }
+    
+    font-style: @dropdown-slug-font-style;
+}

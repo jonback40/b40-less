@@ -1,0 +1,511 @@
+//
+// Javelin: Calendar Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-calendar {
+    
+    // views
+    .details-view(@rules) {
+        .javelin_calendarEventView {
+            @rules();
+        }
+    }
+    
+    
+    // list layout
+    .event(@rules) {
+        .javelin_calendarEvent {
+            @rules();
+        }
+    }
+    .event-title(@rules) {
+        .javelin_calendarEventLink,
+        .javelin_calendarEventTitle {
+            @rules();
+        }
+    }
+    .event-date(@rules) {
+        .javelin_calendarEventDateRange,
+        .javelin_calendarEventView .javelin_calendarEventDateRange {
+            @rules();
+        }
+    }
+    .event-summary(@rules) {
+        .javelin_calendarEventSummary {
+            @rules();
+        }
+    }
+    .event-body(@rules) {
+        .javelin_calendarEventBody {
+            @rules();
+        }
+    }
+    
+    
+    // wrappers
+    .full(@rules) {
+        .javelin_calendarFull {
+            @rules();
+        }
+    }
+    .list(@rules) {
+        .javelin_calendarList {
+            @rules();
+        }
+    }
+    .mini(@rules) {
+        .javelin_calendarMini {
+            @rules();
+        }
+    }
+    
+    
+    // table layout
+    .table(@rules) {
+        .javelin_calendarMini .javelin_calendarTable,
+        .javelin_calendarFull .javelin_calendarTable {
+            @rules();
+        }
+    }
+    .table-mini(@rules) {
+        .javelin_calendarMini .javelin_calendarTable {
+            @rules();
+        }
+    }
+    .table-full(@rules) {
+        .javelin_calendarFull .javelin_calendarTable {
+            @rules();
+        }
+    }
+    .table-month(@rules) {
+        .javelin_calendarMini .javelin_calendarMonth,
+        .javelin_calendarFull .javelin_calendarMonth {
+            @rules();
+        }
+    }
+    .table-prevnext(@rules) {
+        .javelin_calendarMini .javelin_calendarPrev,
+        .javelin_calendarFull .javelin_calendarPrev,
+        .javelin_calendarMini .javelin_calendarNext,
+        .javelin_calendarFull .javelin_calendarNext {
+            @rules();
+        }
+    }
+    .table-prev(@rules) {
+        .javelin_calendarMini .javelin_calendarPrev,
+        .javelin_calendarFull .javelin_calendarPrev {
+            @rules();
+        }
+    }
+    .table-next(@rules) {
+        .javelin_calendarMini .javelin_calendarNext,
+        .javelin_calendarFull .javelin_calendarNext {
+            @rules();
+        }
+    }
+    .table-cells(@rules) {
+        .javelin_calendarMini .javelin_calendarTable th,
+        .javelin_calendarMini .javelin_calendarTable td,
+        .javelin_calendarFull .javelin_calendarTable th,
+        .javelin_calendarFull .javelin_calendarTable td {
+            @rules();
+        }
+    }
+    .table-day(@rules) {
+        .javelin_calendarMini .javelin_calendarTable td,
+        .javelin_calendarFull .javelin_calendarTable td {
+            @rules();
+        }
+    }
+    .table-day-num(@rules) {
+        .javelin_calendarDayNumber {
+            @rules();
+        }
+    }
+    .table-day-hasevents(@rules) {
+        .javelin_calendarDayEvents {
+            @rules();
+        }
+    }
+    .table-day-event(@rules) {
+        .javelin_calendarDayEvents > a {
+            @rules();
+        }
+    }
+    .table-today(@rules) {
+        .javelin_calendarDayToday {
+            @rules();
+        }
+    }
+    .table-weekday(@rules) {
+        .javelin_calendarMini .javelin_calendarTable th,
+        .javelin_calendarFull .javelin_calendarTable th {
+            @rules();
+        }
+    }
+    .table-weekend(@rules) {
+        .javelin_calendarMini .javelin_calendarTable td:first-child,
+        .javelin_calendarMini .javelin_calendarTable td:last-child,
+        .javelin_calendarFull .javelin_calendarTable td:first-child,
+        .javelin_calendarFull .javelin_calendarTable td:last-child {
+            @rules();
+        }
+    }
+    
+    
+    // misc
+    .backlink(@rules) {
+        .javelin_calendarEventView > a {
+            @rules();
+        }
+    }
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// List + Mini Layout
+.javelin_calendarMulti {
+    min-height: auto;
+    
+    & when (@is-mobile = false) {
+        .javelin_calendarList,
+        .javelin_calendarMini {
+            &:extend(.border-box-sizing all);
+        }
+        
+        & when (@is-responsive = false) {
+            .make-grid-row();
+            
+            .javelin_calendarList,
+            .javelin_calendarMini {
+                .make-grid-column-default();
+            }
+            
+            .javelin_calendarList {
+                width: @calendar-list-width;
+                padding-right: floor(@grid-gutter-width / 2);
+                float: left;
+            }
+        
+            .javelin_calendarMini {
+                width: @calendar-mini-width;
+                padding-left: floor(@grid-gutter-width / 2);
+                float: right;
+            }
+        }
+        
+        & when (@is-responsive = true) {
+            @media (@screen-sm-down) {
+                .javelin_calendarList,
+                .javelin_calendarMini {
+                    width: auto;
+                    padding-left: 0;
+                    float: none;
+                }
+            }
+            
+            @media (@screen-md-up) {
+                .make-grid-row();
+                
+                .javelin_calendarList,
+                .javelin_calendarMini {
+                    .make-grid-column-default();
+                }
+                
+                .javelin_calendarList {
+                    width: @calendar-list-width;
+                    padding-right: floor(@grid-gutter-width / 2);
+                    float: left;
+                }
+            
+                .javelin_calendarMini {
+                    width: @calendar-mini-width;
+                    padding-left: floor(@grid-gutter-width / 2);
+                    float: right;
+                }
+            }
+        }
+    }
+    
+    & when (@is-mobile = true) {
+        .javelin_calendarList,
+        .javelin_calendarMini {
+            &:extend(.border-box-sizing all);
+            
+            width: auto;
+            padding-left: 0;
+            float: none;
+        }
+    }
+    
+    .javelin_calendarList {
+        // Override Javelin's bad styling
+        a {
+            font-size: inherit;
+        }
+    }
+}
+
+.javelin_calendarEvent {
+    margin-bottom: @calendar-event-offset-vert;
+}
+
+.javelin_calendarEventLink,
+.javelin_calendarEventTitle {
+    margin-bottom: @calendar-event-title-offset-vert;
+    font-size: @calendar-event-title-font-size;
+}
+
+.javelin_calendarEventDateRange,
+.javelin_calendarEventView .javelin_calendarEventDateRange {
+    font-size: @calendar-event-date-font-size;
+    font-style: @calendar-event-date-font-style;
+}
+
+.javelin_calendarEventSummary {
+    & when not (@calendar-event-summary-font-size = inherit) {
+        font-size: @calendar-event-summary-font-size;
+    }
+    
+    &:empty {
+        display: none;
+    }
+}
+
+.javelin_calendarEventBody {
+    margin-top: @calendar-event-body-offset-vert;
+}
+
+.javelin_calendarEventView > a {
+    margin-bottom: @calendar-backlink-offset-vert;
+    font-size: @calendar-backlink-font-size;
+    display: inline-block;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Calendar Tables
+.javelin_calendarMini .javelin_calendarTable,
+.javelin_calendarFull .javelin_calendarTable {
+    margin-bottom: @calendar-table-offset-vert;
+    border: @calendar-table-cell-border;
+    
+    caption {
+        background-color: @calendar-table-caption-bg;
+        border: @calendar-table-caption-border;
+        color: @calendar-table-caption-color;
+        line-height: @calendar-table-caption-height !important;
+        
+        & when (iscolor(@calendar-table-caption-gradient-start)) {
+            #gradient.vertical(@calendar-table-caption-gradient-start; @calendar-table-caption-gradient-stop);
+        }
+    }
+    
+    // table cells
+    th {
+        height: auto !important;
+    }
+    td {
+        font-weight: normal !important;
+    }
+    th,
+    td {
+        width: 14.285% !important;
+        padding: 0 !important;
+        background-color: @calendar-table-cell-bg;
+        border: @calendar-table-cell-border;
+        color: @calendar-table-cell-color;
+        font-size: @calendar-table-cell-font-size;
+        line-height: @calendar-table-cell-height;
+        
+        a when not (@calendar-table-cell-link-color = inherit) {
+            color: @calendar-table-cell-link-color;
+            
+            &:hover {
+                color: @calendar-table-cell-link-hover-color;
+            }
+        }
+    }
+    
+    // table cell styling for "today"
+    .javelin_calendarDayToday {
+        & when (iscolor(@calendar-table-today-bg)) {
+            background-color: @calendar-table-today-bg !important;
+        }
+        & when not (@calendar-table-today-border-color = inherit) {
+            border-style: solid;
+            border-color: @calendar-table-today-border-color;
+        }
+    }
+    
+    // table cell styling for a day that has events
+    .javelin_calendarDayEvents {
+        a {
+            color: @calendar-table-hasevents-color !important;
+            
+            &:hover {
+                color: @calendar-table-hasevents-hover-color !important;
+            }
+        }
+        
+        & when (iscolor(@calendar-table-hasevents-bg)) {
+            background-color: @calendar-table-hasevents-bg !important;
+        }
+        
+        & when not (@calendar-table-hasevents-border-color = inherit) {
+            border-style: solid;
+            border-color: @calendar-table-hasevents-border-color;
+        }
+        
+        & when (iscolor(@calendar-table-hasevents-gradient-start)) {
+            #gradient.vertical(@calendar-table-hasevents-gradient-start; @calendar-table-hasevents-gradient-stop);
+        }
+    }
+}
+
+.javelin_calendarMini .javelin_calendarTable {
+    th,
+    td {
+        text-align: center;
+    }
+}
+
+.javelin_calendarFull .javelin_calendarTable {
+    th,
+    td {
+        padding: @calendar-table-full-cell-padding-vert @calendar-table-full-cell-padding-horz !important;
+        line-height: @calendar-table-full-cell-line-height;
+    }
+    th {
+        text-align: center;
+    }
+    td {
+        & when (@is-mobile = false) {
+            height: @calendar-table-full-cell-height;
+        }
+        & when (@is-mobile = true) {
+            height: floor(@calendar-table-full-cell-height / 2);
+        }
+        
+        font-size: @calendar-table-full-cell-font-size;
+    }
+    
+    .javelin_calendarDayNumber {
+        margin-bottom: @calendar-table-full-daynum-offset-vert;
+        color: @calendar-table-full-daynum-color;
+        font-size: @calendar-table-full-daynum-font-size;
+        line-height: 1;
+    }
+    
+    .javelin_calendarDayEvents {
+        > br {
+            display: none;
+        }
+    }
+    
+    .javelin_calendarDayEvents > a {
+        margin-top: @calendar-table-full-events-offset-vert;
+        padding-left: @calendar-table-full-events-offset-horz;
+        color: @calendar-table-full-events-color;
+        display: block;
+        
+        &:hover {
+            color: @calendar-table-full-events-hover-color;
+        }
+        
+        &:before {
+            margin-left: -@calendar-table-full-events-offset-horz;
+            font-size: floor(@calendar-table-full-cell-font-size * 1.375);
+            line-height: 1;
+            content: @unicode-bull;
+            float: left;
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.javelin_calendarFull when (@is-responsive = true) {
+    .table-responsive();
+    
+    margin-bottom: @line-height-computed;
+    
+    .javelin_calendarTable {
+        margin-bottom: 0;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Table "header" elements
+.javelin_calendarMini .javelin_calendarMonth,
+.javelin_calendarFull .javelin_calendarMonth {
+    padding: 0;
+    display: inline-block;
+    position: static !important;
+    left: 0;
+}
+
+.javelin_calendarMini .javelin_calendarPrev,
+.javelin_calendarFull .javelin_calendarPrev,
+.javelin_calendarMini .javelin_calendarNext,
+.javelin_calendarFull .javelin_calendarNext {
+    width: 14.285% !important;
+    color: @calendar-table-prevnext-color;
+    
+    &:hover {
+        color: @calendar-table-prevnext-hover-color;
+    }
+    
+    & when not (@calendar-table-prevnext-font-size = inherit) {
+        font-size: @calendar-table-prevnext-font-size;
+    }
+}
+
+.javelin_calendarMini .javelin_calendarPrev,
+.javelin_calendarFull .javelin_calendarPrev {
+    float: left;
+}
+
+.javelin_calendarMini .javelin_calendarNext,
+.javelin_calendarFull .javelin_calendarNext {
+    float: right;
+}
+
+.javelin_calendarMini .javelin_calendarTable th,
+.javelin_calendarFull .javelin_calendarTable th {
+    & when (iscolor(@calendar-table-weekday-bg)) {
+        background-color: @calendar-table-weekday-bg;
+    }
+    & when (iscolor(@calendar-table-weekday-border-color)) {
+        border-color: @calendar-table-weekday-border-color;
+    }
+    & when (iscolor(@calendar-table-weekday-color)) {
+        color: @calendar-table-weekday-color;
+    }
+    & when not (@calendar-table-weekday-font-size = inherit) {
+        font-size: @calendar-table-weekday-font-size;
+    }
+}

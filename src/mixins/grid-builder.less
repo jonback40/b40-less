@@ -1,0 +1,295 @@
+//
+// Mixin: Grid Builder
+// ----------------------------------------------------------------------------------------------------
+
+
+// (MODIFIED) Source: http://getbootstrap.com/
+
+
+.make-grid-container(@gutter: @grid-gutter-width) {
+    .clearfix();
+    .border-box-sizing();
+    
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: (@gutter / 2);
+    padding-right: (@gutter / 2);
+}
+
+
+.make-grid-row(@gutter: @grid-gutter-width) {
+    .clearfix();
+    
+    margin-left: -(@gutter / 2);
+    margin-right: -(@gutter / 2);
+}
+
+
+.make-grid-column-default(@gutter: @grid-gutter-width) {
+    .border-box-sizing();
+    
+    min-height: 1px; // Prevent columns from collapsing when empty
+    padding-left: (@gutter / 2);
+    padding-right: (@gutter / 2);
+    position: relative;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Reset most of the styles generated from the `make-grid-` functions. Clearfix and box-sizing are not altered.
+.reset-grid-layout() {
+    .row {
+        .reset-grid-row();
+    }
+    
+    & when (@is-responsive = false) {
+        [class*="grid-"] {
+            .reset-grid-column();
+        }
+    }
+    & when (@is-responsive = true) {
+        [class*="col-"] {
+            .reset-grid-column();
+        }
+    }
+    
+    [class*="offset-"] {
+        .reset-grid-offset();
+    }
+    
+    [class*="push-"] {
+        .reset-grid-push();
+    }
+    
+    [class*="pull-"] {
+        .reset-grid-pull();
+    }
+}
+
+.reset-grid-container() {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.reset-grid-row() {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.reset-grid-column() {
+    width: auto;
+    min-height: 0;
+    padding-left: 0;
+    padding-right: 0;
+    position: static;
+    float: none;
+}
+
+.reset-grid-offset() {
+    margin-left: auto;
+}
+
+.reset-grid-push() {
+    left: auto;
+}
+
+.reset-grid-pull() {
+    right: auto;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Control where column overflow clears new rows
+.clear-columns(@num) {
+    &:nth-child(@{num}+1) {
+        clear: left;
+    }
+    
+    &:nth-child(@{num}+@{num}) {
+        clear: right;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Generate grid columns
+.generate-grid-columns(@columns: @grid-columns) when (@is-responsive = false) {
+    .float-grid-columns(@columns);
+    .calc-grid-columns(@columns; @columns; width);
+    .calc-grid-columns(@columns; @columns; pull);
+    .calc-grid-columns(@columns; @columns; push);
+    .calc-grid-columns(@columns; @columns; offset);
+}
+.generate-grid-columns(@columns: @grid-columns) when (@is-responsive = true) {
+    .float-grid-columns(@columns; xs);
+    .calc-grid-columns(@columns; xs; @columns; width);
+    .calc-grid-columns(@columns; xs; @columns; pull);
+    .calc-grid-columns(@columns; xs; @columns; push);
+    .calc-grid-columns(@columns; xs; @columns; offset);
+    
+    @media (@screen-sm-up) {
+        .float-grid-columns(@columns; sm);
+        .calc-grid-columns(@columns; sm; @columns; width);
+        .calc-grid-columns(@columns; sm; @columns; pull);
+        .calc-grid-columns(@columns; sm; @columns; push);
+        .calc-grid-columns(@columns; sm; @columns; offset);
+    }
+    
+    @media (@screen-md-up) {
+        .float-grid-columns(@columns; md);
+        .calc-grid-columns(@columns; md; @columns; width);
+        .calc-grid-columns(@columns; md; @columns; pull);
+        .calc-grid-columns(@columns; md; @columns; push);
+        .calc-grid-columns(@columns; md; @columns; offset);
+    }
+    
+    @media (@screen-lg-up) {
+        .float-grid-columns(@columns; lg);
+        .calc-grid-columns(@columns; lg; @columns; width);
+        .calc-grid-columns(@columns; lg; @columns; pull);
+        .calc-grid-columns(@columns; lg; @columns; push);
+        .calc-grid-columns(@columns; lg; @columns; offset);
+    }
+    
+    @media (@screen-xl-up) {
+        .float-grid-columns(@columns; xl);
+        .calc-grid-columns(@columns; xl; @columns; width);
+        .calc-grid-columns(@columns; xl; @columns; pull);
+        .calc-grid-columns(@columns; xl; @columns; push);
+        .calc-grid-columns(@columns; xl; @columns; offset);
+    }
+}
+
+
+// Float grid classes
+.float-grid-columns(@columns) when (@is-responsive = false) { // uses 'grid-' prefix for columns
+    .loop(@index) when (@index = 1) { // initial
+        @item: ~".grid-@{index}";
+        .loop((@index + 1); @item);
+    }
+    .loop(@index; @list) when (@index =< @columns) { // general
+        @item: ~".grid-@{index}";
+        .loop((@index + 1); ~"@{list}, @{item}");
+    }
+    .loop(@index; @list) when (@index > @columns) { // terminal
+        @{list} {
+            float: left;
+        }
+    }
+    .loop(1);
+}
+.float-grid-columns(@columns; @class) when (@is-responsive = true) { // uses 'col-' prefix for columns
+    .loop(@index) when (@index = 1) { // initial
+        @item: ~".col-@{class}-@{index}";
+        .loop((@index + 1); @item);
+    }
+    .loop(@index; @list) when (@index =< @columns) { // general
+        @item: ~".col-@{class}-@{index}";
+        .loop((@index + 1); ~"@{list}, @{item}");
+    }
+    .loop(@index; @list) when (@index > @columns) { // terminal
+        @{list} {
+            float: left;
+        }
+    }
+    .loop(1);
+}
+
+
+// Build grid classes and 
+.calc-grid-columns(@index; @columns; @type) when (@is-responsive = false) and (@index >= 0) {
+    // Determine each grid property. Push and pull have a conditional mixin for handling zero indexes
+    .loop(@index; @columns; @type) when (@type = width) and (@index > 0) {
+        .grid-@{index} {
+            width: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @columns; @type) when (@type = push) and (@index > 0) {
+        .push-@{index} {
+            left: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @columns; @type) when (@type = push) and (@index = 0) {
+        .push-0 {
+            left: auto;
+        }
+    }
+    .loop(@index; @columns; @type) when (@type = pull) and (@index > 0) {
+        .pull-@{index} {
+            right: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @columns; @type) when (@type = pull) and (@index = 0) {
+        .pull-0 {
+            right: auto;
+        }
+    }
+    .loop(@index; @columns; @type) when (@type = offset) {
+        .offset-@{index} {
+            margin-left: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @columns; @type);
+    
+    
+    // Next iteration
+    .calc-grid-columns((@index - 1); @columns; @type);
+}
+.calc-grid-columns(@index; @class; @columns; @type) when (@is-responsive = true) and (@index >= 0) {
+    // Determine each grid property. Push and pull have a conditional mixin for handling zero indexes
+    .loop(@index; @class; @columns; @type) when (@type = width) and (@index > 0) {
+        .col-@{class}-@{index} {
+            width: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @class; @columns; @type) when (@type = push) and (@index > 0) {
+        .push-@{class}-@{index} {
+            left: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @class; @columns; @type) when (@type = push) and (@index = 0) {
+        .push-@{class}-0 {
+            left: auto;
+        }
+    }
+    .loop(@index; @class; @columns; @type) when (@type = pull) and (@index > 0) {
+        .pull-@{class}-@{index} {
+            right: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @class; @columns; @type) when (@type = pull) and (@index = 0) {
+        .pull-@{class}-0 {
+            right: auto;
+        }
+    }
+    .loop(@index; @class; @columns; @type) when (@type = offset) {
+        .offset-@{class}-@{index} {
+            margin-left: percentage(@index / @columns);
+        }
+    }
+    .loop(@index; @class; @columns; @type);
+    
+    
+    // Next iteration
+    .calc-grid-columns((@index - 1); @class; @columns; @type);
+}

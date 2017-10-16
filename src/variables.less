@@ -1,0 +1,1500 @@
+//
+// Variables
+// ----------------------------------------------------------------------------------------------------
+
+
+// FRAMEWORK VARS
+// -------------------------
+// - Javelin Site Name
+// - File System
+// - Media Flags
+// - Common Unicode Characters
+
+
+// GENERIC BASE VALUES
+// -------------------------
+// - Media Query Breakpoints
+// - Base Padding
+// - Base Borders
+// - Base Box Shadow
+// - Font Families
+// - Animation and Transitions
+// - Triangles
+
+
+// CORE
+// -------------------------
+// - Body
+// - Links
+// - Typography
+// - Headings
+// - Misc Inline Text
+// - Blockquote
+// - Horizontal Rule
+// - Lists
+// - Tables
+// - Code
+// - Forms
+
+
+// HELPERS
+// -------------------------
+// - Button Helpers
+// - Form Helpers
+// - Help Block
+// - Horizontal Definition List
+// - Table Helpers
+// - Vertical Horizontal Rule
+
+
+// COMPONENTS
+// -------------------------
+// - Alert
+// - Canvas Panels
+// - Dropdown
+// - Form Blocks
+// - Grid
+// - Icons
+// - Icon List
+// - Inline Form
+// - Inset Block
+// - Navicon
+// - Page
+// - Panel
+// - Progress Bars
+// - Search Bar
+// - Simplemodal
+
+
+// JAVELIN
+// -------------------------
+// - Back40 Credit
+// - Blog
+// - Calendar
+// - Carousel
+// - Contact Form
+// - FAQ
+// - Gallery
+// - Navigation: Navbar
+// - Navigation: Stacked
+// - Obituaries
+// - Products
+// - Products Cart
+// - Staff
+// - Tabs
+// - Twitter
+// - User Bar
+// - Weather
+
+
+
+
+
+
+
+
+
+
+//
+// FRAMEWORK VARS
+// ----------------------------------------------------------------------------------------------------
+
+
+// Javelin Site
+@javelin-sitename:                              "";
+@site-template:                                 "default";
+
+
+// File System
+@host-path:                                     ~"//@{javelin-sitename}.javelincms.com/";
+@site-path:                                     ~"@{host-path}sites/@{javelin-sitename}/";
+@template-path:                                 ~"@{site-path}templates/@{site-template}/";
+@framework-path:                                ~"@{site-path}public/less/";
+
+@public-fonts-path:                             ~"/public/fonts/"; // this will NOT work with @imports
+@fonts-path:                                    ~"@{template-path}fonts/";
+@images-path:                                   ~"/sites/@{javelin-sitename}/templates/@{site-template}/images/";
+@uploads-path:                                  ~"@{site-path}uploads/images/";
+
+
+// Media Flags
+@is-responsive:                                 false;
+@is-mobile:                                     false;
+@component-animations:                          false;
+
+
+// Common Unicode Characters
+@unicode-space:                                 "\0020";
+@unicode-ndash:                                 "\2013";
+@unicode-mdash:                                 "\2014";
+@unicode-lsaquo:                                "\2039";
+@unicode-rsaquo:                                "\203A";
+@unicode-laquo:                                 "\00AB";
+@unicode-raquo:                                 "\00BB";
+@unicode-larr:                                  "\2190";
+@unicode-rarr:                                  "\2192";
+@unicode-lt:                                    "\003C";
+@unicode-gt:                                    "\003E";
+@unicode-bull:                                  "\2022";
+@unicode-deg:                                   "\00B0";
+@unicode-copy:                                  "\00A9";
+@unicode-reg:                                   "\00AE";
+
+
+
+
+
+
+
+
+
+
+//
+// GENERIC BASE VALUES
+// ----------------------------------------------------------------------------------------------------
+
+
+// Media query breakpoints
+@screen-xs-min:                                 320px; // Extra small screen / phone
+@screen-sm-min:                                 544px; // Small screen / phone
+@screen-md-min:                                 768px; // Medium screen / tablet
+@screen-lg-min:                                 992px; // Large screen / desktop
+@screen-xl-min:                                 1200px; // Extra large screen / wide desktop
+
+// Provide a maximum so media queries don't overlap when required
+@screen-xs-max:                                 (@screen-sm-min - 1);
+@screen-sm-max:                                 (@screen-md-min - 1);
+@screen-md-max:                                 (@screen-lg-min - 1);
+@screen-lg-max:                                 (@screen-xl-min - 1);
+
+// Shorthands for 'max-width' media queries
+@screen-xs-down:                                ~"max-width: @{screen-xs-max}";
+@screen-sm-down:                                ~"max-width: @{screen-sm-max}";
+@screen-md-down:                                ~"max-width: @{screen-md-max}";
+@screen-lg-down:                                ~"max-width: @{screen-lg-max}";
+
+// Shorthands for 'min-width' media queries
+@screen-sm-up:                                  ~"min-width: @{screen-sm-min}";
+@screen-md-up:                                  ~"min-width: @{screen-md-min}";
+@screen-lg-up:                                  ~"min-width: @{screen-lg-min}";
+@screen-xl-up:                                  ~"min-width: @{screen-xl-min}";
+
+// Shorthands for 'min-width' and 'max-width' media queriess
+@screen-sm-between:                             ~"@{screen-sm-up}) and (@{screen-sm-down}";
+@screen-md-between:                             ~"@{screen-md-up}) and (@{screen-md-down}";
+@screen-lg-between:                             ~"@{screen-lg-up}) and (@{screen-lg-down}";
+
+// Shorthand for 'retina display' media queries
+@screen-retina:                                 ~"min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 2/1), (min-device-pixel-ratio: 2), (min-resolution: 2dppx";
+                                                
+
+// Base Padding
+@padding-vert-base:                             5px;
+@padding-horz-base:                             @padding-vert-base * 2;
+
+@padding-vert-sm:                               floor(@padding-vert-base * .875);
+@padding-horz-sm:                               floor(@padding-horz-base * .875);
+
+@padding-vert-lg:                               floor(@padding-vert-base * 1.25);
+@padding-horz-lg:                               floor(@padding-horz-base * 1.75);
+
+
+// Base Borders
+@border-base:                                   @border-size-base @border-style-base @border-color-base;
+@border-size-base:                              1px;
+@border-style-base:                             solid;
+@border-color-base:                             #ccc;
+
+@border-radius-base:                            4px;
+@border-radius-sm:                              3px;
+@border-radius-lg:                              6px;
+
+
+// Base Box Shadow
+@box-shadow-base:                               @box-shadow-x-base @box-shadow-y-base @box-shadow-blur-base @box-shadow-spread-base @box-shadow-color-base;
+@box-shadow-x-base:                             0;
+@box-shadow-y-base:                             6px;
+@box-shadow-blur-base:                          12px;
+@box-shadow-spread-base:                        0;
+@box-shadow-color-base:                         fade(#000, 17.5%);
+
+
+// Font Families
+@font-family-serif:                             "Times New Roman", Times, serif;
+@font-family-sansserif:                         Arial, Helvetica, sans-serif;
+@font-family-monospace:                         "Courier New", Courier, monospace, serif;
+
+
+// Animation and Transitions
+@animation-duration-base:                       .2s;
+@animation-timing-function-base:                ease;
+
+
+
+
+
+
+
+
+
+
+//
+// CORE
+// ----------------------------------------------------------------------------------------------------
+
+
+// Body
+@html-bg:                                       #fff;
+@body-bg:                                       #fff;
+
+
+// Links
+@link-color:                                    #08c;
+@link-hover-color:                              tint(@link-color, 37.5%);
+@link-underline:                                none;
+@link-hover-underline:                          none;
+@link-font-family:                              inherit;
+
+
+// Typography
+@text-color-base:                               #555;
+@font-size-base:                                16px;
+@font-size-sm:                                  floor(@font-size-base * .75); // 12px
+@font-size-lg:                                  floor(@font-size-base * 1.5); // 24px
+@line-height-base:                              1.75;
+@line-height-sm:                                1.5;
+@line-height-lg:                                2;
+@line-height-computed:                          floor(@font-size-base * @line-height-base); // floor(16 * 1.75) = 28
+@font-family-base:                              @font-family-sansserif;
+
+
+// Headings
+@h1-size:                                       floor(@font-size-base * 2);     // floor(16 * 2) = 32
+@h2-size:                                       floor(@font-size-base * 1.75);  // floor(16 * 1.75) = 28
+@h3-size:                                       floor(@font-size-base * 1.5);   // floor(16 * 1.5) = 24
+@h4-size:                                       floor(@font-size-base * 1.25);  // floor(16 * 1.25) = 20
+@h5-size:                                       @font-size-base;                // 16
+@h6-size:                                       floor(@font-size-base * .75);   // floor(16 * .75) = 12
+
+@h1-color:                                      @headings-color;
+@h2-color:                                      @headings-color;
+@h3-color:                                      @headings-color;
+@h4-color:                                      @headings-color;
+@h5-color:                                      @headings-color;
+@h6-color:                                      @headings-color;
+
+@h1-offset-vert:                                floor(@line-height-computed / 2); // 8px
+@h2-offset-vert:                                floor(@line-height-computed / 2);
+@h3-offset-vert:                                floor(@line-height-computed / 2);
+@h4-offset-vert:                                floor(@line-height-computed / 2);
+@h5-offset-vert:                                floor(@line-height-computed / 2);
+@h6-offset-vert:                                floor(@line-height-computed / 2);
+
+@headings-color:                                inherit;
+@headings-font-weight:                          normal;
+@headings-line-height:                          1.25;
+@headings-font-family:                          @font-family-sansserif;
+@headings-text-transform:                       none;
+
+@headings-small-color:                          inherit;
+@headings-link-color:                           inherit;
+
+
+// Misc Inline Text
+@cite-font-style:                               normal;
+@mark-color:                                    #ff9;
+
+
+// Blockquote
+@blockquote-offset-horz:                        @grid-gutter-width;
+@blockquote-padding-vert:                       @padding-vert-base;
+@blockquote-padding-horz:                       (@padding-horz-base * 2);
+@blockquote-border:                             @blockquote-border-size @blockquote-border-style @blockquote-border-color;
+@blockquote-border-size:                        5px;
+@blockquote-border-style:                       solid;
+@blockquote-border-color:                       @border-color-base;
+@blockquote-color:                              @text-color-base;
+@blockquote-font-size:                          @font-size-base;
+@blockquote-font-style:                         inherit;
+@blockquote-font-weight:                        inherit;
+@blockquote-font-family:                        inherit;
+@blockquote-line-height:                        inherit;
+
+@blockquote-footer-color:                       tint(@blockquote-color, 25%);
+@blockquote-footer-size:                        floor(@blockquote-font-size * .75);
+@blockquote-footer-style:                       italic;
+
+
+// Horizontal Rule
+@hr-border:                                     @hr-border-size @hr-border-style @hr-border-color;
+@hr-border-size:                                @border-size-base;
+@hr-border-style:                               @border-style-base;
+@hr-border-color:                               @border-color-base;
+@hr-offset-vert:                                @line-height-computed;
+@hr-offset-horz:                                0;
+
+
+// Lists
+@list-indent:                                   floor(@font-size-base * 2.5);
+@list-nested-indent:                            floor(@list-indent * .75);
+
+@dt-font-weight:                                bold;
+
+
+// Tables
+@table-cell-padding-vert:                       @padding-vert-base;
+@table-cell-padding-horz:                       @padding-horz-base;
+@table-cell-vertical-align:                     top;
+@table-border:                                  @table-border-size @table-border-style @table-border-color;
+@table-border-size:                             @border-size-base;
+@table-border-style:                            @border-style-base;
+@table-border-color:                            @border-color-base;
+
+
+// Code
+@code-padding-vert:                             floor(@padding-vert-base / 2);
+@code-padding-horz:                             floor(@padding-horz-base / 2);
+@code-bg:                                       #f9f2f4;
+@code-border-radius:                            @border-radius-base;
+@code-color:                                    #c7254e;
+@code-font-size:                                @font-size-sm;
+@code-font-family:                              @font-family-monospace;
+
+@pre-padding-vert:                              @padding-vert-base;
+@pre-padding-horz:                              @padding-horz-base;
+@pre-bg:                                        #f5f5f5;
+@pre-border:                                    @pre-border-size @pre-border-style @pre-border-color;
+@pre-border-size:                               @border-size-base;
+@pre-border-style:                              solid;
+@pre-border-color:                              #ccc;
+@pre-border-radius:                             @border-radius-base;
+@pre-color:                                     #666;
+@pre-line-height:                               @line-height-base;
+
+@kbd-padding-vert:                              3px;
+@kbd-padding-horz:                              8px;
+@kbd-bg:                                        #fafafa;
+@kbd-border:                                    @kbd-border-size @kbd-border-style @kbd-border-color;
+@kbd-border-size:                               1px;
+@kbd-border-style:                              solid;
+@kbd-border-color:                              #ccc;
+@kbd-border-radius:                             @border-radius-base;
+@kbd-box-shadow:                                0 1px 0 rgba(0, 0, 0, .2), inset 0 0 2px #fff;
+@kbd-color:                                     #555;
+@kbd-font-weight:                               bold;
+@kbd-font-size:                                 11px;
+@kbd-line-height:                               1.4;
+@kbd-font-family:                               @font-family-sansserif;
+@kbd-text-shadow:                               0 1px 0 #fff;
+
+
+// Forms
+@legend-color:                                  inherit;
+@legend-font-size:                              @h3-size;
+@legend-font-family:                            inherit;
+@legend-border:                                 @legend-border-size @legend-border-style @legend-border-color;
+@legend-border-size:                            @border-size-base;
+@legend-border-style:                           @border-style-base;
+@legend-border-color:                           @border-color-base;
+
+
+
+
+
+
+
+
+
+
+//
+// HELPERS
+// ----------------------------------------------------------------------------------------------------
+
+
+// Button Helpers
+@btn-height-base:                               40px;
+@btn-padding-horz:                              @padding-horz-base;
+@btn-border-width:                              1px;
+@btn-border-style:                              solid;
+@btn-border-radius:                             @border-radius-base;
+@btn-box-shadow:                                none;
+@btn-box-shadow-active:                         inset 0 3px 5px rgba(0, 0, 0, .125);
+@btn-font-weight:                               normal;
+@btn-font-size:                                 @font-size-base;
+@btn-line-height:                               @line-height-base;
+@btn-font-family:                               @font-family-base;
+@btn-text-transform:                            none;
+@btn-animation-duration:                        @animation-duration-base;
+@btn-animation-timing-function:                 @animation-timing-function-base;
+
+@btn-default-bg:                                #fff;
+@btn-default-bg-hover:                          darken(@btn-default-bg, 10%);
+@btn-default-border-color:                      #ccc;
+@btn-default-border-color-hover:                darken(@btn-default-border-color, 12%);
+@btn-default-color:                             #333;
+@btn-default-color-hover:                       @btn-default-color;
+@btn-default-gradient-start:                    false;
+@btn-default-gradient-stop:                     false;
+@btn-default-gradient-start-hover:              false;
+@btn-default-gradient-stop-hover:               false;
+
+@btn-inverse-bg:                                spin(@btn-default-bg, 180);
+@btn-inverse-bg-hover:                          spin(@btn-default-bg-hover, 180);
+@btn-inverse-border-color:                      spin(@btn-default-border-color, 180);
+@btn-inverse-border-color-hover:                spin(@btn-default-border-color-hover, 180);
+@btn-inverse-color:                             spin(@btn-default-color, 180);
+@btn-inverse-color-hover:                       spin(@btn-default-color-hover, 180);
+@btn-inverse-gradient-start:                    false;
+@btn-inverse-gradient-stop:                     false;
+@btn-inverse-gradient-start-hover:              false;
+@btn-inverse-gradient-stop-hover:               false;
+
+@btn-link-color:                                @link-color;
+@btn-link-hover-color:                          @link-hover-color;
+@btn-link-color-disabled:                       #777;
+@btn-link-font-size:                            @btn-font-size;
+@btn-link-line-height:                          @btn-line-height;
+@btn-link-font-family:                          @btn-font-family;
+
+@btn-sm-height:                                 @line-height-computed;
+@btn-sm-padding-horz:                           @padding-horz-sm;
+@btn-sm-border-radius:                          @border-radius-sm;
+@btn-sm-font-size:                              @font-size-sm;
+@btn-sm-line-height:                            @btn-line-height;
+
+@btn-lg-height:                                 (@line-height-computed * 2);
+@btn-lg-padding-horz:                           @padding-horz-lg;
+@btn-lg-border-radius:                          @border-radius-lg;
+@btn-lg-font-size:                              @font-size-lg;
+@btn-lg-line-height:                            @btn-line-height;
+
+
+// Form Helpers
+@input-height-base:                             (@line-height-computed + (@input-padding-vert * 2) + (@input-border-size * 2));
+@input-height-sm:                               (floor(@font-size-sm * @line-height-sm) + (@padding-vert-sm * 2) + (@input-border-size * 2));
+@input-height-lg:                               (floor(@font-size-lg * @line-height-lg) + (@padding-vert-lg * 2) + (@input-border-size * 2));
+
+@input-padding-vert:                            @padding-vert-base;
+@input-padding-horz:                            @padding-horz-base;
+@input-bg:                                      #fff;
+@input-bg-disabled:                             #ddd;
+@input-border:                                  @input-border-size @input-border-style @input-border-color;
+@input-border-size:                             @border-size-base;
+@input-border-style:                            @border-style-base;
+@input-border-color:                            @border-color-base;
+@input-border-color-focused:                    #66afe9;
+@input-border-radius:                           @border-radius-base;
+@input-box-shadow:                              inset 0 1px 1px rgba(0, 0, 0, .075);
+@input-color:                                   #555;
+@input-font-size:                               @font-size-base;
+@input-line-height:                             @line-height-base;
+@input-font-family:                             @font-family-base;
+
+@textarea-min-height:                           150px;
+
+@placeholder-color:                             #aaa;
+
+@form-switch-offset-vert:                       floor(@font-size-base / 2);
+@form-switch-offset-horz:                       20px;
+
+
+// Help Block
+@help-block-color:                              lighten(@text-color-base, 25%);
+@help-block-font-size:                          @font-size-sm;
+@help-block-line-height:                        1.25;
+
+
+// Horizontal Definition List
+@dl-horizontal-offset:                          220px;
+@dl-horizontal-dt-align:                        right;
+
+
+// Table Helpers
+@table-cell-padding-vert-condensed:             0;
+@table-cell-padding-horz-condensed:             floor(@padding-horz-base / 2);
+@table-bg-accent:                               #f9f9f9; // for striped tables
+@table-bg-hover:                                tint(#08c, 95%);
+
+@table-caption-side:                            bottom;
+@table-caption-font-size:                       @font-size-sm;
+@table-caption-font-style:                      italic;
+@table-caption-text-align:                      left;
+
+
+// Vertical Horizontal Rule
+@hr-vertical-breakpoint:                        @grid-float-breakpoint;
+@hr-vertical-border:                            @hr-vertical-border-size @hr-vertical-border-style @hr-vertical-border-color;
+@hr-vertical-border-size:                       @hr-border-size;
+@hr-vertical-border-style:                      @hr-border-style;
+@hr-vertical-border-color:                      @hr-border-color;
+
+
+
+
+
+
+
+
+
+
+//
+// COMPONENTS
+// ----------------------------------------------------------------------------------------------------
+
+
+// Alert
+@alert-padding:                                 @alert-padding-vert @alert-padding-horz;
+@alert-padding-vert:                            floor(@grid-gutter-width / 2);
+@alert-padding-horz:                            floor(@grid-gutter-width / 2);
+@alert-border:                                  @alert-border-width solid @alert-border-color;
+@alert-border-width:                            @border-size-base;
+@alert-border-color:                            @border-color-base;
+@alert-border-radius:                           @border-radius-base;
+
+@alert-content-offset-vert:                     10px;
+
+@alert-link-font-weight:                        bold;
+@alert-link-hover-underline:                    true;
+
+@alert-info-bg:                                 #d9edf7;
+@alert-info-border:                             darken(spin(@alert-info-bg, -10), 5%);
+@alert-info-color:                              #31708f;
+
+@alert-success-bg:                              #dff0d8;
+@alert-success-border:                          darken(spin(@alert-success-bg, -10), 5%);
+@alert-success-color:                           #3c763d;
+
+@alert-warning-bg:                              #fcf8e3;
+@alert-warning-border:                          darken(spin(@alert-warning-bg, -10), 5%);
+@alert-warning-color:                           #8a6d3b;
+
+@alert-danger-bg:                               #f2dede;
+@alert-danger-border:                           darken(spin(@alert-danger-bg, -10), 5%);
+@alert-danger-color:                            #a94442;
+
+
+// Canvas Panels
+@canvas-panel-padding-vert:                     floor(@grid-gutter-width / 2);
+@canvas-panel-transition-duration:              .35s;
+@canvas-panel-transition-timing-function:       ease;
+
+@canvas-main-bg:                                #fff;
+@canvas-main-box-shadow:                        @canvas-main-box-shadow-x @canvas-main-box-shadow-y @canvas-main-box-shadow-blur @canvas-main-box-shadow-spread @canvas-main-box-shadow-color;
+@canvas-main-box-shadow-x:                      @box-shadow-x-base;
+@canvas-main-box-shadow-y:                      @box-shadow-y-base;
+@canvas-main-box-shadow-blur:                   @box-shadow-blur-base;
+@canvas-main-box-shadow-spread:                 @box-shadow-spread-base;
+@canvas-main-box-shadow-color:                  @box-shadow-color-base;
+
+@canvas-left-width:                             80%;
+@canvas-left-bg:                                #222;
+@canvas-left-color:                             #fff;
+
+@canvas-right-width:                            80%;
+@canvas-right-bg:                               #222;
+@canvas-right-color:                            #fff;
+
+
+// Dropdown
+@dropdown-bg:                                   #fff;
+@dropdown-border:                               @dropdown-border-width solid @dropdown-border-color;
+@dropdown-border-width:                         @input-border-size;
+@dropdown-border-color:                         @input-border-color;
+@dropdown-border-radius:                        @input-border-radius;
+@dropdown-color:                                @input-color;
+@dropdown-font-size:                            @input-font-size;
+@dropdown-line-height:                          1.25;
+@dropdown-font-family:                          @input-font-family;
+
+@dropdown-label-padding:                        @dropdown-label-padding-vert @dropdown-label-padding-horz;
+@dropdown-label-padding-vert:                   @dropdown-option-padding-vert;
+@dropdown-label-padding-horz:                   @dropdown-option-padding-horz;
+@dropdown-label-bg:                             #fff;
+@dropdown-label-color:                          @text-color-base;
+
+@dropdown-caret-width:                          12px;
+@dropdown-caret-height:                         6px;
+@dropdown-caret-color:                          #444;
+
+@dropdown-optgroup-padding:                     @dropdown-optgroup-padding-vert @dropdown-optgroup-padding-horz;
+@dropdown-optgroup-padding-vert:                5px;
+@dropdown-optgroup-padding-horz:                15px;
+@dropdown-optgroup-bg:                          #ddd;
+@dropdown-optgroup-color:                       @input-color;
+@dropdown-optgroup-font-size:                   (@dropdown-font-size - 2);
+@dropdown-optgroup-font-family:                 inherit;
+
+@dropdown-options-max-height:                   250px;
+@dropdown-options-bg:                           #fff;
+@dropdown-options-border:                       @dropdown-options-border-width solid @dropdown-options-border-color;
+@dropdown-options-border-width:                 @dropdown-border-width;
+@dropdown-options-border-color:                 @dropdown-border-color;
+@dropdown-options-box-shadow:                   @dropdown-options-box-shadow-x @dropdown-options-box-shadow-y @dropdown-options-box-shadow-spread @dropdown-options-box-shadow-color;
+@dropdown-options-box-shadow-x:                 0;
+@dropdown-options-box-shadow-y:                 2px;
+@dropdown-options-box-shadow-spread:            3px;
+@dropdown-options-box-shadow-color:             fade(#000, 7.5%);
+
+@dropdown-option-padding:                       @dropdown-option-padding-vert @dropdown-option-padding-horz;
+@dropdown-option-padding-vert:                  10px;
+@dropdown-option-padding-horz:                  15px;
+@dropdown-option-bg:                            #fff;
+@dropdown-option-bg-hover:                      tint(#08c, 85%);
+@dropdown-option-bg-active:                     tint(#08c, 25%);
+@dropdown-option-border-width:                  @dropdown-border-width;
+@dropdown-option-border-color:                  @dropdown-border-color;
+@dropdown-option-color:                         @input-color;
+@dropdown-option-color-hover:                   #08c;
+@dropdown-option-color-active:                  #fff;
+
+@dropdown-slug-color:                           fade(@dropdown-option-color, 50%);
+@dropdown-slug-font-style:                      italic;
+
+
+// Form Blocks
+@form-group-spacing:                            @line-height-computed;
+@form-section-spacing:                          60px;
+
+
+// Grid
+@grid-columns:                                  12;
+@grid-gutter-width:                             30px;
+@grid-float-breakpoint:                         @screen-sm-min;
+
+@grid-container-default:                        @grid-container-lg;
+@grid-container-sm:                             576px;
+@grid-container-md:                             720px;
+@grid-container-lg:                             (960 + @grid-gutter-width);
+@grid-container-xl:                             1200px;
+
+
+// Icons
+@icon-sprite-path:                              false;
+@icon-width-base:                               30px;
+@icon-height-base:                              30px;
+
+
+// Icon List
+@icon-list-offset-horz:                         3px;
+
+
+// Inline Form
+@form-inline-offset-vert:                       @line-height-computed;
+@form-inline-offset-horz:                       @grid-gutter-width;
+
+
+// Inset Block
+@inset-padding-vert:                            10px;
+@inset-padding-horz:                            20px;
+@inset-bg:                                      #eee;
+
+@inset-border:                                  @inset-border-size @inset-border-style @inset-border-color;
+@inset-border-size:                             1px;
+@inset-border-style:                            solid;
+@inset-border-color:                            #ddd;
+@inset-border-radius:                           @border-radius-base;
+@inset-color:                                   @text-color-base;
+@inset-box-shadow:                              inset @inset-box-shadow-x @inset-box-shadow-y @inset-box-shadow-blur @inset-box-shadow-spread @inset-box-shadow-color;
+@inset-box-shadow-x:                            0;
+@inset-box-shadow-y:                            2px;
+@inset-box-shadow-blur:                         3px;
+@inset-box-shadow-spread:                       0;
+@inset-box-shadow-color:                        rgba(0, 0, 0, .05);
+
+
+// Navicon
+@navicon-offset-top:                            0;
+@navicon-offset-right:                          0;
+@navicon-width:                                 40px;
+@navicon-height:                                40px;
+@navicon-bg:                                    transparent;
+@navicon-bg-hover:                              transparent;
+@navicon-bg-active:                             transparent;
+@navicon-gradient-start:                        false;
+@navicon-gradient-stop:                         false;
+@navicon-gradient-start-hover:                  false;
+@navicon-gradient-stop-hover:                   false;
+@navicon-gradient-start-active:                 false;
+@navicon-gradient-stop-active:                  false;
+@navicon-border-radius:                         @border-radius-base;
+
+@navicon-bar-width:                             20px;
+@navicon-bar-height:                            2px;
+@navicon-bar-border-radius:                     0;
+@navicon-bar-color:                             @border-color-base;
+@navicon-bar-hover-color:                       @navicon-bar-color;
+@navicon-bar-active-color:                      @navicon-bar-color;
+@navicon-bar-offset-vert:                       4px;
+
+
+// Page
+@page-top-buffer:                               0; // helpful with 'fixed-toolbar' elements
+@page-height-buffer:                            400px; // for 'default-region' elements
+@page-end-buffer:                               100px;
+
+@page-title-offset-vert:                        @h1-offset-vert;
+@page-title-bg:                                 transparent;
+@page-title-color:                              @headings-color;
+@page-title-font-size:                          @h1-size;
+@page-title-line-height:                        @headings-line-height;
+@page-title-font-family:                        @headings-font-family;
+@page-title-text-transform:                     @headings-text-transform;
+
+@page-nav-breakpoint-down:                      @screen-md-down;
+@page-nav-breakpoint-up:                        @screen-lg-up;
+@page-nav-header-height:                        @navbar-height;
+@page-nav-animation-duration:                   @animation-duration-base;
+@page-nav-animation-timing-function:            @animation-timing-function-base;
+
+
+// Panel
+@panel-bg:                                      #fff;
+@panel-border:                                  @panel-border-width @panel-border-style @panel-border-color;
+@panel-border-width:                            0; // disable borders for sites that used this before it was completed
+@panel-border-style:                            solid;
+@panel-border-color:                            #ddd;
+@panel-border-radius:                           @border-radius-base;
+@panel-inner-border-radius:                     (@panel-border-radius - 1);
+
+@panel-header-padding:                          @panel-header-padding-vert @panel-header-padding-horz;
+@panel-header-padding-vert:                     @padding-vert-base;
+@panel-header-padding-horz:                     floor(@grid-gutter-width / 2);
+@panel-header-bg:                               #eee;
+@panel-header-border-radius:                    @panel-border-radius @panel-border-radius 0 0;
+
+@panel-title-color:                             @text-color-base;
+@panel-title-font-weight:                       normal;
+@panel-title-font-size:                         @font-size-base;
+@panel-title-line-height:                       @line-height-base;
+@panel-title-font-family:                       @font-family-base;
+
+@panel-body-padding:                            @panel-body-padding-vert @panel-body-padding-horz;
+@panel-body-padding-vert:                       floor(@grid-gutter-width / 2);
+@panel-body-padding-horz:                       floor(@grid-gutter-width / 2);
+
+@panel-footer-padding:                          @panel-footer-padding-vert @panel-footer-padding-horz;
+@panel-footer-padding-vert:                     @padding-vert-base;
+@panel-footer-padding-horz:                     floor(@grid-gutter-width / 2);
+
+
+// Progress Bars
+@progress-bar-height:                           @line-height-computed;
+@progress-bar-track-bg:                         #ddd;
+@progress-bar-bg:                               #08c;
+@progress-bar-border-radius:                    @border-radius-base;
+@progress-bar-color:                            #fff;
+
+
+// Search Bar
+@search-bar-width:                              300px;
+@search-bar-height:                             @input-height-base;
+@search-bar-padding-vert:                       @input-padding-vert;
+@search-bar-padding-horz:                       @input-padding-horz;
+@search-bar-bg:                                 @input-bg;
+@search-bar-border:                             @search-bar-border-size solid @search-bar-border-color;
+@search-bar-border-size:                        @input-border-size;
+@search-bar-border-color:                       @input-border-color;
+@search-bar-border-color-focused:               @input-border-color-focused;
+@search-bar-border-radius:                      @input-border-radius;
+@search-bar-color:                              @input-color;
+@search-bar-font-size:                          @input-font-size;
+@search-bar-line-height:                        @input-line-height;
+@search-bar-font-family:                        @input-font-family;
+
+@search-bar-btn-width:                          @search-bar-height;
+@search-bar-btn-height:                         @search-bar-height;
+@search-bar-btn-bg:                             transparent;
+
+@search-bar-icon-width:                         @icon-width-base;
+@search-bar-icon-height:                        @icon-height-base;
+
+
+// Simple Modal
+@simplemodal-box-shadow:                        @box-shadow-base;
+
+@simplemodal-close-size:                        30px;
+@simplemodal-close-bg:                          #fff;
+@simplemodal-close-box-shadow:                  @box-shadow-base;
+@simplemodal-close-font-size:                   @font-size-base;
+@simplemodal-close-color:                       @text-color-base;
+@simplemodal-close-hover-color:                 @link-hover-color;
+
+
+
+
+
+
+
+
+
+
+//
+// JAVELIN
+// ----------------------------------------------------------------------------------------------------
+
+
+// Back40 Credit
+@b40-credit-link-color:                         inherit;
+@b40-credit-link-hover-color:                   inherit;
+
+
+// Blog
+@blog-post-offset-vert:                         @line-height-computed;
+@blog-post-image-offset-vert:                   floor(@line-height-computed / 2);
+@blog-post-title-offset-vert:                   0;
+@blog-post-title-font-size:                     @h3-size;
+@blog-post-date-font-size:                      inherit;
+@blog-post-date-font-style:                     inherit;
+@blog-post-summary-font-size:                   inherit;
+@blog-post-comments-link-font-size:             inherit;
+@blog-post-comments-link-align:                 right;
+@blog-post-thumb-width:                         200px;
+@blog-post-thumb-gutter-width:                  @grid-gutter-width;
+@blog-post-thumb-side:                          left;
+
+@blog-readmore-inline:                          false;
+@blog-readmore-font-size:                       @font-size-sm;
+
+@blog-tags-offset-vert:                         @line-height-computed;
+@blog-tags-font-size:                           inherit;
+
+@blog-backlink-offset-vert:                     @line-height-computed;
+@blog-backlink-font-size:                       inherit;
+
+@blog-pager-offset-horz:                        2px;
+@blog-pager-align:                              center;
+@blog-pager-width:                              20px;
+@blog-pager-height:                             30px;
+@blog-pager-border-radius:                      0;
+
+@blog-pager-bg:                                 transparent;
+@blog-pager-color:                              inherit;
+@blog-pager-gradient-start:                     false;
+@blog-pager-gradient-stop:                      false;
+@blog-pager-hover-bg:                           inherit;
+@blog-pager-hover-color:                        inherit;
+@blog-pager-hover-gradient-start:               false;
+@blog-pager-hover-gradient-stop:                false;
+@blog-pager-active-bg:                          inherit;
+@blog-pager-active-color:                       inherit;
+@blog-pager-active-gradient-start:              false;
+@blog-pager-active-gradient-stop:               false;
+
+@blog-pager-prevnext-padding-horz:              0;
+@blog-pager-prevnext-bg:                        transparent;
+@blog-pager-prevnext-color:                     inherit;
+@blog-pager-prevnext-gradient-start:            false;
+@blog-pager-prevnext-gradient-stop:             false;
+@blog-pager-prevnext-hover-bg:                  inherit;
+@blog-pager-prevnext-hover-color:               inherit;
+@blog-pager-prevnext-hover-gradient-start:      false;
+@blog-pager-prevnext-hover-gradient-stop:       false;
+
+@blog-details-date-font-size:                   inherit;
+@blog-details-date-font-style:                  inherit;
+@blog-details-date-font-weight:                 bold;
+
+@blog-comments-offset-vert:                     @line-height-computed;
+@blog-comments-border:                          @blog-comments-border-size @blog-comments-border-style @blog-comments-border-color;
+@blog-comments-border-size:                     @border-size-base;
+@blog-comments-border-style:                    @border-style-base;
+@blog-comments-border-color:                    @border-color-base;
+
+@blog-comments-title-offset-vert:               inherit;
+@blog-comments-title-color:                     inherit;
+@blog-comments-title-font-size:                 inherit;
+@blog-comments-title-line-height:               inherit;
+@blog-comments-title-font-family:               inherit;
+
+@blog-comments-item-offset-vert:                @line-height-computed;
+@blog-comments-item-title-font-size:            inherit;
+@blog-comments-item-title-font-weight:          bold;
+@blog-comments-item-date-font-size:             inherit;
+
+@blog-comments-form-width:                      60%;
+@blog-comments-form-buttons-align:              center;
+
+
+// Calendar
+@calendar-list-width:                           60%;
+@calendar-mini-width:                           40%;
+
+@calendar-event-offset-vert:                    @line-height-computed;
+@calendar-event-title-offset-vert:              0;
+@calendar-event-title-font-size:                @h3-size;
+@calendar-event-date-font-size:                 inherit;
+@calendar-event-date-font-style:                inherit;
+@calendar-event-summary-font-size:              inherit;
+@calendar-event-body-offset-vert:               @line-height-computed;
+
+@calendar-table-offset-vert:                    @line-height-computed;
+
+@calendar-table-caption-height:                 40px;
+@calendar-table-caption-bg:                     #eee;
+@calendar-table-caption-border:                 @calendar-table-caption-border-size @calendar-table-caption-border-style @calendar-table-caption-border-color;
+@calendar-table-caption-border-size:            1px;
+@calendar-table-caption-border-style:           solid;
+@calendar-table-caption-border-color:           @calendar-table-cell-border-color;
+@calendar-table-caption-color:                  @calendar-table-cell-color;
+@calendar-table-caption-gradient-start:         false;
+@calendar-table-caption-gradient-stop:          false;
+
+@calendar-table-prevnext-color:                 @calendar-table-caption-color;
+@calendar-table-prevnext-hover-color:           tint(@calendar-table-prevnext-color, 37.5%);
+@calendar-table-prevnext-font-size:             inherit;
+
+@calendar-table-cell-height:                    40px;
+@calendar-table-cell-bg:                        #fff;
+@calendar-table-cell-border:                    @calendar-table-cell-border-size @calendar-table-cell-border-style @calendar-table-cell-border-color;
+@calendar-table-cell-border-size:               1px; // this is used in conjunction with border-style set to "inset"...
+@calendar-table-cell-border-style:              inset; // ... "inset" allows border colors to be fully rendered on table cells
+@calendar-table-cell-border-color:              @border-color-base;
+@calendar-table-cell-color:                     @text-color-base;
+@calendar-table-cell-font-size:                 floor(@font-size-base * .875);
+@calendar-table-cell-link-color:                inherit;
+@calendar-table-cell-link-hover-color:          inherit;
+
+@calendar-table-weekday-bg:                     inherit;
+@calendar-table-weekday-border-color:           inherit;
+@calendar-table-weekday-color:                  inherit;
+@calendar-table-weekday-font-size:              @font-size-base;
+
+@calendar-table-today-bg:                       inherit;
+@calendar-table-today-border-color:             tint(#08c, 25%);
+
+@calendar-table-hasevents-bg:                   tint(#08c, 95%);
+@calendar-table-hasevents-border-color:         inherit;
+@calendar-table-hasevents-gradient-start:       false;
+@calendar-table-hasevents-gradient-stop:        false;
+@calendar-table-hasevents-color:                @link-color;
+@calendar-table-hasevents-hover-color:          @link-hover-color;
+
+@calendar-table-full-cell-height:               100px;
+@calendar-table-full-cell-padding-vert:         10px;
+@calendar-table-full-cell-padding-horz:         10px;
+@calendar-table-full-cell-font-size:            floor(@font-size-base * .75);
+@calendar-table-full-cell-line-height:          1.25;
+
+@calendar-table-full-daynum-offset-vert:        5px;
+@calendar-table-full-daynum-color:              #999;
+@calendar-table-full-daynum-font-size:          floor(@font-size-base * .75);
+
+@calendar-table-full-events-offset-vert:        5px;
+@calendar-table-full-events-offset-horz:        10px;
+@calendar-table-full-events-color:              @link-color;
+@calendar-table-full-events-hover-color:        @link-hover-color;
+
+@calendar-backlink-offset-vert:                 @line-height-computed;
+@calendar-backlink-font-size:                   inherit;
+
+
+// Carousel
+@carousel-text-color:                           #fff;
+@carousel-text-shadow-color:                    #000;
+@carousel-text-line-height:                     1.5;
+
+@carousel-prevnext-arrow-width:                 50px;
+@carousel-prevnext-arrow-height:                50px;
+@carousel-prevnext-arrow-color:                 #fff;
+@carousel-prevnext-fade-color:                  #000;
+
+@carousel-pager-item-size:                      10px;
+@carousel-pager-item-offset-horz:               3px;
+@carousel-pager-item-bg:                        transparent;
+@carousel-pager-item-hover-bg:                  fade(@carousel-pager-item-active-bg, 50%);
+@carousel-pager-item-active-bg:                 #fff;
+@carousel-pager-item-border:                    @carousel-pager-item-border-size solid @carousel-pager-item-border-color;
+@carousel-pager-item-border-size:               1px;
+@carousel-pager-item-border-color:              #fff;
+@carousel-pager-item-hover-border-color:        fade(@carousel-pager-item-active-border-color, 50%);
+@carousel-pager-item-active-border-color:       #fff;
+
+
+// Contact Form
+@contact-form-width:                            50%;
+@contact-form-group-offset-vert:                @line-height-computed;
+@contact-form-buttons-align:                    center;
+
+
+// FAQ
+@faq-questions-offset-vert:                     @line-height-computed;
+@faq-answers-offset-vert:                       @line-height-computed;
+@faq-questions-border:                          @faq-questions-border-size @faq-questions-border-style @faq-questions-border-color;
+@faq-questions-border-size:                     @border-size-base;
+@faq-questions-border-style:                    @border-style-base;
+@faq-questions-border-color:                    @border-color-base;
+
+@faq-item-offset-vert:                          @line-height-computed;
+@faq-item-question-font-weight:                 bold;
+
+@faq-toplink-align:                             right;
+
+
+// Gallery
+@gallery-offset-vert:                           @grid-gutter-width;
+@gallery-offset-horz:                           floor(@grid-gutter-width / 2);
+@gallery-column-count:                          false;
+
+@gallery-caption-padding-vert:                  @padding-vert-base;
+@gallery-caption-padding-horz:                  @padding-horz-base;
+@gallery-caption-align:                         center;
+@gallery-caption-font-size:                     inherit;
+@gallery-caption-line-height:                   1.25;
+@gallery-caption-font-family:                   inherit;
+
+
+// Navigation: Navbar
+@navbar-height:                                 40px;
+@navbar-bg:                                     transparent;
+@navbar-gradient-start:                         false;
+@navbar-gradient-stop:                          false;
+@navbar-border:                                 @navbar-border-size @navbar-border-style @navbar-border-color;
+@navbar-border-size:                            0;
+@navbar-border-style:                           @border-style-base;
+@navbar-border-color:                           @border-color-base;
+@navbar-border-radius:                          0;
+@navbar-animation-duration:                     @animation-duration-base;
+@navbar-animation-timing-function:              @animation-timing-function-base;
+
+@navbar-item-offset-control:                    padding;
+@navbar-item-offset-vert:                       0;
+@navbar-item-offset-horz:                       10px;
+@navbar-font-size:                              @font-size-base;
+@navbar-line-height:                            @navbar-height;
+@navbar-font-family:                            @font-family-base;
+@navbar-text-transform:                         none;
+@navbar-link-color:                             @link-color;
+@navbar-link-bg:                                transparent;
+@navbar-link-gradient-start:                    false;
+@navbar-link-gradient-stop:                     false;
+@navbar-link-hover-color:                       @link-hover-color;
+@navbar-link-hover-bg:                          transparent;
+@navbar-link-hover-gradient-start:              false;
+@navbar-link-hover-gradient-stop:               false;
+@navbar-link-active-color:                      @navbar-link-color;
+@navbar-link-active-bg:                         transparent;
+@navbar-link-active-gradient-start:             false;
+@navbar-link-active-gradient-stop:              false;
+
+@navbar-menu-width:                             250px;
+@navbar-menu-has-shadow:                        false;
+@navbar-menu-shadow:                            @navbar-menu-shadow-x @navbar-menu-shadow-y @navbar-menu-shadow-blur @navbar-menu-shadow-spread @navbar-menu-shadow-color;
+@navbar-menu-shadow-x:                          @box-shadow-x-base;
+@navbar-menu-shadow-y:                          @box-shadow-y-base;
+@navbar-menu-shadow-blur:                       @box-shadow-blur-base;
+@navbar-menu-shadow-spread:                     @box-shadow-spread-base;
+@navbar-menu-shadow-color:                      @box-shadow-color-base;
+
+@navbar-dropdown-padding-vert:                  10px;
+@navbar-dropdown-bg:                            #eee;
+@navbar-dropdown-border-radius:                 0 0 @border-radius-base @border-radius-base;
+@navbar-dropdown-offset:                        0;
+@navbar-dropdown-item-padding-vert:             10px;
+@navbar-dropdown-item-padding-horz:             @navbar-item-offset-horz;
+@navbar-dropdown-font-size:                     @navbar-font-size;
+@navbar-dropdown-line-height:                   1.25;
+@navbar-dropdown-font-family:                   @navbar-font-family;
+@navbar-dropdown-text-transform:                none;
+@navbar-dropdown-link-color:                    @navbar-link-color;
+@navbar-dropdown-link-bg:                       transparent;
+@navbar-dropdown-link-gradient-start:           false;
+@navbar-dropdown-link-gradient-stop:            false;
+@navbar-dropdown-link-hover-color:              @navbar-link-hover-color;
+@navbar-dropdown-link-hover-bg:                 transparent;
+@navbar-dropdown-link-hover-gradient-start:     false;
+@navbar-dropdown-link-hover-gradient-stop:      false;
+
+@navbar-nested-padding-vert:                    0;
+@navbar-nested-indent:                          20px;
+@navbar-nested-bg:                              transparent;
+@navbar-nested-item-padding-vert:               inherit;
+@navbar-nested-item-padding-horz:               inherit;
+@navbar-nested-font-size:                       inherit;
+@navbar-nested-line-height:                     inherit;
+@navbar-nested-font-family:                     inherit;
+@navbar-nested-text-transform:                  inherit;
+@navbar-nested-link-color:                      inherit;
+@navbar-nested-link-bg:                         inherit;
+@navbar-nested-link-gradient-start:             inherit;
+@navbar-nested-link-gradient-stop:              inherit;
+@navbar-nested-link-hover-color:                inherit;
+@navbar-nested-link-hover-bg:                   inherit;
+@navbar-nested-link-hover-gradient-start:       inherit;
+@navbar-nested-link-hover-gradient-stop:        inherit;
+                                                
+
+// Navigation: Stacked
+@navstack-padding-vert:                         0;
+@navstack-bg:                                   transparent;
+@navstack-border-radius:                        0;
+@navstack-animation-duration:                   @animation-duration-base;
+@navstack-animation-timing-function:            @animation-timing-function-base;
+
+@navstack-item-padding-vert:                    10px;
+@navstack-item-padding-horz:                    0;
+@navstack-font-size:                            inherit;
+@navstack-line-height:                          1.25;
+@navstack-font-family:                          inherit;
+@navstack-text-transform:                       none;
+@navstack-link-color:                           @link-color;
+@navstack-link-bg:                              transparent;
+@navstack-link-gradient-start:                  false;
+@navstack-link-gradient-stop:                   false;
+@navstack-link-hover-color:                     @link-hover-color;
+@navstack-link-hover-bg:                        transparent;
+@navstack-link-hover-gradient-start:            false;
+@navstack-link-hover-gradient-stop:             false;
+@navstack-link-active-color:                    @navstack-link-color;
+@navstack-link-active-bg:                       transparent;
+@navstack-link-active-gradient-start:           false;
+@navstack-link-active-gradient-stop:            false;
+
+@navstack-menu-width:                           250px;
+@navstack-menu-has-shadow:                      false;
+@navstack-menu-shadow:                          @navstack-menu-shadow-x @navstack-menu-shadow-y @navstack-menu-shadow-blur @navstack-menu-shadow-spread @navstack-menu-shadow-color;
+@navstack-menu-shadow-x:                        @box-shadow-x-base;
+@navstack-menu-shadow-y:                        @box-shadow-y-base;
+@navstack-menu-shadow-blur:                     @box-shadow-blur-base;
+@navstack-menu-shadow-spread:                   @box-shadow-spread-base;
+@navstack-menu-shadow-color:                    @box-shadow-color-base;
+
+@navstack-nested-padding-vert:                  0;
+@navstack-nested-indent:                        20px;
+@navstack-nested-bg:                            transparent;
+@navstack-nested-item-padding-vert:             inherit;
+@navstack-nested-item-padding-horz:             inherit;
+@navstack-nested-font-size:                     inherit;
+@navstack-nested-line-height:                   inherit;
+@navstack-nested-font-family:                   inherit;
+@navstack-nested-text-transform:                inherit;
+@navstack-nested-link-color:                    inherit;
+@navstack-nested-link-bg:                       inherit;
+@navstack-nested-link-gradient-start:           inherit;
+@navstack-nested-link-gradient-stop:            inherit;
+@navstack-nested-link-hover-color:              inherit;
+@navstack-nested-link-hover-bg:                 inherit;
+@navstack-nested-link-hover-gradient-start:     inherit;
+@navstack-nested-link-hover-gradient-stop:      inherit;
+                                                
+
+// Navigation: Inline
+@navinline-animation-duration:                  @animation-duration-base;
+@navinline-animation-timing-function:           @animation-timing-function-base;
+
+
+// Obituaries
+@obit-listings-header-padding:                  @obit-listings-header-padding-vert @obit-listings-header-padding-horz;
+@obit-listings-header-padding-vert:             10px;
+@obit-listings-header-padding-horz:             10px;
+@obit-listings-header-bg:                       fade(#000, 70%);
+@obit-listings-header-border-radius:            10px 10px 0 0;
+@obit-listings-header-color:                    #fff;
+@obit-listings-header-line-height:              30px;
+
+@obit-listings-title-offset:                    0;
+
+@obit-listings-body-bg:                         fade(#fff, 70%);
+
+@obit-listings-footer-padding:                  @obit-listings-footer-padding-vert @obit-listings-footer-padding-horz;
+@obit-listings-footer-padding-vert:             10px;
+@obit-listings-footer-padding-horz:             10px;
+@obit-listings-footer-bg:                       fade(#000, 70%);
+@obit-listings-footer-border-radius:            0 0 10px 10px;
+
+@obit-subscribe-btn-bg:                         #fff;
+@obit-subscribe-btn-border-color:               #fff;
+@obit-subscribe-btn-color:                      @text-color-base;
+@obit-subscribe-btn-font-family:                @font-family-base;
+@obit-subscribe-btn-text-transform:             uppercase;
+@obit-subscribe-close-size:                     30px;
+@obit-subscribe-close-bg:                       #000;
+@obit-subscribe-close-border-width:             1px;
+@obit-subscribe-close-border-color:             #fff;
+@obit-subscribe-close-color:                    #fff;
+@obit-subscribe-close-font-size:                16px;
+@obit-subscribe-modal-padding:                  @obit-subscribe-modal-padding-vert @obit-subscribe-modal-padding-horz;
+@obit-subscribe-modal-padding-vert:             20px;
+@obit-subscribe-modal-padding-horz:             30px;
+@obit-subscribe-modal-bg:                       #fff;
+@obit-subscribe-modal-title-color:              @headings-color;
+@obit-subscribe-modal-title-font-size:          @h3-size;
+
+@obit-share-icon-offset-horz:                   5px;
+@obit-share-padding:                            @obit-share-padding-vert @obit-share-padding-horz;
+@obit-share-padding-vert:                       10px;
+@obit-share-padding-horz:                       5px;
+@obit-share-bg:                                 #eee;
+@obit-share-icon-width:                         30px;
+@obit-share-icon-height:                        30px;
+
+@obit-item-striped-bg:                          darken(@obit-listings-body-bg, 5%);
+@obit-item-border-color:                        #999;
+
+@obit-thumb-width:                              100px;
+@obit-thumb-height:                             150px;
+@obit-image-width:                              225px;
+@obit-image-height:                             335px;
+
+@obit-pager-item-bg:                            #fff;
+@obit-pager-item-hover-bg:                      #fff;
+@obit-pager-item-active-bg:                     #000;
+
+@obit-tab-control-bg:                           #ddd;
+@obit-tab-control-color:                        #444;
+@obit-tab-control-active-bg:                    #eee;
+@obit-tab-control-active-color:                 #444;
+@obit-tab-control-font-size:                    @font-size-base;
+@obit-tab-pane-bg:                              #eee;
+@obit-tab-h3-font-size:                         28px;
+
+@obit-icon-path-candle:                         ~"@{images-path}icon-obit-candle.png";
+@obit-icon-path-cart:                           ~"@{images-path}icon-obit-cart.png";
+@obit-icon-path-cart-delete:                    ~"@{images-path}icon-obit-cart-delete.png";
+@obit-icon-path-cart-checkout:                  ~"@{images-path}icon-obit-cart-checkout.png";
+@obit-icon-path-facebook:                       ~"@{images-path}icon-obit-facebook.png";
+@obit-icon-path-googleplus:                     ~"@{images-path}icon-obit-googleplus.png";
+@obit-icon-path-search:                         ~"@{images-path}icon-obit-search.png";
+@obit-icon-path-subscribe:                      ~"@{images-path}icon-obit-subscribe.png";
+@obit-icon-path-symbol:                         ~"@{images-path}icon-obit-symbol.png";
+@obit-icon-path-twitter:                        ~"@{images-path}icon-obit-twitter.png";
+@obit-icon-path-veteran:                        ~"@{images-path}icon-obit-veteran.png";
+
+@obit-guestbook-thumb-width:                    100px;
+@obit-guestbook-thumb-height:                   100px;
+@obit-guestbook-form-bg:                        #fff;
+@obit-guestbook-item-border-color:              #999;
+@obit-guestbook-symbol-hover-bg:                #eee;
+@obit-guestbook-symbol-active-bg:               #dbf3ff;
+
+@obit-flowers-body-width:                       555px;
+@obit-flowers-cats-width:                       150px;
+@obit-flowers-cats-bg:                          #e5e5e5;
+@obit-flowers-cats-link-padding-vert:           6px;
+@obit-flowers-cats-link-padding-horz:           15px;
+@obit-flowers-cats-link-font-size:              14px;
+@obit-flowers-cats-link-color:                  @text-color-base;
+@obit-flowers-cats-link-hover-color:            lighten(@obit-flowers-cats-link-color, 15%);
+@obit-flowers-item-bg:                          #666;
+@obit-flowers-item-hover-bg:                    lighten(@obit-flowers-item-bg, 15%);
+@obit-flowers-pager-item-offset-horz:           2px;
+@obit-flowers-pager-item-bg:                    transparent;
+@obit-flowers-pager-item-hover-bg:              #fff;
+@obit-flowers-pager-item-active-bg:             #ccc;
+@obit-flowers-cart-font-size:                   @font-size-base;
+
+
+// Products
+@products-filterbar-offset-vert:                (@grid-gutter-width * 2);
+@products-filterbar-btn-size:                   30px;
+@products-filterbar-btn-border-radius:          @border-radius-base;
+
+@products-filterbar-btn-segment-bg:             #666;
+@products-filterbar-btn-segment-hover-bg:       mix(@products-filterbar-btn-segment-bg, @products-filterbar-btn-segment-active-bg, 80%);
+@products-filterbar-btn-segment-active-bg:      #eee;
+@products-filterbar-btn-segment-border-radius:  2px;
+@products-filterbar-btn-segment-list-size:      2px;
+@products-filterbar-btn-segment-grid-size:      6px;
+
+@products-list-offset-vert:                     (@grid-gutter-width * 2);
+
+@products-item-offset-vert:                     (@grid-gutter-width * 2);
+@products-item-padding:                         @products-item-padding-vert @products-item-padding-horz;
+@products-item-padding-vert:                    0;
+@products-item-padding-horz:                    0;
+@products-item-bg:                              #fff;
+@products-item-border-radius:                   @border-radius-base;
+@products-item-divider-border:                  @products-item-divider-border-size @products-item-divider-border-style @products-item-divider-border-color;
+@products-item-divider-border-size:             @border-size-base;
+@products-item-divider-border-style:            @border-style-base;
+@products-item-divider-border-color:            @border-color-base;
+
+@products-item-title-offset-vert:               10px;
+@products-item-title-color:                     @headings-color;
+@products-item-title-font-size:                 @h3-size;
+@products-item-title-font-size-sm:              (@products-item-title-font-size - 2);
+@products-item-title-font-family:               @headings-font-family;
+
+@products-item-price-color:                     inherit;
+@products-item-price-font-size:                 @font-size-base;
+
+@products-item-body-padding:                    @products-item-body-padding-vert @products-item-body-padding-horz;
+@products-item-body-padding-vert:               20px;
+@products-item-body-padding-horz:               0;
+
+@products-item-summary-font-size:               inherit;
+@products-item-summary-line-height:             1.25;
+
+@products-item-link-border-radius:              @btn-border-radius;
+
+@products-item-thumbnail-size:                  60px;
+@products-item-larr-size:                       16px;
+
+@products-item-stock-offset-vert:               40px;
+@products-item-stock-border:                    @products-item-stock-border-size @products-item-stock-border-style @products-item-stock-border-color;
+@products-item-stock-border-size:               @border-size-base;
+@products-item-stock-border-style:              @border-style-base;
+@products-item-stock-border-color:              @border-color-base;
+
+@products-item-descriptions-padding:            @products-item-descriptions-padding-vert @products-item-descriptions-padding-horz;
+@products-item-descriptions-padding-vert:       20px;
+@products-item-descriptions-padding-horz:       0;
+@products-item-descriptions-border:             @products-item-descriptions-border-size @products-item-descriptions-border-style @products-item-descriptions-border-color;
+@products-item-descriptions-border-size:        @border-size-base;
+@products-item-descriptions-border-style:       @border-style-base;
+@products-item-descriptions-border-color:       @border-color-base;
+
+@products-pager-size:                           30px;
+@products-pager-offset-horz:                    3px;
+@products-pager-bg:                             @link-color;
+@products-pager-hover-bg:                       @link-hover-color;
+@products-pager-active-bg:                      #eee;
+@products-pager-border-radius:                  @border-radius-base;
+@products-pager-color:                          #fff;
+@products-pager-hover-color:                    #fff;
+@products-pager-active-color:                   #666;
+@products-pager-font-size:                      inherit;
+
+
+// Products Cart
+@cart-progress-offset-vert:                     (@grid-gutter-width * 2);
+@cart-progress-step-bg:                         #eee;
+@cart-progress-step-bg-completed:               #08c;
+@cart-progress-icon-size:                       60px;
+
+@cart-checkout-divider-border:                  @cart-checkout-divider-border-size @cart-checkout-divider-border-style @cart-checkout-divider-border-color;
+@cart-checkout-divider-border-size:             @border-size-base;
+@cart-checkout-divider-border-style:            @border-style-base;
+@cart-checkout-divider-border-color:            @border-color-base;
+@cart-checkout-item-offset-vert:                40px;
+@cart-checkout-item-font-size:                  @font-size-base;
+@cart-checkout-attr-font-size:                  @font-size-sm;
+@cart-checkout-attr-line-height:                @line-height-sm;
+@cart-checkout-actions-font-size:               @font-size-sm;
+
+@cart-subtotals-padding:                        @cart-subtotals-padding-vert @cart-subtotals-padding-horz;
+@cart-subtotals-padding-vert:                   20px;
+@cart-subtotals-padding-horz:                   20px;
+@cart-subtotals-bg:                             #eee;
+@cart-subtotals-border-radius:                  @border-radius-base;
+@cart-subtotal-item-offset-vert:                20px;
+@cart-subtotal-item-font-size:                  18px;
+@cart-subtotal-item-font-weight:                700;
+
+@cart-actions-border:                           @cart-actions-border-size @cart-actions-border-style @cart-actions-border-color;
+@cart-actions-border-size:                      @border-size-base;
+@cart-actions-border-style:                     @border-style-base;
+@cart-actions-border-color:                     @border-color-base;
+
+@cart-creditcards-offset-vert:                  40px;
+@cart-creditcards-color:                        #08c;
+@cart-creditcards-font-weight:                  700;
+
+@cart-legend-border:                            @cart-legend-border-size @cart-legend-border-style @cart-legend-border-color;
+@cart-legend-border-size:                       @border-size-base;
+@cart-legend-border-style:                      @border-style-base;
+@cart-legend-border-color:                      @border-color-base;
+
+@cart-sidebar-bg:                               #eee;
+@cart-sidebar-header-bg:                        #999;
+@cart-sidebar-header-padding:                   @cart-sidebar-header-padding-vert @cart-sidebar-header-padding-horz;
+@cart-sidebar-header-padding-vert:              10px;
+@cart-sidebar-header-padding-horz:              20px;
+@cart-sidebar-header-color:                     #eee;
+@cart-sidebar-body-padding:                     @cart-sidebar-body-padding-vert @cart-sidebar-body-padding-horz;
+@cart-sidebar-body-padding-vert:                20px;
+@cart-sidebar-body-padding-horz:                20px;
+@cart-sidebar-item-offset-vert:                 20px;
+@cart-sidebar-item-offset-horz:                 @cart-sidebar-body-padding-horz;
+@cart-sidebar-divider-border:                   @cart-sidebar-divider-border-size @cart-sidebar-divider-border-style @cart-sidebar-divider-border-color;
+@cart-sidebar-divider-border-size:              @border-size-base;
+@cart-sidebar-divider-border-style:             @border-style-base;
+@cart-sidebar-divider-border-color:             #fff;
+
+
+// Staff
+@staff-item-offset-vert:                        @line-height-computed;
+@staff-item-image-offset-vert:                  (@line-height-computed / 2);
+@staff-item-name-offset-vert:                   0;
+@staff-item-name-font-size:                     inherit;
+@staff-item-jobtitle-offset-vert:               0;
+@staff-item-jobtitle-font-size:                 inherit;
+@staff-item-summary-font-size:                  inherit;
+@staff-item-thumb-width:                        200px;
+
+@staff-details-name-offset-vert:                0;
+@staff-details-name-font-size:                  inherit;
+@staff-details-jobtitle-offset-vert:            @line-height-computed;
+@staff-details-jobtitle-font-size:              inherit;
+@staff-details-jobtitle-font-style:             normal;
+@staff-details-citystate-offset-vert:           @line-height-computed;
+@staff-details-body-offset-vert:                @line-height-computed;
+
+
+// Tabs
+@tabs-content-width:                            percentage(2 / 3);
+@tabs-list-width:                               percentage(1 / 3);
+@tabs-list-border:                              @tabs-list-border-width solid @tabs-list-border-color;
+@tabs-list-border-width:                        @border-size-base;
+@tabs-list-border-color:                        @border-color-base;
+@tabs-list-border-radius:                       @border-radius-base;
+
+@tabs-item-offset-horz:                         3px;
+@tabs-item-padding:                             @tabs-item-padding-vert @tabs-item-padding-horz;
+@tabs-item-padding-vert:                        10px;
+@tabs-item-padding-horz:                        10px;
+@tabs-item-border:                              @tabs-item-border-width @tabs-item-border-style @tabs-item-border-color;
+@tabs-item-border-width:                        @border-size-base;
+@tabs-item-border-style:                        @border-style-base;
+@tabs-item-border-color:                        @border-color-base;
+@tabs-item-font-size:                           inherit;
+
+@tabs-item-bg:                                  #fff;
+@tabs-item-color:                               @link-color;
+@tabs-item-hover-bg:                            #eee;
+@tabs-item-hover-color:                         #666;
+@tabs-item-active-bg:                           @link-color;
+@tabs-item-active-color:                        #fff;
+
+@tabs-panel-padding:                            @tabs-panel-padding-vert @tabs-panel-padding-horz;
+@tabs-panel-padding-vert:                       @grid-gutter-width;
+@tabs-panel-padding-horz:                       @grid-gutter-width;
+@tabs-panel-fade:                               true;
+
+
+// Twitter
+@twitter-header-offset-vert:                    @twitter-tweet-offset-vert;
+@twitter-usericon-width:                        48px;
+@twitter-usericon-height:                       48px;
+@twitter-tweet-offset-vert:                     @line-height-computed;
+@twitter-tweet-font-size:                       inherit;
+@twitter-tweet-line-height:                     1.5;
+@twitter-meta-font-size:                        @font-size-sm;
+
+
+// User Bar
+@userbar-height:                                40px;
+@userbar-bg:                                    #222;
+@userbar-item-padding-horz:                     10px;
+@userbar-item-color:                            #fff;
+@userbar-item-font-size:                        @font-size-sm;
+@userbar-divider-color:                         #666;
+
+@adminbar-height:                               60px; // This is here just for a convenient reference. Do not modify this value.
+
+
+// Weather
+@weather-padding:                               0;
+@weather-bg:                                    inherit;
+@weather-border:                                @weather-border-size @weather-border-style @weather-border-color;
+@weather-border-size:                           0;
+@weather-border-style:                          @border-style-base;
+@weather-border-color:                          @border-color-base;
+@weather-border-radius:                         0;
+@weather-font-size:                             floor(@font-size-base * .875);
+@weather-line-height:                           1.5;
+
+@weather-time-font-size:                        @font-size-sm;
+@weather-icon-offset-horz:                      10px;
+@weather-temp-color:                            inherit;
+@weather-temp-font-size:                        24px; // sized in relation to the actual icon height
+

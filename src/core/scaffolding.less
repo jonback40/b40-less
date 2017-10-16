@@ -1,0 +1,97 @@
+//
+// Scaffolding
+// ----------------------------------------------------------------------------------------------------
+
+
+// IE10 in Windows (Phone) 8
+//
+// Support for responsive views via media queries is kind of borked in IE10, for
+// Surface/desktop in split view and for Windows Phone 8. This particular fix
+// must be accompanied by a snippet of JavaScript to sniff the user agent and
+// apply some conditional CSS to *only* the Surface/desktop Windows 8. Look at
+// our Getting Started page for more information on this bug.
+//
+// For more information, see the following:
+//
+// Issue: https://github.com/twbs/bootstrap/issues/10497
+// Docs: http://getbootstrap.com/getting-started/#support-ie10-width
+// Source: http://timkadlec.com/2013/01/windows-phone-8-and-device-width/
+// Source: http://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/
+.responsive-ms-viewport() when (@is-responsive = true) {
+    @-ms-viewport {
+        width: device-width;
+    }
+}
+.responsive-ms-viewport();
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+html {
+    font-size: 10px;
+    background-color: @html-bg;
+    
+    // Remove gray highlight when tapping links in WebKit browsers
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+    background-color: @body-bg;
+    color: @text-color-base;
+    font-size: @font-size-base;
+    font-family: @font-family-base;
+    line-height: @line-height-base;
+}
+
+
+// Links
+a {
+    color: @link-color;
+    text-decoration: @link-underline;
+    
+    & when not (@link-font-family = inherit) {
+        font-family: @link-font-family;
+    }
+    
+    // transition certain properties when @component-animations flag is set to 'true'
+    & when (@component-animations) {
+        .transition(color @animation-duration-base @animation-timing-function-base);
+    }
+    
+    &:hover,
+    &:focus {
+        color: @link-hover-color;
+        text-decoration: @link-hover-underline;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Images
+img {
+    vertical-align: middle;
+}
+
+
+// Figures
+figure {
+    margin: 0;
+}
+
+
+// Horizontal Rule
+hr {
+    margin: @hr-offset-vert @hr-offset-horz;
+    border: 0;
+    border-top: @hr-border;
+}

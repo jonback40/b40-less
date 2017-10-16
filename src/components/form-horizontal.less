@@ -1,0 +1,58 @@
+//
+// Horizontal Form Layout
+// ----------------------------------------------------------------------------------------------------
+
+
+// (MODIFIED) Source: http://getbootstrap.com/
+
+
+// Horizontal forms are built on grid classes and allow you to create forms with
+// labels on the left and inputs on the right.
+.form-horizontal {
+    
+    // Make form groups behave like rows
+    .form-group {
+        .make-grid-row();
+        
+        // Reset spacing and right align labels
+        label when (@is-responsive = false) {
+            margin-bottom: 0;
+            padding-top: (@padding-vert-base + 1); // Default padding plus a border
+            text-align: right;
+        }
+        label when (@is-responsive = true) {
+            @media (@screen-md-up) {
+                margin-bottom: 0;
+                padding-top: (@padding-vert-base + 1); // Default padding plus a border
+                text-align: right;
+            }
+        }
+    }
+    
+    
+    // Consistent vertical alignment of radios and checkboxes
+    .form-switch,
+    .form-switch-inline {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: (@padding-vert-base + 1); // Default padding plus a border
+    }
+    
+    
+    // Account for padding we're adding to ensure the alignment and of help text
+    // and other content below items
+    .form-switch {
+        min-height: (@line-height-computed + (@padding-vert-base + 1));
+        
+        label {
+            padding-top: 0;
+            text-align: left;
+        }
+        
+        // Tuck help-blocks closer to form-switches
+        & + .help-block {
+            margin-top: -(@padding-vert-base + 1); // Default padding plus a border
+        }
+    }
+    
+}

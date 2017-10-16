@@ -1,0 +1,87 @@
+//
+// Javelin: Links Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-links {
+    
+    .self(@rules) {
+        .javelin_links {
+            @rules();
+        }
+    }
+    
+    .list(@rules) {
+        .javelin_linksItems {
+            @rules();
+        }
+    }
+    
+    .item(@rules) {
+        .javelin_linksItem {
+            @rules();
+        }
+    }
+    
+    .item-link(@rules) {
+        .javelin_linksItemLink {
+            @rules();
+        }
+    }
+    
+    .item-anchor(@rules) {
+        .javelin_linksItemAnchor {
+            @rules();
+        }
+    }
+    
+    .item-description(@rules) {
+        .javelin_linksItemDescription {
+            @rules();
+        }
+    }
+    
+    
+    // Inline Links
+    .inline(@offset-horz; @color: @link-color; @hover-color: @link-hover-color; @divider: false) {
+        .javelin_links {
+            &:extend(.clearfix all);
+        }
+        
+        .javelin_linksItems {
+            margin-left: 0;
+            margin-bottom: 0;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        
+        .javelin_linksItem {
+            padding-right: @offset-horz;
+            background-image: none; // remove custom bullet images in javelin content
+            display: inline-block;
+            list-style: none;
+            
+            & when (iscolor(@divider)) {
+                border-right: 1px solid @divider;
+            }
+            
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+                border-right: 0;
+            }
+        }
+        
+        .javelin_linksItemAnchor {
+            color: @color;
+            display: inline-block;
+            
+            &:hover {
+                color: @hover-color;
+            }
+        }
+    }
+    
+}

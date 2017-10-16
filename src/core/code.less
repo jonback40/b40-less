@@ -1,0 +1,63 @@
+//
+// Code
+// ----------------------------------------------------------------------------------------------------
+
+
+// Override styles set in Normalize
+code,
+pre,
+samp,
+var {
+    font-size: @code-font-size;
+    font-family: @code-font-family;
+    font-style: normal;
+}
+
+
+// Inline code
+code {
+    padding: @code-padding-vert @code-padding-horz;
+    background-color: @code-bg;
+    border-radius: @code-border-radius;
+    color: @code-color;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+
+// Keyboard input
+kbd {
+    padding: @kbd-padding-vert @kbd-padding-horz;
+    background-color: @kbd-bg;
+    border: @kbd-border;
+    border-radius: @kbd-border-radius;
+    box-shadow: @kbd-box-shadow;
+    color: @kbd-color;
+    font: @kbd-font-weight @kbd-font-size/@kbd-line-height @kbd-font-family;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+
+// Blocks of code
+pre {
+    margin-top: 0;
+    margin-bottom: @line-height-computed;
+    padding: @pre-padding-vert @pre-padding-horz;
+    background-color: @pre-bg;
+    border: @pre-border;
+    border-radius: @pre-border-radius;
+    color: @pre-color;
+    line-height: @pre-line-height;
+    display: block;
+    
+    
+    // Account for some code outputs that place code tags in pre tags
+    code {
+        padding: 0;
+        background-color: transparent;
+        color: inherit;
+        font-size: inherit;
+        white-space: pre-wrap;
+    }
+}

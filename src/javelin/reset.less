@@ -1,0 +1,156 @@
+//
+// Javelin Reset
+// ----------------------------------------------------------------------------------------------------
+
+
+// Remove any baseline text-shadow styles coming from the website stylesheet
+.javelin,
+.ui-dialog {
+    text-shadow: none;
+}
+
+
+// Be more specific with the title bar in modals
+.javelin h2,
+.javelin h3,
+.javelin h4 {
+    font-family: ~"Verdana, @{font-family-sansserif}";
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+
+// Undo any font-specific styles for baseline link stylings
+.javelin_dialog .javelin_moduleTabs li a {
+    font: inherit;
+}
+
+
+// Undo any styling from "custom bullets" coming from the website stylesheet
+.javelin_moduleBarOptions li,
+.ui-dialog li,
+ul.javelin_pageTree li {
+    padding-left: 0 !important;
+    background: none !important;
+    list-style: none !important;
+}
+
+
+// Correct font-size on Javelin modal headings
+.ui-dialog .ui-dialog-title {
+    font-size: 16px !important;
+}
+
+
+// Restore margins on checkboxes and radio buttons
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px;
+}
+
+
+// Correct sizes of form controls
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-size: 12px !important;
+    line-height: 1.5;
+}
+
+
+// Remove bold formatting on label elements in Javelin
+.javelin dt {
+    font-weight: normal;
+}
+.javelin label {
+    font-weight: inherit;
+}
+
+
+// Helper for applying red color to required fields
+.javelin_requiredField {
+    color: #c00;
+}
+
+
+// jQuery UI is always available for use in Javelin, but the styles for it are
+// only available when logged in. Here, we enable UI overlay styles for usage
+// in public-facing content.
+.ui-widget-overlay {
+    background-color: fade(#000, 60%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Undo bold formatting on inputs inside of the "CTRL + SHIFT + L" shortcut
+#javelintoolbar input {
+    font-weight: normal;
+}
+
+
+// Tidy up the padding on user bar list items
+#javelin_userBar {
+    ul li {
+        padding-left: 8px !important;
+        
+        &:first-child {
+            padding-left: 0 !important;
+        }
+        &:last-child {
+            padding-right: 0 !important;
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+#lightbox-image {
+    .img-responsive();
+}
+
+& when (@is-mobile = true) {
+    #lightbox-container-image-box,
+    #lightbox-container-image-data-box {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    // Prevent the 'prev' and 'next' controls from laying on top of the 'close' control
+    #lightbox-nav a {
+        height: 98% !important;
+    }
+}
+
+& when (@is-responsive = true) {
+    @media (@screen-md-down) {
+        #lightbox-container-image-box,
+        #lightbox-container-image-data-box {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        
+        // Prevent the 'prev' and 'next' controls from laying on top of the 'close' control
+        #lightbox-nav a {
+            height: 98% !important;
+        }   
+    }
+}

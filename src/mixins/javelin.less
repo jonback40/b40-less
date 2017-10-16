@@ -1,0 +1,247 @@
+//
+// Javelin Mixins
+// ----------------------------------------------------------------------------------------------------
+
+
+// Set a custom bullet image to list items found throughout Javelin modules
+.javelin-custom-bullets(@bg-path; @position: 0 10px; @indent: 16px) {
+    .javelin_textItem,
+    .javelin_rotatorItem,
+    .javelin_calendarEventBody,
+    .javelin_blogPostDescription,
+    .javelin_faq,
+    .javelin_links,
+    .javelin_staffBody,
+    .cms-tabs-panel {
+        ul {
+            margin-left: floor(@list-indent / 2);
+            
+            li {
+                padding-left: @indent;
+                background: ~"url(@{bg-path}) @{position} no-repeat";
+                list-style: none;
+                
+                ul {
+                    margin-left: @indent;
+                }
+            }
+        }
+    }
+}
+
+// Set a custom background-size property on custom bullets in Javelin modules (useful for mobile/responsive sites)
+.javelin-custom-bullets-size(@bg-size) {
+    .javelin_textItem,
+    .javelin_rotatorItem,
+    .javelin_calendarEventBody,
+    .javelin_blogPostDescription,
+    .javelin_faq,
+    .javelin_links,
+    .javelin_staffBody,
+    .cms-tabs-panel {
+        ul {
+            li {
+                background-size: @bg-size;
+            }
+        }
+    }
+}
+
+
+// Set a custom image styling to image tags found throughout Javelin modules
+// 
+// Note: a class to remove the custom image styling rules is also generated
+.javelin-custom-images(@rules) {
+    .javelin_textItem,
+    .javelin_rotatorItem,
+    .javelin_galleryItem,
+    .javelin_blogPostImage,
+    .javelin_blogPostDescription,
+    .javelin_linksItemDescription,
+    .javelin_staffImage,
+    .javelin_staffItemImage,
+    .javelin_twitterHeader,
+    .cms-tabs-panel {
+        img {
+            @rules();
+        }
+    }
+}
+.javelin-custom-images(@rules; @anti-rules) {
+    .javelin_textItem,
+    .javelin_rotatorItem,
+    .javelin_galleryItem,
+    .javelin_blogPostImage,
+    .javelin_blogPostDescription,
+    .javelin_linksItemDescription,
+    .javelin_staffImage,
+    .javelin_staffItemImage,
+    .javelin_twitterHeader,
+    .cms-tabs-panel {
+        img {
+            @rules();
+        }
+        
+        // A class to remove image styling from unwanted elements
+        .img-nostyle {
+            &,
+            img {
+                @anti-rules();
+            }
+        }
+    }
+}
+
+
+// Fix the layering of poorly styled UI elements in Javelin modules
+.javelin-fix-module-ui(@module) {
+    // Fix for improper layering of the "module settings" dropdown over the "module content"
+    .javelin_module-@{module} .javelin_moduleContent {
+        position: relative;
+    }
+    
+    // The rule above breaks the layout in the modal, so we put that back to "static" positioning only when we're in the modal
+    .javelin_dialog .javelin_module-@{module} .javelin_moduleContent {
+        position: static;
+    }
+}
+
+.javelin-fix-module-item-ui(@module) {
+    .javelin_moduleItemActions {
+        top: 0 !important;
+        left: 0 !important;
+    }
+}
+
+
+// Apply styling rules to the awkward and ill-formed legacy pager without dealing with the strange selectors involved
+.javelin-legacy-pager(@size; @item-offset @default-bg; @default-color; @hover-bg; @hover-color; @active-bg; @active-color; @border-radius: 0;) {
+    // Apply spacing between each pager item
+    > a,
+    > b {
+        margin-left: @item-offset;
+        margin-right: @item-offset;
+    }
+    
+    a,
+    b {
+        display: inline-block;
+        
+        & when (@border-radius > 0) {
+            border-radius: @border-radius;
+        }
+    }
+    
+    b {
+        width: (@size - 1);
+        height: (@size - 1);
+        font-weight: normal;
+        text-align: center;
+        vertical-align: middle;
+        line-height: @size;
+        
+        // "current" page link colors
+        background-color: @active-bg;
+        color: @active-color;
+        
+        // static page links
+        & > a {
+            width: @size;
+            height: @size;
+            margin: -1px;
+            background-color: @default-bg;
+            color: @default-color;
+            
+            // Remove the border radius to more easily cover up the background color on the containing 'b' tag
+            & when (@border-radius > 0) {
+                border-radius: @border-radius;
+            }
+            
+            &:hover {
+                background-color: @hover-bg;
+                color: @hover-color;
+            }
+        }
+    }
+    
+    // Prev and next links
+    > a:first-child,
+    > a:last-child {
+        line-height: @size;
+        position: relative;
+        top: 1px;
+    }
+}
+
+.javelin-legacy-pager-item(@rules) {
+    a,
+    b {
+        @rules();
+    }
+}
+
+.javelin-legacy-pager-item-active(@rules) {
+    b {
+        @rules();
+    }
+}
+
+.javelin-legacy-pager-item-inactive(@rules) {
+    b > a {
+        @rules();
+    }
+}
+
+.javelin-legacy-pager-next(@rules) {
+    > a:last-child {
+        @rules();
+    }
+}
+
+.javelin-legacy-pager-prev(@rules) {
+    > a:first-child {
+        @rules();
+    }
+}
+
+.javelin-legacy-pager-prevnext(@rules) {
+    > a:first-child,
+    > a:last-child {
+        @rules();
+    }
+}
+
+
+// Make media elements like images and iframes responsive in Javelin modules
+.javelin-responsive-media(@selector) {
+    .@{selector} {
+        img,
+        iframe {
+            .border-box-sizing();
+        }
+        
+        img {
+            .img-responsive();
+        }
+        
+        iframe {
+            max-width: 100%;
+        }
+    }
+}
+
+
+// Remove floats and margins from images in shared modules.
+// This is used when dealing with a mobile site that is sharing content from a desktop site
+.javelin-unfloat-images(@selector; @remove-margins: true) {
+    .@{selector} {
+        img[style*="float"] {
+            display: block; // guarantee it goes on its own line just in case its inside of another block with text
+            float: none !important;
+            
+            & when (@remove-margins = true) {
+                margin: 0 !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+//
+// Mixin: Blocks
+// ----------------------------------------------------------------------------------------------------
+
+
+// Apply "cover" style background sizing
+.bg-cover(@position: center top) {
+    background-position: @position;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+// Convenient mixin for applying styles to common text blocks
+.common-blocks(@rules) {
+    p,
+    blockquote,
+    ol,
+    ul,
+    table {
+        @rules();
+    }
+}
+
+
+// Convenient mixin for applying styles to all heading tags (h1 - h6) 
+.headings(@rules) {
+    h1, h2, h3, h4, h5, h6 {
+        @rules();
+    }
+}

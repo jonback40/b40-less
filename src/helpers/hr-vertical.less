@@ -1,0 +1,30 @@
+//
+// Vertical Horizontal Rule
+// ----------------------------------------------------------------------------------------------------
+
+
+// Great for vertical pin lines and vertical dividers
+.hr-vertical() {
+    width: 0;
+    height: auto;
+    margin: 0;
+    margin-left: 50%; // this is just a default value and it is meant to be overridden 
+    border: 0;
+    border-right: @hr-vertical-border;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.hr-vertical {
+    & when (@is-responsive = false) {
+        .hr-vertical();
+    }
+    
+    & when (@is-responsive = true) {
+        @media (min-width: @hr-vertical-breakpoint) {
+            .hr-vertical();
+        }
+    }
+}

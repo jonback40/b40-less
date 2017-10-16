@@ -1,0 +1,224 @@
+//
+// Mixin: Component Variants
+// ----------------------------------------------------------------------------------------------------
+
+
+// Alert color
+.alert-color(@bg; @border; @color) {
+    background-color: @bg;
+    border-color: @border;
+    color: @color;
+    
+    hr {
+        .hr-color(darken(@border, 10%));
+    }
+    
+    .alert-link {
+        color: darken(@color, 5%);
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Button colors
+//
+// Easily generate default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+.button-color(@bg; @color; @border; @hover-bg; @hover-color; @hover-border) {
+    background-color: @bg;
+    border-color: @border;
+    color: @color;
+    
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: @hover-bg;
+        border-color: @hover-border;
+        color: @hover-color;
+    }
+    
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            background-color: @bg;
+            border-color: @border;
+        }
+    }
+}
+.button-color(@bg; @color; @border) {
+    .button-color(@bg; @color; @border; darken(@bg, 10%); darken(@color, 10%); darken(@border, 10%));
+}
+
+
+// Button gradients
+//
+// Note: IE9 will paint this gradient outside of the border-radius
+//       boundaries. Currently, there is no fix for this other
+//       than using an additional div to crop the gradient.
+//
+//       We allow this behavior because IE9 isn't a prioriry
+//       browser since it gets ugraded to the latest version
+//       of IE automatically
+.button-gradient(@start; @stop; @hover-start; @hover-stop) {
+    #gradient.vertical(@start; @stop);
+    
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        #gradient.vertical(@hover-start; @hover-stop);
+    }
+}
+.button-gradient(@start; @stop) {
+    .button-gradient(@start; @stop; darken(@start, 10%); darken(@stop, 10%));
+}
+
+
+// Button sizing
+.button-size(@height; @font-size; @line-height; @padding-horz; @border-radius) {
+    @padding-vert: floor(max(0, (@height - @btn-border-width - (@font-size * @line-height))) / 2);
+    
+    height: @height;
+    padding: @padding-vert @padding-horz;
+    border-radius: @border-radius;
+    font-size: @font-size;
+    line-height: @line-height;
+}
+.button-size(@height; @font-size; @line-height) {
+    @padding-vert: floor(max(0, (@height - @btn-border-width - (@font-size * @line-height))) / 2);
+    
+    height: @height;
+    padding-top: @padding-vert;
+    padding-bottom: @padding-vert;
+    font-size: @font-size;
+    line-height: @line-height;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Form control sizing
+//
+// Relative text size, padding, and border-radius changes for form controls. For
+// horizontal sizing, wrap controls in the predefined grid classes.
+.form-control-size(
+    @input-height:  @input-height-base;
+    @padding-vert:  @input-padding-vert;
+    @padding-horz:  @input-padding-horz;
+    @font-size:     @input-font-size;
+    @line-height:   @input-line-height;
+    @border-radius: @input-border-radius
+) {
+    height: @input-height;
+    padding: @padding-vert @padding-horz;
+    border-radius: @border-radius;
+    font-size: @font-size;
+    line-height: @line-height;
+    
+    select& {
+        height: @input-height;
+        line-height: @input-height;
+    }
+    
+    textarea&,
+    select[multiple]& {
+        height: auto;
+    }
+}
+
+
+// Form control focus state
+//
+// Generate a customized focus state and for any input with the specified color,
+// which defaults to the `@input-border-focus` variable.
+//
+// We highly encourage you to not customize the default value, but instead use
+// this to tweak colors on an as-needed basis. This aesthetic change is based on
+// WebKit's default styles, but applicable to a wider range of browsers. Its
+// usability and accessibility should be taken into account with any change.
+//
+// Example usage: change the default blue border and shadow to white for better
+// contrast against a dark gray background.
+.form-control-focus(@color: @input-border-color-focused) {
+    @color-rgba: rgba(red(@color), green(@color), blue(@color), .6);
+    
+    &:focus {
+        border-color: @color;
+        outline: 0;
+        box-shadow: ~"@{input-box-shadow}, 0 0 8px @{color-rgba}";
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Horizontal rule color
+.hr-color(@color) {
+    border-color: @color;
+}
+
+
+// Horizontal rule size
+.hr-size(@size; @side: top) {
+    border-@{side}-width: @size;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Icon size
+.icon-size(@width; @height) {
+    width: @width;
+    height: @height;
+}
+.icon-size(@size) {
+    width: @size;
+    height: @size;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Progress Bar Color
+.progress-bar-color(@bg) {
+    background-color: @bg;
+}
+
+
+// Progress Bar Size
+.progress-bar-size(@height; @border-radius) {
+    height: @height;
+    border-radius: @border-radius;
+}

@@ -1,0 +1,857 @@
+//
+// Javelin: Navigation
+// ----------------------------------------------------------------------------------------------------
+
+
+// TODO: Add support for borders on containers and dividers between items
+
+
+#javelin-nav {
+    
+    // Shared styles across navigation components
+    // NOTE: This is only applicable to internal framework usage
+    .__base() {
+        margin-left: 0;
+        
+        // Remove margin from all child lists
+        ul {
+            margin: 0;
+        }
+        
+        // Position all list items so dropdowns and flyouts can position properly
+        li {
+            list-style: none;
+            position: relative;
+        }
+        
+        // All navigation links should be set to block so the click area isn't bound to the textNode itself
+        a {
+            display: block;
+        }
+    }
+    
+    
+    // Navbar
+    // 
+    // Note: Supports only 2 levels of unique nesting
+    .navbar(@dropdown: true; @flyout: false; @float: true) {
+        #javelin-nav.__base();
+        
+        // We do not use the &:extend syntax so this mixin can be used within a @media query block
+        .clearfix();
+        .border-box-sizing();
+        
+        margin-bottom: 0;
+        vertical-align: middle;
+        
+        // transition certain link properties when @component-animations flag is set to 'true'
+        a when (@component-animations) {
+            .transition(~"background-color @{navbar-animation-duration} @{navbar-animation-timing-function}, color @{navbar-animation-duration} @{navbar-animation-timing-function}");
+        }
+        
+        // background and borders
+        & when not (@navbar-bg = transparent) {
+            background-color: @navbar-bg;
+        }
+        & when (iscolor(@navbar-gradient-start)) {
+            #gradient.vertical(@navbar-gradient-start; @navbar-gradient-stop);
+        }
+        & when (@navbar-border-size > 0) {
+            border: @navbar-border;
+        }
+        & when not (@navbar-border-radius = 0) {
+            border-radius: @navbar-border-radius;
+            
+            // Add border radii to outer nav items
+            > li {
+                &:first-child > a {
+                    border-radius: @navbar-border-radius;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                &:last-child > a {
+                    border-radius: @navbar-border-radius;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+            }
+        }
+        
+        // 1. Navbar items
+        > li {
+            & when (@float = true) {
+                float: left;
+            }
+            & when (@float = false) { // for use with centered nav items
+                display: inline-block;
+            }
+            
+            > a {
+                & when (@navbar-item-offset-vert > 0) {
+                    @{navbar-item-offset-control}-top: @navbar-item-offset-vert;
+                    @{navbar-item-offset-control}-bottom: @navbar-item-offset-vert;
+                }
+                
+                @{navbar-item-offset-control}-left: @navbar-item-offset-horz;
+                @{navbar-item-offset-control}-right: @navbar-item-offset-horz;
+                
+                color: @navbar-link-color;
+                font-size: @navbar-font-size;
+                line-height: @navbar-line-height;
+                font-family: @navbar-font-family;
+                position: relative;
+                z-index: 2;
+                
+                & when not (@navbar-link-bg = transparent) {
+                    background-color: @navbar-link-bg;
+                }
+                & when (iscolor(@navbar-link-gradient-start)) {
+                    #gradient.vertical(@navbar-link-gradient-start; @navbar-link-gradient-stop);
+                }
+                & when not (@navbar-text-transform = none) {
+                    text-transform: @navbar-text-transform;
+                }
+            }
+            
+            // active items
+            &.javelin_active > a {
+                color: @navbar-link-active-color;
+                
+                & when not (@navbar-link-active-bg = transparent) {
+                    background-color: @navbar-link-active-bg;
+                }
+                & when (iscolor(@navbar-link-active-gradient-start)) {
+                    #gradient.vertical(@navbar-link-active-gradient-start; @navbar-link-active-gradient-stop);
+                }
+            }
+            
+            // hovered items
+            > a:hover,
+            &:hover > a {
+                color: @navbar-link-hover-color;
+                
+                & when not (@navbar-link-hover-bg = transparent) {
+                    background-color: @navbar-link-hover-bg;
+                }
+                & when (iscolor(@navbar-link-hover-gradient-start)) {
+                    #gradient.vertical(@navbar-link-hover-gradient-start; @navbar-link-hover-gradient-stop);
+                }
+            }
+            
+            
+            // 2. Dropdown menu
+            > ul when (@dropdown = false) {
+                display: none;
+            }
+            > ul when (@dropdown = true) {
+                
+                & when (@navbar-dropdown-padding-vert > 0) {
+                    padding-top: @navbar-dropdown-padding-vert;
+                    padding-bottom: @navbar-dropdown-padding-vert;
+                }
+                & when not (@navbar-dropdown-border-radius = 0) {
+                    border-radius: @navbar-dropdown-border-radius;
+                    
+                    // Add border radii to outer nav items
+                    & when (@navbar-dropdown-padding-vert = 0) {
+                        > li {
+                            &:first-child > a {
+                                border-radius: @navbar-dropdown-border-radius;
+                                border-bottom-left-radius: 0;
+                                border-bottom-right-radius: 0;
+                            }
+                            &:last-child > a {
+                                border-radius: @navbar-dropdown-border-radius;
+                                border-top-left-radius: 0;
+                                border-top-right-radius: 0;
+                            }
+                        }
+                    }
+                }
+                & when (@navbar-menu-has-shadow = true) {
+                    box-shadow: @navbar-menu-shadow;
+                }
+                
+                background-color: @navbar-dropdown-bg;
+                text-align: left;
+                
+                > li {
+                    
+                    a {
+                        padding: @navbar-dropdown-item-padding-vert @navbar-dropdown-item-padding-horz;
+                        color: @navbar-dropdown-link-color;
+                        font-size: @navbar-dropdown-font-size;
+                        line-height: @navbar-dropdown-line-height;
+                        font-family: @navbar-dropdown-font-family;
+                        
+                        & when not (@navbar-dropdown-link-bg = transparent) {
+                            background-color: @navbar-dropdown-link-bg;
+                        }
+                        & when (iscolor(@navbar-dropdown-link-gradient-start)) {
+                            #gradient.vertical(@navbar-dropdown-link-gradient-start; @navbar-dropdown-link-gradient-stop);
+                        }
+                        & when not (@navbar-dropdown-text-transform = none) {
+                            text-transform: @navbar-dropdown-text-transform;
+                        }
+                        
+                        &:hover {
+                            color: @navbar-dropdown-link-hover-color;
+                            
+                            & when not (@navbar-dropdown-link-hover-bg = transparent) {
+                                background-color: @navbar-dropdown-link-hover-bg;
+                            }
+                            & when (iscolor(@navbar-dropdown-link-hover-gradient-start)) {
+                                #gradient.vertical(@navbar-dropdown-link-hover-gradient-start; @navbar-dropdown-link-hover-gradient-stop);
+                            }
+                        }
+                    }
+                    &:hover > a when (@flyout = true) {
+                        color: @navbar-dropdown-link-hover-color;
+                        
+                        & when not (@navbar-dropdown-link-hover-bg = transparent) {
+                            background-color: @navbar-dropdown-link-hover-bg;
+                        }
+                        & when (iscolor(@navbar-dropdown-link-hover-gradient-start)) {
+                            #gradient.vertical(@navbar-dropdown-link-hover-gradient-start; @navbar-dropdown-link-hover-gradient-stop);
+                        }
+                    }
+                    
+                    
+                    // 3. Nested navigation items at this level and beyond
+                    // 
+                    // Note: Most of these rules are set to inherit by default, therefore we
+                    //       use several mixin guards to only style what needs to be styled.
+                    
+                    // If this is a flyout menu, inherit dropdown properties
+                    > ul when (@flyout = true) {
+                        & when (@navbar-dropdown-padding-vert > 0) {
+                            padding-top: @navbar-dropdown-padding-vert;
+                            padding-bottom: @navbar-dropdown-padding-vert;
+                        }
+                        & when not (@navbar-dropdown-border-radius = 0) {
+                            border-radius: @navbar-dropdown-border-radius;
+                            
+                            // Add border radii to outer nav items
+                            & when (@navbar-dropdown-padding-vert = 0) {
+                                > li {
+                                    &:first-child > a {
+                                        border-radius: @navbar-dropdown-border-radius;
+                                        border-bottom-left-radius: 0;
+                                        border-bottom-right-radius: 0;
+                                    }
+                                    &:last-child > a {
+                                        border-radius: @navbar-dropdown-border-radius;
+                                        border-top-left-radius: 0;
+                                        border-top-right-radius: 0;
+                                    }
+                                }
+                            }
+                        }
+                        & when (@navbar-nested-bg = transparent) {
+                            background-color: @navbar-dropdown-bg;
+                        }
+                        & when (@navbar-menu-has-shadow = true) {
+                            box-shadow: @navbar-menu-shadow;
+                        }
+                    }
+                    ul {
+                        
+                        // list padding
+                        & when (@navbar-nested-padding-vert > 0) {
+                            padding-top: @navbar-nested-padding-vert;
+                            padding-bottom: @navbar-nested-padding-vert;
+                        }
+                        
+                        // list color
+                        & when not (@navbar-nested-bg = transparent) {
+                            background-color: @navbar-nested-bg;
+                        }
+                        
+                        a {
+                            
+                            // item padding
+                            & when not (@navbar-nested-item-padding-vert = inherit) {
+                                padding-top: @navbar-nested-item-padding-vert;
+                                padding-bottom: @navbar-nested-item-padding-vert;
+                            }
+                            & when (@flyout = true) {
+                                & when (@navbar-nested-item-padding-horz = inherit) {
+                                    padding-left: @navbar-dropdown-item-padding-horz;
+                                    padding-right: @navbar-dropdown-item-padding-horz;
+                                }
+                                & when not (@navbar-nested-item-padding-horz = inherit) {
+                                    padding-left: @navbar-nested-item-padding-horz;
+                                    padding-right: @navbar-nested-item-padding-horz;
+                                }
+                            }
+                            & when (@flyout = false) {
+                                & when (@navbar-nested-item-padding-horz = inherit) {
+                                    padding-left: (@navbar-dropdown-item-padding-horz + @navbar-nested-indent);
+                                }
+                                & when not (@navbar-nested-item-padding-horz = inherit) {
+                                    padding-left: (@navbar-nested-item-padding-horz + @navbar-nested-indent);
+                                    padding-right: @navbar-nested-item-padding-horz;
+                                }
+                            }
+                            
+                            // item color
+                            & when not (@navbar-nested-link-color = inherit) {
+                                color: @navbar-nested-link-color;
+                            }
+                            & when not (@navbar-nested-link-bg = inherit) {
+                                background-color: @navbar-nested-link-bg;
+                            }
+                            & when (iscolor(@navbar-nested-link-gradient-start)) {
+                                #gradient.vertical(@navbar-nested-link-gradient-start; @navbar-nested-link-gradient-stop);
+                            }
+                            &:hover {
+                                & when not (@navbar-nested-link-hover-color = inherit) {
+                                    color: @navbar-nested-link-hover-color;
+                                }
+                                & when not (@navbar-nested-link-hover-bg = inherit) {
+                                    background-color: @navbar-nested-link-hover-bg;
+                                }
+                                & when (iscolor(@navbar-nested-link-hover-gradient-start)) {
+                                    #gradient.vertical(@navbar-nested-link-hover-gradient-start; @navbar-nested-link-hover-gradient-stop);
+                                }
+                            }
+                            
+                            // item type
+                            & when not (@navbar-nested-font-size = inherit) {
+                                font-size: @navbar-nested-font-size;
+                            }
+                            & when not (@navbar-nested-line-height = inherit) {
+                                line-height: @navbar-nested-line-height;
+                            }
+                            & when not (@navbar-nested-font-family = inherit) {
+                                font-family: @navbar-nested-font-family;
+                            }
+                            & when not (@navbar-nested-text-transform = inherit) {
+                                text-transform: @navbar-nested-text-transform;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        // Dropdown menus
+        & when (@dropdown = true) {
+            #javelin-nav.dropdown(@navbar-menu-width; (@navbar-height + @navbar-border-size); @navbar-dropdown-offset; @flyout);
+        }
+    }
+    .navbar-item(@rules) {
+        > li {
+            @rules();
+        }
+    }
+    .navbar-active-item(@rules) {
+        > .javelin_active {
+            @rules();
+        }
+    }
+    .navbar-link(@rules) {
+        > li > a {
+            @rules();
+        }
+    }
+    .navbar-active-link(@rules) {
+        > li.javelin_active > a {
+            @rules();
+        }
+    }
+    .navbar-dropdown-menu(@rules) {
+        > li > ul {
+            @rules();
+        }
+    }
+    .navbar-dropdown-item(@rules) {
+        > li > ul > li {
+            @rules();
+        }
+    }
+    .navbar-dropdown-active-item(@rules) {
+        > li > ul > li.javelin_active {
+            @rules();
+        }
+    }
+    .navbar-dropdown-link(@rules) {
+        > li > ul > li > a {
+            @rules();
+        }
+    }
+    .navbar-dropdown-active-link(@rules) {
+        > li > ul > li.javelin_active > a {
+            @rules();
+        }
+    }
+    .navbar-nested-menu(@rules) {
+        > li > ul > li > ul {
+            @rules();
+        }
+    }
+    .navbar-nested-item(@rules) {
+        > li > ul > li > ul > li {
+            @rules();
+        }
+    }
+    .navbar-nested-active-item(@rules) {
+        > li > ul > li > ul > li.javelin_active {
+            @rules();
+        }
+    }
+    .navbar-nested-link(@rules) {
+        > li > ul > li > ul > li > a {
+            @rules();
+        }
+    }
+    .navbar-nested-active-link(@rules) {
+        > li > ul > li > ul > li.javelin_active > a {
+            @rules();
+        }
+    }
+    .navbar-deep-menu(@rules) {
+        > li > ul > li > ul > li ul { // any list beyond this level of nesting
+            @rules();
+        }
+    }
+    .navbar-deep-item(@rules) {
+        > li > ul > li > ul > li > ul li { // any list item beyond this level of nesting
+            @rules();
+        }
+    }
+    .navbar-deep-link(@rules) {
+        > li > ul > li > ul > li > ul a { // any link beyond this level of nesting
+            @rules();
+        }
+    }
+    
+    
+    
+    
+    // Stacked
+    // 
+    // Note: Supports 1 level of unique nesting
+    .stacked(@flyout: false) {
+        #javelin-nav.__base();
+        
+        // transition certain link properties when @component-animations flag is set to 'true'
+        a when (@component-animations) {
+            .transition(~"background-color @{navstack-animation-duration} @{navstack-animation-timing-function}, color @{navstack-animation-duration} @{navstack-animation-timing-function}");
+        }
+        
+        // padding
+        & when (@navstack-padding-vert > 0) {
+            padding-top: @navstack-padding-vert;
+            padding-bottom: @navstack-padding-vert;
+        }
+        
+        // background and borders
+        & when (iscolor(@navstack-bg)) {
+            background-color: @navstack-bg;
+        }
+        & when not (@navstack-border-radius = 0) {
+            border-radius: @navstack-border-radius;
+            
+            // Add border radii to outer nav items
+            > li {
+                &:first-child > a {
+                    border-radius: @navstack-border-radius;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                &:last-child > a {
+                    border-radius: @navstack-border-radius;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                }
+            }
+        }
+        
+        
+        // 1. Stacked items
+        > li {
+            
+            a {
+                padding: @navstack-item-padding-vert @navstack-item-padding-horz;
+                color: @navstack-link-color;
+                line-height: @navstack-line-height;
+                
+                & when (iscolor(@navstack-link-bg)) {
+                    background-color: @navstack-link-bg;
+                }
+                & when (iscolor(@navstack-link-gradient-start)) {
+                    #gradient.vertical(@navstack-link-gradient-start; @navstack-link-gradient-stop);
+                }
+                & when not (@navstack-font-size = inherit) {
+                    font-size: @navstack-font-size;
+                }
+                & when not (@navstack-font-family = inherit) {
+                    font-family: @navstack-font-family;
+                }
+                & when not (@navstack-text-transform = none) {
+                    text-transform: @navstack-text-transform;
+                }
+            }
+            
+            // active items
+            &.javelin_active > a {
+                color: @navstack-link-active-color;
+                
+                & when (iscolor(@navstack-link-active-bg)) {
+                    background-color: @navstack-link-active-bg;
+                }
+                & when (iscolor(@navstack-link-active-gradient-start)) {
+                    #gradient.vertical(@navstack-link-active-gradient-start; @navstack-link-active-gradient-stop);
+                }
+            }
+            
+            // hovered items
+            & a:hover {
+                color: @navstack-link-hover-color;
+                
+                & when (iscolor(@navstack-link-hover-bg)) {
+                    background-color: @navstack-link-hover-bg;
+                }
+                & when (iscolor(@navstack-link-hover-gradient-start)) {
+                    #gradient.vertical(@navstack-link-hover-gradient-start; @navstack-link-hover-gradient-stop);
+                }
+            }
+            
+            
+            // 2. Nested navigation items at this level and beyond
+            // 
+            // Note: Most of these rules are set to inherit by default, therefore we
+            //       use several mixin guards to only style what needs to be styled.
+            ul {
+                
+                // list padding
+                & when (@navstack-nested-padding-vert > 0) {
+                    padding-top: @navstack-nested-padding-vert;
+                    padding-bottom: @navstack-nested-padding-vert;
+                }
+                
+                // list color
+                & when (iscolor(@navstack-nested-bg)) {
+                    background-color: @navstack-nested-bg;
+                }
+                
+                a {
+                    // item padding
+                    & when not (@navstack-nested-item-padding-vert = inherit) {
+                        padding-top: @navstack-nested-item-padding-vert;
+                        padding-bottom: @navstack-nested-item-padding-vert;
+                    }
+                    & when (@flyout = true) {
+                        & when (@navstack-nested-item-padding-horz = inherit) {
+                            padding-left: @navstack-item-padding-horz;
+                            padding-right: @navstack-item-padding-horz;
+                        }
+                        & when not (@navstack-nested-item-padding-horz = inherit) {
+                            padding-left: @navstack-nested-item-padding-horz;
+                            padding-right: @navstack-nested-item-padding-horz;
+                        }
+                    }
+                    & when (@flyout = false) {
+                        & when (@navstack-nested-item-padding-horz = inherit) {
+                            padding-left: (@navstack-item-padding-horz + @navstack-nested-indent);
+                        }
+                        & when not (@navstack-nested-item-padding-horz = inherit) {
+                            padding-left: (@navstack-nested-item-padding-horz + @navstack-nested-indent);
+                            padding-right: @navstack-nested-item-padding-horz;
+                        }
+                    }
+                    
+                    // item color
+                    & when (iscolor(@navstack-nested-link-color)) {
+                        color: @navstack-nested-link-color;
+                    }
+                    & when (iscolor(@navstack-nested-link-bg)) {
+                        background-color: @navstack-nested-link-bg;
+                    }
+                    & when (iscolor(@navstack-nested-link-gradient-start)) {
+                        #gradient.vertical(@navstack-nested-link-gradient-start; @navstack-nested-link-gradient-stop);
+                    }
+                    &:hover {
+                        & when (iscolor(@navstack-nested-link-hover-color)) {
+                            color: @navstack-nested-link-hover-color;
+                        }
+                        & when (iscolor(@navstack-nested-link-hover-bg)) {
+                            background-color: @navstack-nested-link-hover-bg;
+                        }
+                        & when (iscolor(@navstack-nested-link-hover-gradient-start)) {
+                            #gradient.vertical(@navstack-nested-link-hover-gradient-start; @navstack-nested-link-hover-gradient-stop);
+                        }
+                    }
+                    
+                    // item type
+                    & when not (@navstack-nested-font-size = inherit) {
+                        font-size: @navstack-nested-font-size;
+                    }
+                    & when not (@navstack-nested-line-height = inherit) {
+                        line-height: @navstack-nested-line-height;
+                    }
+                    & when not (@navstack-nested-font-family = inherit) {
+                        font-family: @navstack-nested-font-family;
+                    }
+                    & when not (@navstack-nested-text-transform = inherit) {
+                        text-transform: @navstack-nested-text-transform;
+                    }
+                }
+                
+                li {
+                    // 3. Deep nested navigation items
+                    li {
+                        a {
+                            & when (@navstack-nested-item-padding-horz = inherit) {
+                                padding-left: (@navstack-item-padding-horz + (@navstack-nested-indent * 2));
+                            }
+                            & when not (@navstack-nested-item-padding-horz = inherit) {
+                                padding-left: (@navstack-nested-item-padding-horz + (@navstack-nested-indent * 2));
+                                padding-right: @navstack-nested-item-padding-horz;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        // Flyout menus
+        & when (@flyout = true) {
+            #javelin-nav.flyout(@navstack-menu-width);
+            
+            // If this is a flyout menu, inherit dropdown properties
+            > li {
+                > ul {
+                    & when (@navstack-padding-vert > 0) {
+                        padding-top: @navstack-padding-vert;
+                        padding-bottom: @navstack-padding-vert;
+                    }
+                    & when not (@navstack-border-radius = 0) {
+                        border-radius: @navbar-border-radius;
+                        
+                        // Add border radii to outer nav items
+                        & when (@navstack-padding-vert = 0) {
+                            > li {
+                                &:first-child > a {
+                                    border-radius: @navstack-border-radius;
+                                    border-bottom-left-radius: 0;
+                                    border-bottom-right-radius: 0;
+                                }
+                                &:last-child > a {
+                                    border-radius: @navstack-border-radius;
+                                    border-top-left-radius: 0;
+                                    border-top-right-radius: 0;
+                                }
+                            }
+                        }
+                    }
+                    & when (@navstack-nested-bg = transparent) {
+                        background-color: @navstack-bg;
+                    }
+                    & when (@navstack-menu-has-shadow = true) {
+                        box-shadow: @navstack-menu-shadow;
+                    }
+                }
+                
+                &:hover > a {
+                    & when not (@navstack-link-hover-color = inherit) {
+                        color: @navstack-link-hover-color;
+                    }
+                    & when not (@navstack-link-hover-bg = inherit) {
+                        background-color: @navstack-link-hover-bg;
+                    }
+                    & when (iscolor(@navstack-link-hover-gradient-start)) {
+                        #gradient.vertical(@navstack-link-hover-gradient-start; @navstack-link-hover-gradient-stop);
+                    }
+                }
+            }
+        }
+    }
+    .stacked-item(@rules) {
+        > li {
+            @rules();
+        }
+    }
+    .stacked-active-item(@rules) {
+        > li.javelin_active {
+            @rules();
+        }
+    }
+    .stacked-link(@rules) {
+        > li > a {
+            @rules();
+        }
+    }
+    .stacked-active-link(@rules) {
+        > li.javelin_active > a {
+            @rules();
+        }
+    }
+    .stacked-nested-menu(@rules) {
+        > li > ul {
+            @rules();
+        } 
+    }
+    .stacked-nested-item(@rules) {
+        > li > ul > li {
+            @rules();
+        }
+    }
+    .stacked-nested-active-item(@rules) {
+        > li > ul > li.javelin_active {
+            @rules();
+        }
+    }
+    .stacked-nested-link(@rules) {
+        > li > ul > li > a {
+            @rules();
+        }
+    }
+    .stacked-nested-active-link(@rules) {
+        > li > ul > li.javelin_active > a {
+            @rules();
+        }
+    }
+    .stacked-deep-menu(@rules) {
+        > li > ul > li ul { // any list beyond this level of nesting
+            @rules();
+        } 
+    }
+    .stacked-deep-item(@rules) {
+        > li > ul > li > ul li { // any list item beyond this level of nesting
+            @rules();
+        }
+    }
+    .stacked-deep-link(@rules) {
+        > li > ul > li > ul a { // any link beyond this level of nesting
+            @rules();
+        }
+    }
+    
+    
+    
+    
+    // Dropdown menu functionality
+    // 
+    // Note: This mixin will only style the mechanics of a dropdown menu, not the visual style
+    .dropdown(@width; @top: 0; @offset: 0; @flyout: false) {
+        > li {
+            
+            // Show the dropdown menu when THIS list item is hovered
+            &:hover {
+                > ul {
+                    display: block;
+                }
+            }
+            
+            // Position the dropdown menu
+            > ul {
+                width: @width;
+                position: absolute;
+                top: @top;
+                left: @offset;
+                z-index: 1;
+                
+                // keep hidden until the parent list item is hovered
+                display: none;
+                
+                & when (@flyout = true) {
+                    #javelin-nav.flyout(@width);
+                }
+            }
+            
+            // Align the last nav item's dropdown to the right instead of the left
+            &.javelin_lastItem > ul {
+                left: auto;
+                right: @offset;
+            }
+        }
+    }
+    
+    
+    
+    
+    // Flyout menu functionality
+    // 
+    // Note: This mixin will only style the mechanics of a flyout menu, not the visual style
+    .flyout(@width) {
+        > li {
+            
+            // Show the flyout menu when THIS list item is hovered
+            &:hover {
+                > ul {
+                    display: block;
+                }
+            }
+            
+            // Position the flyout menu
+            > ul {
+                width: @width;
+                position: absolute;
+                top: 0;
+                left: 100%;
+                z-index: 1;
+                
+                // keep hidden until the parent list item is hovered
+                display: none;
+            }
+        }
+    }
+    
+    
+    
+    
+    // Inline
+    .inline(@offset-horz; @color: @link-color; @hover-color: @link-hover-color; @divider: false) {
+        margin-left: 0;
+        margin-bottom: 0;
+        line-height: 1;
+        vertical-align: middle;
+        
+        // transition certain link properties when @component-animations flag is set to 'true'
+        a when (@component-animations) {
+            .transition(~"background-color @{navinline-animation-duration} @{navinline-animation-timing-function}, color @{navinline-animation-duration} @{navinline-animation-timing-function}");
+        }
+        
+        > li {
+            padding-left: floor(@offset-horz / 2);
+            padding-right: @offset-horz;
+            display: inline-block;
+            list-style: none;
+            
+            & when (iscolor(@divider)) {
+                border-right: 1px solid @divider;
+            }
+            
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+                border-right: 0;
+            }
+            
+            > a {
+                color: @color;
+                
+                &:hover {
+                    color: @hover-color;
+                }
+            }
+        }
+    }
+    .inline-item(@rules) {
+        > li {
+            @rules();
+        }
+    }
+    .inline-link(@rules) {
+        > li > a {
+            @rules();
+        }
+    }
+    
+}

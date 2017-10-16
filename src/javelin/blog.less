@@ -1,0 +1,586 @@
+//
+// Javelin: Blog Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-blog {
+    
+    // views
+    .index-view(@rules) {
+        .javelin_blog {
+            @rules();
+        }
+    }
+    .details-view(@rules) {
+        .javelin_blogView {
+            @rules();
+        }
+    }
+    
+    
+    // post
+    .post(@rules) {
+        .javelin_blogPost {
+            @rules();
+        }
+    }
+    .post-title(@rules) {
+        .javelin_blogPostTitle {
+            @rules();
+        }
+    }
+    .post-date(@rules) {
+        .javelin_blogPostDate,
+        .javelin_blogPostByline {
+            @rules();
+        }
+    }
+    .post-image(@rules) {
+        .javelin_blogPostImage {
+            @rules();
+        }
+    }
+    .post-summary(@rules) {
+        .javelin_blogPostSummary {
+            @rules();
+        }
+    }
+    .post-body(@rules) {
+        .javelin_blogPostDescription {
+            @rules();
+        }
+    }
+    .post-readmore(@rules) {
+        .javelin_blogPostSummary a[title="Read More"] {
+            @rules();
+        }
+    }
+    .post-comments-link(@rules) {
+        .javelin_blogCommentsLink {
+            @rules();
+        }
+    }
+    
+    
+    // tags
+    .tags(@rules) {
+        .javelin_blogPostTags {
+            @rules();
+        }
+    }
+    .tag(@rules) {
+        .javelin_blogPostTags > a {
+            @rules();
+        }
+    }
+    
+    
+    // rss link
+    .rss(@rules) {
+        .javelin_blogFeedRss {
+            @rules();
+        }
+    }
+    
+    
+    // backlink
+    .backlink(@rules) {
+        .javelin_blogBackLink {
+            @rules();
+        }
+    }
+    
+    
+    // pager
+    .pager(@rules) {
+        .javelin_blogPageLinks {
+            @rules();
+        }
+    }
+    .pager-item(@rules) {
+        // there is no "active" class so we target the structure of the markup
+        .javelin_blogPageLinks b {
+            @rules();
+        }
+    }
+    .pager-item-link(@rules) {
+        .javelin_blogPageLinks b > a {
+            @rules();
+        }
+    }
+    .pager-prevnext(@rules) {
+        .javelin_blogPageLinks {
+            // there is no "active" class so we target the structure of the markup
+            > a:first-child,
+            > a:last-child {
+                @rules();
+            }
+        }
+    }
+    .pager-prev(@rules) {
+        // there is no "active" class so we target the structure of the markup
+        .javelin_blogPageLinks > a:first-child {
+            @rules();
+        }
+    }
+    .pager-next(@rules) {
+        // there is no "active" class so we target the structure of the markup
+        .javelin_blogPageLinks > a:last-child {
+            @rules();
+        }
+    }
+    
+    
+    // comments
+    .comments(@rules) {
+        .javelin_blogComments {
+            @rules();
+        }
+    }
+    .comments-list(@rules) {
+        .javelin_blogComments .javelin_comments {
+            @rules();
+        }
+    }
+    .comments-title(@rules) {
+        .javelin_blogComments .javelin_commentsTitle {
+            @rules();
+        }
+    }
+    .comments-item(@rules) {
+        .javelin_blogComments .javelin_commentsItem {
+            @rules();
+        }
+    }
+    .comments-item-title(@rules) {
+        .javelin_commentsItemByline {
+            @rules();
+        }
+    }
+    .comments-item-date(@rules) {
+        .javelin_commentsItemDateline {
+            @rules();
+        }
+    }
+    .comments-item-body(@rules) {
+        .javelin_commentsItemBody {
+            @rules();
+        }
+    }
+    .comments-form(@rules) {
+        .javelin_commentsForm {
+            @rules();
+        }
+    }
+    
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Index View
+.javelin_blogPost {
+    &:extend(.clearfix all);
+    
+    margin-bottom: @blog-post-offset-vert;
+}
+
+.javelin_blogPostTitle {
+    margin-bottom: @blog-post-title-offset-vert;
+    font-size: @blog-post-title-font-size;
+}
+
+.javelin_blogPostDate,
+.javelin_blogPostByline {
+    font-size: @blog-post-date-font-size;
+    font-style: @blog-post-date-font-style;
+}
+
+.javelin_blogPostSummary {
+    & when not (@blog-post-summary-font-size = inherit) {
+        font-size: @blog-post-summary-font-size;
+    }
+    
+    &:empty {
+        display: none;
+    }
+}
+
+.javelin_blogPostSummary a[title="Read More"] {
+    & when (@blog-readmore-inline = false) {
+        display: block;
+    }
+}
+
+.javelin_blogCommentsLink {
+    & when not (@blog-post-comments-link-font-size = inherit) {
+        font-size: @blog-post-comments-link-font-size;
+    }
+    
+    text-align: @blog-post-comments-link-align;
+    float: none;
+}
+
+// Hide RSS icon by default
+.javelin_blogFeedRss {
+    display: none;
+}
+
+
+// Float images to the left by default
+// 
+// Note: Absolute positioning works too but it requires a relative position on
+// the .javelin_blogPost element. This interferes with the Javelin UI controls
+// which is why we float the image to the left/right and use sibling selectors
+// to add padding to the other blog post elements.
+.javelin_blogPostImage {
+    &:empty {
+        display: none;
+    }
+}
+
+& when (@is-responsive = false) {
+    & when (@is-mobile = false) {
+        .javelin_blogPostImage {
+            float: @blog-post-thumb-side;
+        }
+        
+        .javelin_blogPostImage + .javelin_blogPostTitle,
+        .javelin_blogPostImage + .javelin_blogPostTitle + .javelin_blogPostDate,
+        .javelin_blogPostImage + .javelin_blogPostTitle + .javelin_blogPostSummary,
+        .javelin_blogPostImage + .javelin_blogPostTitle + .javelin_blogPostDate + .javelin_blogPostSummary {
+            & when (@blog-post-thumb-width > 0) {
+                padding-@{blog-post-thumb-side}: (@blog-post-thumb-width + @blog-post-thumb-gutter-width);
+            }
+        }
+    }
+}
+& when (@is-responsive = true) {
+    @media (@page-nav-breakpoint-up) {
+        .javelin_blogPostImage {
+            float: @blog-post-thumb-side;
+        }
+        
+        .javelin_blogPostImage + .javelin_blogPostTitle,
+        .javelin_blogPostImage + .javelin_blogPostTitle + .javelin_blogPostDate,
+        .javelin_blogPostImage + .javelin_blogPostTitle + .javelin_blogPostSummary,
+        .javelin_blogPostImage + .javelin_blogPostTitle + .javelin_blogPostDate + .javelin_blogPostSummary {
+            & when (@blog-post-thumb-width > 0) {
+                padding-@{blog-post-thumb-side}: (@blog-post-thumb-width + @blog-post-thumb-gutter-width);
+            }
+        }
+    }
+}
+
+.javelin_blogPostImage {
+    & when (@is-mobile = true) {
+        margin-bottom: @blog-post-image-offset-vert;
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-down) {
+            margin-bottom: @blog-post-image-offset-vert;
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Pager (easily the strangest thing to style in this entire framework)
+.javelin_blogPageLinks {
+    margin-top: (@line-height-computed * 2);
+    text-align: @blog-pager-align;
+    
+    > a,
+    > b {
+        margin-left: @blog-pager-offset-horz;
+        margin-right: @blog-pager-offset-horz;
+    }
+    
+    a,
+    b {
+        display: inline-block;
+        
+        & when (@blog-pager-border-radius > 0) {
+            border-radius: @blog-pager-border-radius;
+        }
+    }
+}
+
+.javelin_blogPageLinks b {
+    font-weight: normal;
+    line-height: @blog-pager-height;
+    text-align: center;
+    vertical-align: middle;
+    
+    &,
+    & > a {
+        width: @blog-pager-width;
+        height: @blog-pager-height;
+    }
+    
+    // colors
+    & when (iscolor(@blog-pager-bg)) {
+        > a {
+            background-color: @blog-pager-bg;
+            
+            & when (iscolor(@blog-pager-color)) {
+                color: @blog-pager-color;
+            }
+            & when (iscolor(@blog-pager-gradient-start)) {
+                #gradient.vertical(@blog-pager-gradient-start; @blog-pager-gradient-stop);
+            }
+        }
+    }
+    & when (iscolor(@blog-pager-hover-bg)) {
+        &:hover > a {
+            background-color: @blog-pager-hover-bg;
+            
+            & when (iscolor(@blog-pager-hover-color)) {
+                color: @blog-pager-hover-color;
+            }
+            & when (iscolor(@blog-pager-hover-gradient-start)) {
+                #gradient.vertical(@blog-pager-hover-gradient-start; @blog-pager-hover-gradient-stop);
+            }
+        }
+    }
+    
+    // "current page" colors
+    & when (iscolor(@blog-pager-active-color)) {
+        color: @blog-pager-active-color;
+    }
+    & when (iscolor(@blog-pager-active-bg)) {
+        background-color: @blog-pager-active-bg;
+    }
+    & when (iscolor(@blog-pager-gradient-start)) {
+        #gradient.vertical(@blog-pager-active-gradient-start; @blog-pager-active-gradient-stop);
+    }
+}
+
+.javelin_blogPageLinks {
+    > a:first-child,
+    > a:last-child {
+        line-height: @blog-pager-height;
+        position: relative;
+        top: 1px;
+        
+        // padding
+        & when (@blog-pager-prevnext-padding-horz > 0) {
+            padding-left: @blog-pager-prevnext-padding-horz;
+            padding-right: @blog-pager-prevnext-padding-horz;
+        }
+        
+        // colors
+        & when (iscolor(@blog-pager-prevnext-bg)) {
+            background-color: @blog-pager-prevnext-bg;
+            
+            & when (iscolor(@blog-pager-prevnext-color)) {
+                color: @blog-pager-prevnext-color;
+            }
+            & when (iscolor(@blog-pager-prevnext-gradient-start)) {
+                #gradient.vertical(@blog-pager-prevnext-gradient-start; @blog-pager-prevnext-gradient-stop);
+            }
+        }
+        & when (iscolor(@blog-pager-prevnext-hover-bg)) {
+            &:hover {
+                background-color: @blog-pager-prevnext-hover-bg;
+                
+                & when (iscolor(@blog-pager-prevnext-hover-color)) {
+                    color: @blog-pager-prevnext-hover-color;
+                }
+                & when (iscolor(@blog-pager-prevnext-hover-gradient-start)) {
+                    #gradient.vertical(@blog-pager-prevnext-hover-gradient-start; @blog-pager-prevnext-hover-gradient-stop);
+                }
+            }
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Details View
+.javelin_blogView {
+    
+    .javelin_blogPostDate,
+    .javelin_blogPostByline {
+        & when not (@blog-details-date-font-size = inherit) {
+            font-size: @blog-details-date-font-size;
+        }
+        & when not (@blog-details-date-font-style = inherit) {
+            font-style: @blog-details-date-font-style;
+        }
+        & when not (@blog-details-date-font-weight = inherit) {
+            font-weight: @blog-details-date-font-weight;
+        }
+    }
+    
+}
+
+.javelin_blogPostTags,
+.javelin_blogBackLink {
+    padding: 0;
+}
+
+.javelin_blogPostTags {
+    margin-bottom: @blog-tags-offset-vert;
+    
+    & when not (@blog-tags-font-size = inherit) {
+        font-size: @blog-tags-font-size;
+    }
+}
+
+.javelin_blogBackLink {
+    margin-bottom: @blog-backlink-offset-vert;
+    
+    & when not (@blog-backlink-font-size = inherit) {
+        font-size: @blog-backlink-font-size;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Comments
+.javelin_blogComments .javelin_comments {
+    padding-top: @blog-comments-offset-vert;
+    padding-bottom: @blog-comments-offset-vert;
+    border-top: @blog-comments-border;
+    
+    > br,
+    &:empty {
+        display: none;
+    }
+}
+
+.javelin_blogComments .javelin_commentsTitle {
+    & when not (@blog-comments-title-offset-vert = inherit) {
+        margin-bottom: @blog-comments-title-offset-vert;
+    }
+    & when not (@blog-comments-title-color = inherit) {
+        color: @blog-comments-title-color;
+    }
+    & when not (@blog-comments-title-font-size = inherit) {
+        font-size: @blog-comments-title-font-size;
+    }
+    & when not (@blog-comments-title-line-height = inherit) {
+        line-height: @blog-comments-title-line-height;
+    }
+    & when not (@blog-comments-title-font-family = inherit) {
+        font-family: @blog-comments-title-font-family;
+    }
+}
+
+.javelin_blogComments .javelin_commentsItem {
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: @blog-comments-item-offset-vert;
+    padding: 0 !important;
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.javelin_commentsItemByline {
+    color: inherit;
+    font-weight: @blog-comments-item-title-font-weight;
+    line-height: inherit;
+    
+    & when not (@blog-comments-item-title-font-size = inherit) {
+        font-size: @blog-comments-item-title-font-size;
+    }
+}
+
+.javelin_commentsItemDateline {
+    margin-bottom: 0;
+    color: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: @blog-comments-item-title-font-size;
+}
+
+
+// Comments Form
+.javelin_commentsForm {
+    & when (@is-mobile = false) {
+        width: @blog-comments-form-width;
+    }
+    
+    padding-top: @blog-comments-offset-vert;
+    border-top: @blog-comments-border;
+    
+    legend {
+        border-bottom: 0;
+    }
+    
+    .formLayout {
+        margin-bottom: 0;
+        
+        dt {
+            margin-top: 0;
+        }
+        
+        dd {
+            margin-bottom: @line-height-computed;
+            
+            input[type="text"],
+            textarea {
+                .form-control();
+            }
+            textarea {
+                height: auto;
+            }
+        }
+    }
+    
+    .javelin_formButtonContainer {
+        text-align: @blog-comments-form-buttons-align;
+    }
+    
+    .javelin_formSubmit,
+    .javelin_formCancel {
+        .btn();
+        
+        & when (@is-mobile = true) {
+            .btn-block();
+        }
+    }
+    
+    .javelin_formSubmit {
+        .btn-default();
+        
+        & when (@is-mobile = true) {
+            margin-bottom: floor(@line-height-computed / 2);
+        }
+    }
+    
+    .javelin_formCancel {
+        .btn-link();
+        
+        // no idea why, but the "inline-block" style that comes from the button helpers
+        // makes this specific element render line-height incorrectly
+        display: inline;
+    }
+}

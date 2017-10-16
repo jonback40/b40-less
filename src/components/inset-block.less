@@ -1,0 +1,16 @@
+//
+// Inset Block
+// ----------------------------------------------------------------------------------------------------
+
+
+.inset-block {
+    &:extend(.border-box-sizing all);
+    
+    margin-bottom: @line-height-computed;
+    padding: @inset-padding-vert @inset-padding-horz;
+    background-color: @inset-bg;
+    border: @inset-border;
+    border-radius: @inset-border-radius;
+    box-shadow: @inset-box-shadow;
+    color: @inset-color;
+}

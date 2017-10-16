@@ -1,0 +1,39 @@
+//
+// Horizontal Definition Lists
+// ----------------------------------------------------------------------------------------------------
+
+
+// Source: http://getbootstrap.com/
+
+
+.__make-dl-horizontal() {
+    dd {
+        // Clear the floated dt if an empty dd is present
+        &:extend(.clearfix all);
+    }
+    
+    dt {
+        .text-overflow();
+        
+        width: @dl-horizontal-offset;
+        text-align: @dl-horizontal-dt-align;
+        float: left;
+        clear: left;
+    }
+    
+    dd {
+        margin-left: (@dl-horizontal-offset + @grid-gutter-width);
+    }
+}
+
+.dl-horizontal {
+    & when (@is-responsive = false) {
+        .__make-dl-horizontal();
+    }
+    
+    & when (@is-responsive = true) {
+        @media (min-width: @grid-float-breakpoint) {
+            .__make-dl-horizontal();
+        }
+    }
+}

@@ -1,0 +1,122 @@
+//
+// Search Bar
+// ----------------------------------------------------------------------------------------------------
+
+
+.search-bar {
+    &:extend(.border-box-sizing all);
+    
+    width: @search-bar-width;
+    height: @search-bar-height;
+    border: @search-bar-border;
+    position: relative;
+    
+    & when (iscolor(@search-bar-bg)) {
+        background-color: @search-bar-bg;
+    }
+    
+    & when (@search-bar-border-radius > 0) {
+        border-radius: @search-bar-border-radius;
+    }
+}
+
+.search-bar-input {
+    .form-control();
+    .form-control-size(
+        (@search-bar-height - (@search-bar-border-size * 2)); // accounting for top and bottom borders
+        @search-bar-padding-vert;
+        @search-bar-padding-horz;
+        @search-bar-font-size;
+        @search-bar-height;
+        @search-bar-border-radius
+    );
+    .placeholder(fade(@search-bar-color, 50%));
+    .form-control-focus(@search-bar-border-color-focused);
+    
+    padding-right: (@search-bar-padding-horz + @search-bar-icon-width);
+    background: transparent;
+    border: 0;
+    color: @search-bar-color;
+    font-family: @search-bar-font-family;
+    position: relative;
+    z-index: 10 !important;
+}
+
+.search-bar-btn {
+    width: @search-bar-btn-width;
+    height: (@search-bar-btn-height - (@search-bar-border-size * 2)); // accounting for top and bottom borders
+    padding: 0;
+    background: @search-bar-btn-bg; // we actually want to nuke the entire background property here, but still apply a color
+    border: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 20 !important;
+    
+    & when (@search-bar-border-radius > 0) {
+        border-radius: 0 @search-bar-border-radius @search-bar-border-radius 0;
+    }
+    
+    .icon {
+        margin-top: -(floor(@search-bar-icon-height / 2));
+        margin-left: -(floor(@search-bar-icon-width / 2));
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Collapsible Search Bar
+// 
+// Required Script:  /public/scripts/less/less.search-collapse.min.js
+.search-bar-collapsible {
+    & when (@component-animations) {
+        .transition(width @animation-duration-base @animation-timing-function-base);
+    }
+    
+    width: @search-bar-btn-width;
+    background-color: transparent;
+    text-align: right;
+    overflow: hidden;
+    
+    &.active {
+        width: @search-bar-width;
+        
+        // Borrowing this block from the 'form-control-focused()' mixin
+        @__search-bar-active-box-shadow: fade(@search-bar-border-color-focused, 60%);
+        
+        border-color: @search-bar-border-color-focused;
+        outline: 0;
+        box-shadow: ~"@{input-box-shadow}, 0 0 8px @{__search-bar-active-box-shadow}";
+        
+        .search-bar-input {
+            opacity: 1;
+        }
+    }
+    
+    .search-bar-input {
+        & when (@component-animations) {
+            .transition(~"opacity @{animation-duration-base} @{animation-timing-function-base}, border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+        }
+        
+        margin-top: -(floor(@search-bar-height / 2));
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        z-index: 10 !important;
+        
+        &,
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}

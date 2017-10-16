@@ -1,0 +1,81 @@
+//
+// Javelin: FAQ Module
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-faq {
+    
+    .questions-list(@rules) {
+        .javelin_faqQuestions {
+            @rules();
+        }
+    }
+    
+    .questions-title(@rules) {
+        .javelin_faqQuestionsTitle {
+            @rules();
+        }
+    }
+    
+    .answers-title(@rules) {
+        .javelin_faqAnswersTitle {
+            @rules();
+        }
+    }
+    
+    .item(@rules) {
+        .javelin_faqItem {
+            @rules();
+        }
+    }
+    
+    .item-question(@rules) {
+        .javelin_faqItemQuestion {
+            @rules();
+        }
+    }
+    
+    .item-answer(@rules) {
+        .javelin_faqItemAnswer {
+            @rules();
+        }
+    }
+    
+    .item-toplink(@rules) {
+        .javelin_faqItemTopLink {
+            @rules();
+        }
+    }
+    
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+.javelin_faqQuestions {
+    margin-bottom: @faq-questions-offset-vert;
+}
+
+.javelin_faqAnswersTitle {
+    padding-top: @faq-answers-offset-vert;
+    border-top: @faq-questions-border;
+}
+
+.javelin_faqItem {
+    margin-bottom: @faq-item-offset-vert;
+    
+    dl,
+    dd {
+        margin-bottom: 0;
+    }
+}
+
+.javelin_faqItemQuestion {
+    font-weight: @faq-item-question-font-weight;
+}
+
+.javelin_faqItemTopLink {
+    margin-top: -@line-height-computed;
+    text-align: @faq-toplink-align;
+}

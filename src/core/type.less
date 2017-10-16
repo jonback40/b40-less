@@ -1,0 +1,186 @@
+//
+// Typography
+// ----------------------------------------------------------------------------------------------------
+
+
+// Headings
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-top: 0;
+    font-family: @headings-font-family;
+    font-weight: @headings-font-weight;
+    line-height: @headings-line-height;
+    
+    & when not (@headings-text-transform = none) {
+        text-transform: @headings-text-transform;
+    }
+    
+    // Maintain some font stylings when using a hyperlink inside of a heading
+    a {
+        color: @headings-link-color;
+        font: inherit;
+    }
+    
+    // Account for 'small' tags inside of headings
+    small {
+        color: @headings-small-color;
+        font-weight: normal;
+        line-height: 1;
+    }
+}
+
+
+h1, .h1 {
+    margin-bottom: @h1-offset-vert;
+    color: @h1-color;
+    font-size: @h1-size;
+}
+h2, .h2 {
+    margin-bottom: @h2-offset-vert;
+    color: @h2-color;
+    font-size: @h2-size;
+}
+h3, .h3 {
+    margin-bottom: @h3-offset-vert;
+    color: @h3-color;
+    font-size: @h3-size;
+}
+h4, .h4 {
+    margin-bottom: @h4-offset-vert;
+    color: @h4-color;
+    font-size: @h4-size;
+}
+h5, .h5 {
+    margin-bottom: @h5-offset-vert;
+    color: @h5-color;
+    font-size: @h5-size;
+}
+h6, .h6 {
+    margin-bottom: @h6-offset-vert;
+    color: @h6-color;
+    font-size: @h6-size;
+}
+
+
+// Set variant sizing for 'small' tags inside of headings
+h1, h2, h3,
+.h1, .h2, .h3 {
+    small {
+        font-size: 62.5%;
+    }
+}
+h4, h5, h6,
+.h4, .h5, .h6 {
+    small {
+        font-size: 75%;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Paragraphs
+p {
+    margin-top: 0;
+    margin-bottom: @line-height-computed;
+}
+
+
+// Blockquotes
+blockquote {
+    margin: 0 @blockquote-offset-horz @line-height-computed @blockquote-offset-horz;
+    padding: @blockquote-padding-vert @blockquote-padding-horz;
+    border-left: @blockquote-border;
+    color: @blockquote-color;
+    font-size: @blockquote-font-size;
+    
+    & when not (@blockquote-font-style = inherit) {
+        font-style: @blockquote-font-style;
+    }
+    & when not (@blockquote-font-weight = inherit) {
+        font-weight: @blockquote-font-weight;
+    }
+    & when not (@blockquote-font-family = inherit) {
+        font-family: @blockquote-font-family;
+    }
+    & when not (@blockquote-line-height = inherit) {
+        line-height: @blockquote-line-height;
+    }
+    
+    // remove horizontal margins for mobil sites
+    & when (@is-mobile = true) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    p,
+    ul,
+    ol {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    footer {
+        color: @blockquote-footer-color;
+        font-style: @blockquote-footer-style;
+        font-size: @blockquote-footer-size;
+        line-height: @line-height-base;
+        display: block;
+        
+        &::before {
+            content: "@{unicode-mdash}@{unicode-space}";
+        }
+    }
+}
+blockquote when (@is-responsive = true) {
+    @media (@screen-sm-down) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+
+// Address
+address {
+    margin-bottom: @line-height-computed;
+    font-style: normal; // Remove default italic styling from addresses
+    line-height: @line-height-base;
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Address inconsistent and variable font size in all browsers
+small {
+    font-size: @font-size-sm;
+}
+
+
+// Abbreviations and acronyms
+abbr[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+
+// Undo browser default styling
+cite {
+    font-style: @cite-font-style;
+}
+
+
+// Soften the default mark color.
+mark {
+    background-color: @mark-color;
+}

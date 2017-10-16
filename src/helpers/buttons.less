@@ -1,0 +1,235 @@
+//
+// Buttons
+// ----------------------------------------------------------------------------------------------------
+
+
+// (MODIFIED) Source: http://getbootstrap.com/
+
+
+.btn {
+    &:extend(.border-box-sizing all);
+    
+    margin-bottom: 0; // For input.btn
+    background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+    border: @btn-border-width @btn-border-style transparent;
+    box-shadow: @btn-box-shadow;
+    font: @btn-font-weight @btn-font-size/@btn-line-height @btn-font-family;
+    text-align: center;
+    text-transform: @btn-text-transform;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    display: inline-block;
+    cursor: pointer;
+    touch-action: manipulation; // remove the 300ms delay in IE10+
+    
+    .button-size(@btn-height-base; @btn-font-size; @btn-line-height; @btn-padding-horz; @btn-border-radius);
+    .user-select(none);
+    
+    // transition certain properties when @component-animations flag is set to 'true'
+    & when (@component-animations) {
+        .transition(~"background-color @{btn-animation-duration} @{btn-animation-timing-function}, border-color @{btn-animation-duration} @{btn-animation-timing-function}, color @{btn-animation-duration} @{btn-animation-timing-function}");
+    }
+    
+    &:hover,
+    &:focus {
+        color: @btn-default-color;
+        text-decoration: none;
+    }
+    
+    &:active,
+    &.active {
+        background-image: none;
+        box-shadow: @btn-box-shadow-active;
+        outline: 0;
+    }
+    
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        box-shadow: none;
+        opacity: .65;
+        cursor: not-allowed;
+        pointer-events: none; // Future-proof disabling of clicks
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Default button style
+.btn-default {
+    .button-color(
+        @btn-default-bg; @btn-default-color; @btn-default-border-color;
+        @btn-default-bg-hover; @btn-default-color-hover; @btn-default-border-color-hover
+    );
+    
+    & when (iscolor(@btn-default-gradient-start)) {
+        .button-gradient(@btn-default-gradient-start; @btn-default-gradient-stop; @btn-default-gradient-start-hover; @btn-default-gradient-stop-hover);
+    }
+}
+.btn-inverse {
+    .button-color(
+        @btn-inverse-bg; @btn-inverse-color; @btn-inverse-border-color;
+        @btn-inverse-bg-hover; @btn-inverse-color-hover; @btn-inverse-border-color-hover
+    );
+    
+    & when (iscolor(@btn-inverse-gradient-start)) {
+        .button-gradient(@btn-inverse-gradient-start; @btn-inverse-gradient-stop; @btn-inverse-gradient-start-hover; @btn-inverse-gradient-stop-hover);
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Link buttons
+//
+// Make a button look and behave like a plain link
+.btn-link {
+    border-radius: 0;
+    color: @btn-link-color;
+    font-weight: normal;
+    font-size: @btn-link-font-size;
+    font-family: @btn-link-font-family;
+    line-height: @btn-link-line-height;
+    //text-transform: none;
+    
+    &,
+    &.active,
+    &:active,
+    &[disabled],
+    fieldset[disabled] & {
+        background-color: transparent;
+        box-shadow: none;
+    }
+    
+    &,
+    &:hover,
+    &:focus,
+    &.active,
+    &:active {
+        border-color: transparent;
+    }
+    
+    &:hover,
+    &:focus {
+        background-color: transparent;
+        color: @btn-link-hover-color;
+    }
+    
+    &[disabled],
+    fieldset[disabled] & {
+        &:hover,
+        &:focus {
+            color: @btn-link-color-disabled;
+            text-decoration: none;
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Sizing options
+.btn-sm {
+    .button-size(@btn-sm-height; @btn-sm-font-size; @btn-sm-line-height; @btn-sm-padding-horz; @btn-sm-border-radius);
+}
+.btn-lg {
+    .button-size(@btn-lg-height; @btn-lg-font-size; @btn-lg-line-height; @btn-lg-padding-horz; @btn-lg-border-radius);
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Block button
+.btn-block {
+    width: 100%;
+    display: block;
+    
+    // Vertically space out multiple block buttons
+    & + .btn-block {
+        margin-top: 5px;
+    }
+    
+    // Specificity overrides
+    input[type="submit"]&,
+    input[type="reset"]&,
+    input[type="button"]& {
+        width: 100%;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Square Button (meant to be used as a button with ONLY an icon as a child)
+.btn-square {
+    width: @btn-height-base;
+    padding-left: 0;
+    padding-right: 0;
+    
+    &.btn-sm {
+        width: @btn-sm-height;
+    }
+    &.btn-lg {
+        width: @btn-lg-height;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// #### DEPRECATED ####
+//
+// For usage with icons in buttons and no text
+.btn-icon {
+    &:extend(.border-box-sizing all);
+    
+    background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+    border: transparent;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    display: inline-block;
+    cursor: pointer;
+    
+    .button-size(@btn-font-size; @icon-height-base; 0; 0; 0);
+    .button-color(transparent; inherit; transparent; transparent; inherit; transparent);
+    .user-select(none);
+    
+    &:hover,
+    &:focus {
+        color: @btn-default-color;
+        text-decoration: none;
+    }
+}

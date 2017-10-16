@@ -1,0 +1,23 @@
+//
+// Image Helpers
+// ----------------------------------------------------------------------------------------------------
+
+
+// Cover images proportionally fill their parent and don't scale beyond their parent
+.img-cover {
+    .translate3d(0, 0, 0); // prevents dithered edges when stretching an image
+    
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    display: block;
+}
+
+
+// Responsive images don't scale beyond their parent
+.img-responsive {
+    .translate3d(0, 0, 0); // prevents dithered edges when stretching an image
+    
+    max-width: 100%;
+    height: auto !important;
+}

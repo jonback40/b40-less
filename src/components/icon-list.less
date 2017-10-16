@@ -1,0 +1,31 @@
+//
+// Icon List
+// ----------------------------------------------------------------------------------------------------
+
+
+.icon-list {
+    line-height: 1;
+    
+    ul {
+        &:extend(.clearfix all);
+        
+        .list-unstyled();
+        .list-inline(@icon-list-offset-horz);
+        
+        margin-bottom: 0;
+    }
+    
+    a {
+        & when (@component-animations) {
+            .transition(opacity @animation-duration-base @animation-timing-function-base);
+        }
+        
+        opacity: 1;
+        color: inherit;
+        display: inline-block;
+        
+        &:hover {
+            opacity: .5;
+        }
+    }
+}

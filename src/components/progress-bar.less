@@ -1,0 +1,37 @@
+//
+// Progress Bar
+// ----------------------------------------------------------------------------------------------------
+
+
+// (MODIFIED) Source: http://getbootstrap.com/
+
+
+// Progress bar container
+.progress-bar {
+    &:extend(.border-box-sizing all);
+    
+    height: @progress-bar-height;
+    margin-bottom: @line-height-computed;
+    background-color: @progress-bar-track-bg;
+    border-radius: @progress-bar-border-radius;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    overflow: hidden;
+}
+
+
+// Progress value
+.progress {
+    &:extend(.border-box-sizing all);
+    
+    .transition(width .4s ease);
+    
+    width: 0%;
+    height: 100%;
+    background-color: @progress-bar-bg;
+    box-shadow: inset 0 -1px 2px rgba(0, 0, 0, .1);
+    color: @progress-bar-color;
+    font-size: @font-size-sm;
+    line-height: @line-height-computed;
+    text-align: center;
+    float: left;
+}

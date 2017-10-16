@@ -1,0 +1,83 @@
+//
+// Grid
+// ----------------------------------------------------------------------------------------------------
+
+
+// (MODIFIED) Source: http://getbootstrap.com/
+
+
+// Define a centered grid container
+.container,
+.container-fluid {
+    .make-grid-container();
+}
+
+.container {
+    & when (@is-responsive = false) {
+        width: @grid-container-default;
+    }
+    
+    & when (@is-responsive = true) {
+        @media (@screen-sm-up) {
+            max-width: @grid-container-sm;
+        }
+        @media (@screen-md-up) {
+            max-width: @grid-container-md;
+        }
+        @media (@screen-lg-up) {
+            max-width: @grid-container-lg;
+        }
+        @media (@screen-xl-up) {
+            max-width: @grid-container-xl;
+        }
+    }
+}
+
+.container-fluid {
+    width: 100%;
+}
+
+
+// Contain and clear a group of grid columns
+.row {
+    .make-grid-row();
+}
+
+
+// Common styles for all grid columns
+[class*="grid-"] when (@is-responsive = false) {
+    .make-grid-column-default();
+}
+[class*="col-"] when (@is-responsive = true) {
+    .make-grid-column-default();
+}
+
+
+// Define grid columns
+.generate-grid-columns(@grid-columns);
+
+
+// Reset table properties for grid classes applied to table columns and cells
+table col {
+    &[class*="grid-"] when (@is-responsive = false) {
+        float: none;
+        display: table-column;
+        position: static; // Prevent border hiding in Firefox and IE9/10 (see https://github.com/twbs/bootstrap/issues/11623)
+    }
+    &[class*="col-"] when (@is-responsive = true) {
+        float: none;
+        display: table-column;
+        position: static; // Prevent border hiding in Firefox and IE9/10 (see https://github.com/twbs/bootstrap/issues/11623)
+    }
+}
+th,
+td {
+    &[class*="grid-"] when (@is-responsive = false) {
+        float: none;
+        display: table-cell;
+    }
+    &[class*="col-"] when (@is-responsive = true) {
+        float: none;
+        display: table-cell;
+    }
+}

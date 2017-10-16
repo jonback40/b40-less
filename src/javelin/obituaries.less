@@ -1,0 +1,1415 @@
+//
+// Javelin: Obituary Module
+// ----------------------------------------------------------------------------------------------------
+
+
+// Debug blocks for obituraries module (only used during development)
+.cms-obit-debug {
+    margin-bottom: 30px;
+    padding: 5px 10px;
+    background-color: #ffc;
+    border: 1px solid darken(#ffc, 50%);
+    border-radius: 2px;
+    color: darken(#ffc, 65%);
+    font-size: 12px;
+    line-height: 1.25;
+    
+    strong {
+        margin-right: 15px;
+    }
+    
+    &.static {
+        background-color: #dff0d8;
+        border-color: darken(#dff0d8, 35%);
+        color: darken(#dff0d8, 50%);
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Main Container
+.cms-obit {
+    position: relative;
+}
+
+
+// Obituary Module Icons
+.icon-obit-search,
+.icon-obit-subscribe,
+.icon-obit-veteran,
+.icon-obit-candle,
+.icon-obit-symbol,
+.icon-obit-cart,
+.icon-obit-cart-delete,
+.icon-obit-cart-checkout {
+    .icon-size(30px);
+    
+    & when (@is-mobile = true) {
+        background-size: auto !important;
+    }
+}
+
+.icon-obit-subscribe {
+    .icon-size(14px);
+    
+    margin-right: 4px;
+    top: -1px;
+}
+
+.icon-obit-veteran {
+    .icon-size(36px; 20px);
+}
+
+.icon-obit-candle,
+.icon-obit-symbol {
+    .icon-size(24px);
+    
+    margin-left: -@btn-sm-padding-horz;
+}
+
+.icon-obit-search {
+    background-image: url("@{obit-icon-path-search}");
+}
+.icon-obit-subscribe {
+    background-image: url("@{obit-icon-path-subscribe}");
+}
+.icon-obit-veteran {
+    margin-right: 6px;
+    background-image: url("@{obit-icon-path-veteran}");
+    top: -2px;
+}
+.icon-obit-candle {
+    background-image: url("@{obit-icon-path-candle}");
+    top: -3px;
+}
+.icon-obit-symbol {
+    background-image: url("@{obit-icon-path-symbol}");
+    top: -1px;
+}
+.icon-obit-cart {
+    background-image: url("@{obit-icon-path-cart}");
+}
+.icon-obit-cart-delete {
+    background-image: url("@{obit-icon-path-cart-delete}");
+}
+.icon-obit-cart-checkout {
+    background-image: url("@{obit-icon-path-cart-checkout}");
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Index View (index.php)
+.cms-obit-index {
+    
+}
+
+.cms-obit-listings-header {
+    &:extend(.clearfix all);
+    
+    padding: @obit-listings-header-padding;
+    background-color: @obit-listings-header-bg;
+    border-radius: @obit-listings-header-border-radius;
+    
+    h2 {
+        margin-bottom: 0;
+        color: @obit-listings-header-color;
+        line-height: @obit-listings-header-line-height;
+        float: left;
+        
+        & when (@obit-listings-title-offset > 0) {
+            position: relative;
+            top: @obit-listings-title-offset;
+        }
+    }
+    
+    a {
+        color: @obit-listings-header-color;
+        
+        &:hover,
+        &:focus {
+            color: fade(@obit-listings-header-color, 50%);
+        }
+    }
+    
+    .cms-obit-search-form {
+        & when (@is-mobile = false) {
+            float: right;
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+            position: relative;
+        }
+    }
+}
+
+.cms-obit-listings-body {
+    background-color: @obit-listings-body-bg;
+}
+
+.cms-obit-listings-footer {
+    padding: @obit-listings-footer-padding;
+    background-color: @obit-listings-footer-bg;
+    border-radius: @obit-listings-footer-border-radius;
+}
+    
+    // Listing Items
+    .cms-obit-items {
+        &:extend(.border-box-sizing all);
+    }
+    
+    .cms-obit-item {
+        &:extend(.border-box-sizing all);
+        
+        min-height: (@obit-thumb-height + @grid-gutter-width) !important; // !important to prevent grid helpers from overriding
+        font-size: min(@font-size-base, 16px);
+        line-height: 1.25;
+        position: relative;
+    }
+    
+    .cms-obit-thumb {
+        &:extend(.border-box-sizing all);
+        
+        width: @obit-thumb-width;
+        height: @obit-thumb-height;
+        overflow: hidden;
+        position: absolute;
+        top: floor(@grid-gutter-width / 2);
+        left: floor(@grid-gutter-width / 2);
+        
+        img {
+            .img-responsive();
+        }
+    }
+    
+    .cms-obit-name {
+        h3 {
+            margin-bottom: 0;
+            font: inherit;
+            font-weight: bold;
+        }
+    }
+    
+    .cms-obit-link {
+        font-size: 14px;
+    }
+    
+    
+    // List Layout
+    .layout-list {
+        .cms-obit-listings-header {
+            position: relative;
+            
+            h2 {
+                margin-bottom: @obit-listings-header-padding-vert;
+                float: none;
+            }
+        }
+        
+        .cms-obit-listings-header .cms-obit-search-form,
+        .cms-obit-search-form > form, {
+            float: none;
+        }
+        
+        .cms-obit-search-form {
+            .cms-obit-subscribe,
+            .cms-obit-viewall {
+                position: absolute;
+            }
+            
+            .cms-obit-subscribe {
+                top: -(@obit-listings-header-line-height + floor(@obit-listings-header-line-height / 5) + 4); // semi-arbitrary compensation for positioning
+            }
+            
+            .cms-obit-viewall {
+                top: -(@obit-listings-header-line-height + floor(@obit-listings-header-line-height / 5)); // semi-arbitrary compensation for positioning
+            }
+            
+            .cms-obit-subscribe {
+                right: 40px; // estimated width of the 'viewall' link
+            }
+            
+            .cms-obit-viewall {
+                margin-right: 0;
+                right: 0;
+            }
+            
+            button {
+                margin-top: 0;
+                top: auto;
+                bottom: 0;
+            }
+        }
+        
+        .cms-obit-item {
+            padding: floor(@grid-gutter-width / 2);
+            padding-left: (@obit-thumb-width + @grid-gutter-width);
+            
+            &:nth-child(even) {
+                background-color: @obit-item-striped-bg;
+            }
+            
+            + .cms-obit-item {
+                border-top: 1px solid @obit-item-border-color;
+            }
+        }
+    }
+    
+    
+    // Grid Layout (desktop only)
+    .layout-grid {
+        & when (@is-mobile = false) {
+            .cms-obit-items {
+                padding-left: floor(@grid-gutter-width / 2);
+                padding-right: floor(@grid-gutter-width / 2);
+            }
+            
+            .cms-obit-item {
+                .make-grid-column-default(@grid-gutter-width);
+                
+                width: 33.3333%;
+                padding: floor(@grid-gutter-width / 2);
+                padding-left: (@obit-thumb-width + @grid-gutter-width);
+                float: left;
+            }
+        }
+        
+        & when (@is-mobile = true) {
+            // for mobile, we reuse the '.layout-list' styling
+            &:extend(.layout-list all);
+        }
+    }
+    
+    .cms-obit-page {
+        &:extend(.border-box-sizing all);
+        
+        width: 100%;
+        display: none; // for slideshow
+        
+        > .inner {
+            padding-left: floor(@grid-gutter-width / 2);
+            padding-right: floor(@grid-gutter-width / 2);
+        }
+    }
+    
+    .cms-obit-row {
+        .make-grid-row(@grid-gutter-width);
+        
+        &:nth-child(even) {
+            background-color: @obit-item-striped-bg;
+        }
+        
+        + .cms-obit-row {
+            border-top: 1px solid @obit-item-border-color;
+        }
+    }
+    
+    
+    // Empty
+    .cms-obit-items-empty {
+        padding: @obit-listings-header-padding; // we're just going to borrow the padding from the header instead of making this element over-customizable
+        font-style: italic;
+        line-height: 1;
+        text-align: center;
+    }
+
+
+// Search
+.cms-obit-search {
+    
+}
+
+
+// Search (partial: _search.php)
+.cms-obit-search-form {
+    position: relative;
+    
+    .cms-obit-subscribe,
+    .cms-obit-viewall,
+    > form {
+        float: left;
+    }
+    
+    .cms-obit-subscribe {
+        .btn();
+        .button-size(30px; 14px; 30px);
+        .button-color(@obit-subscribe-btn-bg; @obit-subscribe-btn-color; @obit-subscribe-btn-border-color);
+        
+        margin-right: floor(@grid-gutter-width / 2);
+        font-family: @obit-subscribe-btn-font-family;
+        
+        & when not (@obit-subscribe-btn-text-transform = none) {
+            text-transform: @obit-subscribe-btn-text-transform;
+        }
+        
+        // Mobile sites run out of space for this button, so we hide the text portion for mobile sites
+        & when (@is-mobile = true) {
+            span:not([class]) {
+                .sr();
+            }
+        }
+    }
+    
+    .cms-obit-viewall {
+        margin-right: floor(@grid-gutter-width / 2);
+        font-size: 14px;
+        line-height: 30px;
+        text-decoration: underline;
+        
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+    
+    input {
+        height: 30px;
+        padding-right: (@icon-width-base + @input-padding-horz);
+        border-color: transparent;
+        font-size: 15px;
+        position: relative;
+        z-index: 1 !important;
+    }
+    
+    button {
+        width: 30px;
+        height: 30px;
+        margin-top: -15px;
+        padding: 0;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        z-index: 2 !important;
+    }
+}
+
+
+// Modal (nested inside of _search.php)
+.cms-obit-subscribe-modal {
+    overflow: visible !important; // override jQuery UI enforced styling
+    
+    .ui-dialog-titlebar,
+    .ui-dialog-content {
+        position: relative;
+    }
+    
+    .ui-dialog-titlebar {
+        z-index: 20 !important;
+    }
+    
+    .ui-dialog-titlebar-close {
+        & when (@component-animations) {
+            .transition(opacity @animation-duration-base @animation-timing-function-base);
+        }
+        
+        width: @obit-subscribe-close-size;
+        height: @obit-subscribe-close-size;
+        background-color: @obit-subscribe-close-bg;
+        border: @obit-subscribe-close-border-width solid @obit-subscribe-close-border-color;
+        border-radius: 50%;
+        box-shadow: @box-shadow-base;
+        opacity: 1;
+        color: @obit-subscribe-close-color;
+        font-size: @obit-subscribe-close-font-size;
+        line-height: @obit-subscribe-close-size;
+        font-family: @font-family-sansserif;
+        text-align: center;
+        text-decoration: none;
+        position: absolute;
+        top: 0;
+        right: -@obit-subscribe-close-size;
+        
+        &:hover,
+        &:focus {
+            opacity: .5;
+            color: @obit-subscribe-close-color;
+        }
+    }
+    
+    .ui-dialog-content {
+        padding: @obit-subscribe-modal-padding;
+        background-color: @obit-subscribe-modal-bg;
+        box-shadow: @box-shadow-base;
+        text-align: center;
+        text-decoration: none;
+        z-index: 10 !important;
+        
+        h4 {
+            margin-bottom: 10px;
+            font-size: @obit-subscribe-modal-title-font-size;
+            
+            & when (iscolor(@obit-subscribe-modal-title-color)) {
+                color: @obit-subscribe-modal-title-color;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-control {
+            margin-bottom: floor(@grid-gutter-width / 2);
+        }
+        
+        .btn {
+            padding-left: 0;
+            padding-right: 0;
+            
+            & when not (@is-mobile = true) {
+                width: 40%;
+            }
+            
+            & when (@is-mobile = true) {
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+// Pager
+.cms-obit-pager {
+    line-height: 12px;
+    text-align: center;
+    
+    a {
+        .text-hide();
+        
+        width: 12px;
+        height: 12px;
+        margin-left: 6px;
+        margin-right: 6px;
+        background-color: @obit-pager-item-bg;
+        border-radius: 50%;
+        vertical-align: middle;
+        display: inline-block;
+        
+        &:hover {
+            background-color: @obit-pager-item-hover-bg;
+        }
+        
+        &.active {
+            background-color: @obit-pager-item-active-bg;
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Details View (view.php)
+.cms-obit-view {
+    & when (@is-mobile = false) {
+        padding-top: 40px;
+    }
+}
+
+.cms-obit-details {
+    & when (@is-mobile = false) {
+        padding-left: (@obit-image-width + @grid-gutter-width);
+        
+        hr {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    }
+    
+    .cms-obit-dos {
+        margin-bottom: @line-height-computed;
+    }
+}
+
+.cms-obit-title {
+    margin-bottom: @grid-gutter-width;
+    padding-bottom: 16px;
+    
+    & when (@is-mobile = false) {
+        padding-top: 32px;
+    }
+    
+    & when (@is-mobile = true) {
+        text-align: center;
+    }
+    
+    h2 {
+        margin-bottom: 0;
+        font-weight: bold;
+        font-size: 40px;
+        line-height: 1;
+    }
+}
+
+.cms-obit-image {
+    &:extend(.border-box-sizing all);
+    
+    width: @obit-image-width;
+    height: @obit-image-height;
+    overflow: hidden;
+    
+    & when (@is-mobile = false) {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    & when (@is-mobile = true) {
+        margin: 0 auto 20px auto;
+    }
+    
+    img {
+        .img-responsive();
+    }
+}
+
+.cms-obit-actions {
+    width: @obit-image-width;
+    
+    & when (@is-mobile = false) {
+        position: absolute;
+        top: (@obit-image-height + @grid-gutter-width);
+        left: 0;
+    }
+    
+    & when (@is-mobile = true) {
+        margin: 0 auto 40px auto;
+    }
+}
+
+.cms-obit-share {
+    margin-top: 5px;
+    padding: @obit-share-padding;
+    background-color: @obit-share-bg;
+    border-radius: @btn-border-radius; // to match the buttons immediately above this element
+    text-align: center;
+}
+
+.cms-obit-share-icon {
+    width: @obit-share-icon-width;
+    height: @obit-share-icon-height;
+    margin-left: @obit-share-icon-offset-horz;
+    margin-right: @obit-share-icon-offset-horz;
+    vertical-align: middle;
+    display: inline-block;
+    
+    .stButton {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    // We use !important frequently in this block to ovverride the styles from ShareThis
+    .stLarge {
+        width: @obit-share-icon-width !important;
+        height: @obit-share-icon-height !important;
+        background-position: 0 0 !important; // prevent hover states styled by ShareThis that modify this property
+    }
+    
+    &.st_facebook_large .stLarge    { background-image: url("@{obit-icon-path-facebook}") !important; }
+    &.st_twitter_large .stLarge     { background-image: url("@{obit-icon-path-twitter}") !important; }
+    &.st_googleplus_large .stLarge  { background-image: url("@{obit-icon-path-googleplus}") !important; }
+}
+
+.cms-obit-veteran when (@is-mobile = false) {
+    position: absolute;
+    top: 0;
+}
+
+
+// Tabs
+.cms-obit-tabs {
+    
+}
+
+.cms-obit-tab-controls {
+    ul {
+        &:extend(.clearfix all);
+        
+        .list-unstyled();
+        .list-inline();
+        
+        margin-bottom: 0;
+    }
+    
+    li {
+        float: left;
+        
+        & when (@is-mobile = true) {
+            width: 33.3333%;
+            text-align: center;
+        }
+    }
+}
+
+.cms-obit-tab-control {
+    padding: floor(@grid-gutter-width / 2) @grid-gutter-width;
+    background-color: @obit-tab-control-bg;
+    color: @obit-tab-control-color;
+    text-decoration: none;
+    display: block;
+    
+    &:hover,
+    &:focus {
+        color: @obit-tab-control-color;
+    }
+    
+    &.active {
+        background-color: @obit-tab-control-active-bg;
+        color: @obit-tab-control-active-color;
+    }
+    
+    & when (@is-mobile = false) {
+        font-size: @obit-tab-control-font-size;
+    }
+    
+    & when (@is-mobile = true) {
+        padding-left: 0;
+        padding-right: 0;
+        font-size: (@obit-tab-control-font-size - 3);
+        
+        @media (@screen-sm-up) {
+            font-size: (@obit-tab-control-font-size - 2);
+        }
+        
+        @media (@screen-md-down) {
+            font-size: @obit-tab-control-font-size;
+        }
+    }
+}
+
+.cms-obit-tab-panes {
+    h3 {
+        font-size: @obit-tab-h3-font-size;
+    }
+}
+
+.cms-obit-tab-pane {
+    background-color: @obit-tab-pane-bg;
+    display: none;
+    
+    &.active {
+        display: block;
+    }
+    
+    & when (@is-mobile = false) {
+        padding: 40px;
+    }
+    
+    & when (@is-mobile = true) {
+        padding: 20px;
+    }
+}
+
+
+// Service Information
+.cms-obit-service-info {
+    
+}
+
+.cms-obit-service-items {
+    
+}
+
+.cms-obit-service-item {
+    font-size: (@font-size-base - 2px);
+    line-height: 1.5;
+    
+    + .cms-obit-service-item {
+        margin-top: floor(@grid-gutter-width * 1.5);
+    }
+}
+
+.cms-obit-service-type {
+    font-size: @font-size-base;
+}
+
+.cms-obit-service-date {
+    
+}
+
+.cms-obit-service-time {
+    margin-bottom: 10px;
+}
+
+.cms-obit-service-location {
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Obituary Guestbook
+.cms-obit-guestbook {
+    
+}
+
+
+// Guestbook Posts
+.cms-obit-guestbook-items {
+    margin-bottom: @line-height-computed;
+}
+
+.cms-obit-guestbook-item {
+    &:extend(.border-box-sizing all);
+    
+    min-height: (@obit-guestbook-thumb-height + @grid-gutter-width);
+    padding: @grid-gutter-width 0 @grid-gutter-width (@obit-guestbook-thumb-width + @grid-gutter-width);
+    border-bottom: 1px solid @obit-guestbook-item-border-color;
+    font-size: (@font-size-base - 2px);
+    line-height: 1.5;
+    position: relative;
+    
+    &:first-child {
+        padding-top: 0;
+        
+        .cms-obit-guestbook-thumb {
+            top: 0;
+        }
+    }
+    
+    & when (@is-mobile = true) {
+        padding-left: (floor(@obit-guestbook-thumb-width / 2) + floor(@grid-gutter-width / 2));
+    }
+}
+
+.cms-obit-guestbook-thumb {
+    width: @obit-guestbook-thumb-width;
+    height: @obit-guestbook-thumb-height;
+    position: absolute;
+    top: floor(@grid-gutter-width / 2);
+    left: 0;
+    
+    > img {
+        .img-responsive();
+    }
+    
+    & when (@is-mobile = true) {
+        width: floor(@obit-guestbook-thumb-width / 2);
+    }
+}
+
+.cms-obit-guestbook-name {
+    font-weight: bold;
+    font-size: @font-size-base;
+    line-height: 1;
+}
+
+.cms-obit-guestbook-location {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.cms-obit-guestbook-comment {
+    
+}
+
+
+// Guestbook Symbols Popover
+.cms-obit-guestbook-symbols-wrapper {
+    position: relative;
+}
+
+.cms-obit-guestbook-symbols-menu {
+    width: 250px;
+    height: 250px;
+    background-color: #fff;
+    border-radius: @border-radius-base;
+    box-shadow: @box-shadow-base;
+    display: none;
+    position: absolute;
+    left: -50%;
+    bottom: 40px;
+    z-index: 9999 !important;
+    
+    > .inner {
+        height: 250px;
+        padding: 0 15px;
+        overflow-y: scroll;
+    }
+    
+    &::after {
+        .triangle(bottom; 20px; 10px; #fff);
+        
+        margin-left: -10px;
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+    }
+    
+    & when (@is-mobile = true) {
+        left: 0;
+        
+        &::after {
+            left: @grid-gutter-width;
+        }
+    }
+}
+
+.cms-obit-guestbook-symbols-selected {
+    padding-left: floor(@grid-gutter-width / 2);
+    
+    .cms-obit-guestbook-symbols-menu-image {
+        width: 64px;
+        margin-right: 10px;
+        padding: 5px;
+        border: 1px solid @obit-guestbook-item-border-color;
+        border-radius: @border-radius-base;
+        position: relative;
+        
+        // Remove icon
+        //
+        // NOTE: If we decided to use an actual element in the DOM instead of
+        // a pseudo-element, it will require some refactoring of the javascript
+        // associated with this element.
+        &::after {
+            width: 16px;
+            height: 16px;
+            padding: 2px;
+            background: @obit-guestbook-item-border-color;
+            border-bottom-left-radius: @border-radius-base;
+            border-top-right-radius: max(0, (@border-radius-base - 1));
+            box-shadow: @box-shadow-base;
+            color: #fff;
+            font-size: 14px;
+            line-height: 1;
+            font-family: @font-family-sansserif;
+            text-align: center;
+            cursor: pointer;
+            pointer-events: none;
+            content: "x";
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+}
+
+.cms-obit-guestbook-symbols-menu-item {
+    .make-grid-row();
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    
+    &:hover,
+    &:focus {
+        background-color: @obit-guestbook-symbol-hover-bg;
+    }
+    
+    &.active {
+        background-color: @obit-guestbook-symbol-active-bg;
+    }
+}
+
+.cms-obit-guestbook-symbols-menu-image,
+.cms-obit-guestbook-symbols-menu-label {
+    .make-grid-column-default();
+    
+    vertical-align: middle;
+    float: left;
+}
+
+.cms-obit-guestbook-symbols-menu-image {
+    width: 25%;
+    
+    img {
+        .img-responsive();
+    }
+}
+
+.cms-obit-guestbook-symbols-menu-label {
+    width: 75%;
+}
+
+
+// Guestbook Comment Form
+.cms-obit-guestbook-form {
+    .form-control {
+        border: 0;
+        border-radius: 0;
+    }
+}
+
+.cms-obit-guestbook-form-comments {
+    background-color: @obit-guestbook-form-bg;
+}
+
+.cms-obit-guestbook-form-actions {
+    &:extend(.clearfix all);
+    
+    padding: floor(@grid-gutter-width / 2);
+    
+    & when (@is-mobile = true) {
+        // overriding helper classes is typically not suggested, but this works out here... so far
+        .float-left {
+            margin-bottom: floor(@grid-gutter-width / 2);
+            float: right !important; // backwards, right?
+            
+            &:first-child {
+                float: left !important;
+            }
+        }
+        
+        .float-right {
+            padding-top: @grid-gutter-width;
+            border-top: 1px solid @obit-tab-pane-bg;
+            text-align: center;
+            display: block;
+            float: none !important; // !important because we're overriding a helper class
+            clear: both;
+        }
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Flowers
+.cms-obit-flowers {
+    .make-grid-row(20px);
+    
+    & when (@is-mobile = false) {
+        margin: -40px;
+    }
+    
+    & when (@is-mobile = true) {
+        margin: -10px 0;
+    }
+}
+
+.cms-obit-flowers-cats,
+.cms-obit-flowers-body {
+    .make-grid-column-default(20px);
+    
+    & when (@is-mobile = false) {
+        float: left;
+    }
+}
+
+.cms-obit-flowers-cats {
+    background-color: @obit-flowers-cats-bg;
+    position: relative;
+    
+    & when (@is-mobile = false) {
+        width: (@obit-flowers-cats-width + 20px);
+        padding: floor(@grid-gutter-width / 2);
+        background-color: #fff;
+    }
+    
+    h4 {
+        color: inherit;
+        font: inherit;
+        font-weight: bold;
+        
+        & when (@is-mobile = false) {
+            padding-bottom: 10px;
+            border-bottom: @border-base;
+        }
+        
+        & when (@is-mobile = true) {
+            margin: 0 -10px;
+            padding: floor(@grid-gutter-width / 2);
+            line-height: 1;
+            cursor: pointer;
+            
+            &::after {
+                .triangle(bottom; 20px; 10px; @text-color-base);
+                
+                margin-top: -3px;
+                content: "";
+                position: absolute;
+                top: 50%;
+                right: 12px;
+            }
+        }
+    }
+    
+    ul {
+        .list-unstyled();
+        
+        margin-bottom: 0;
+        font-size: @obit-flowers-cats-link-font-size;
+        line-height: 1.25;
+        
+        & when (@is-mobile = true) {
+            &:extend(.border-box-sizing all);
+            
+            width: 100%;
+            height: 250px;
+            padding: 0;
+            background-color: #fff;
+            border-radius: @border-radius-base;
+            box-shadow: @box-shadow-base;
+            overflow-y: scroll;
+            display: none;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            z-index: 9999 !important;
+            
+            &::after {
+                .triangle(bottom; 20px; 10px; #fff);
+                
+                margin-left: -10px;
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -10px;
+            }
+        }
+    }
+    
+    a {
+        padding: @obit-flowers-cats-link-padding-vert 0;
+        color: @obit-flowers-cats-link-color;
+        display: block;
+        
+        & when (@is-mobile = true) {
+            padding: floor(@obit-flowers-cats-link-padding-vert * 1.5) @obit-flowers-cats-link-padding-horz;
+        }
+        
+        &:hover,
+        &:focus {
+            & when (@is-mobile = false) {
+                color: @obit-flowers-cats-link-hover-color;
+            }
+            
+            & when (@is-mobile = true) {
+                background-color: #eee;
+            }
+        }
+    }
+}
+
+.cms-obit-flowers-body {
+    & when (@is-mobile = false) {
+        width: (@obit-flowers-body-width - 20px);
+    }
+    
+    & when (@is-mobile = true) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .cms-obit-flowers-actions {
+        padding: 15px 10px;
+        text-align: right;
+    }
+}
+
+
+// Flowers - Pager
+.cms-obit-flowers-pager {
+    padding: 10px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    
+    > b,
+    > a {
+        margin-left: @obit-flowers-pager-item-offset-horz;
+        margin-right: @obit-flowers-pager-item-offset-horz;
+        padding: 2px 8px;
+        background-color: @obit-flowers-pager-item-bg;
+        border-radius: 3px;
+        text-align: center;
+        vertical-align: middle;
+        display: inline-block;
+        
+        &:hover {
+            background-color: @obit-flowers-pager-item-hover-bg;
+        }
+        
+        &.active {
+            background-color: @obit-flowers-pager-item-active-bg;
+        }
+    }
+    
+    > b {
+        font-weight: normal;
+    }
+    
+    > a {
+        // prev and next links
+        &:first-child {
+            margin-left: 0;
+        }
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+
+// Flowers - Index view
+.cms-obit-flowers-items {
+    .make-grid-row(20px);
+    
+    // help maintain the outer padding around the grid of items
+    & when (@is-mobile = false) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.cms-obit-flowers-item {
+    .make-grid-column-default(20px);
+    
+    margin-bottom: 20px;
+    line-height: 1.25;
+    float: left;
+    
+    & when (@is-mobile = false) {
+        width: 33.3333%;
+        
+        &:nth-child(3n+1) {
+            clear: left;
+        }
+        &:nth-child(3n+3) {
+            clear: right;
+        }
+    }
+    
+    & when (@is-mobile = true) {
+        width: 50%;
+        
+        &:nth-child(2n+1) {
+            clear: left;
+        }
+        &:nth-child(2n+2) {
+            clear: right;
+        }
+    }
+    
+    > .inner {
+        &:extend(.clearfix all);
+        
+        background-color: @obit-flowers-item-bg;
+        display: block;
+        
+        &:hover,
+        &:focus {
+            background-color: @obit-flowers-item-hover-bg;
+        }
+    }
+    
+    .cms-obit-flowers-thumb {
+        img {
+            .img-responsive();
+        }
+    }
+    
+    .cms-obit-flowers-name,
+    .cms-obit-flowers-price {
+        &:extend(.border-box-sizing all);
+        
+        color: #fff;
+        vertical-align: middle;
+        float: left;
+    }
+    
+    .cms-obit-flowers-name {
+        width: 65%;
+        min-height: 40px;
+        padding: 5px 10px;
+        border-right: 1px solid #eee;
+        font-size: 12.5px; // can't seem to make this font-size small enough or big enough
+    }
+    
+    .cms-obit-flowers-price {
+        width: 35%;
+        font-size: 13px;
+        line-height: 40px;
+        text-align: center;
+    }
+}
+
+.cms-obit-flowers-pager {
+    text-align: center;
+}
+
+
+// Flowers - Details View
+.cms-obit-flowers-details {
+    & when (@is-mobile = false) {
+        padding: 10px;
+    }
+    
+    .cms-obit-flowers-backlink {
+        margin-bottom: 20px;
+    }
+    
+    .cms-obit-flowers-image {
+        margin-bottom: 20px;
+        
+        img {
+            .img-cover();
+        }
+    }
+    
+    .cms-obit-flowers-name {
+        .h2();
+    }
+    
+    .cms-obit-flowers-price {
+        font-weight: bold;
+    }
+    
+    .cms-obit-flowers-dimension {
+        margin-bottom: 20px;
+    }
+    
+    .cms-obit-flowers-description {
+        
+    }
+    
+    .cms-obit-flowers-actions {
+        .btn when (@is-mobile = true) {
+            .btn-block();
+        }
+    }
+}
+
+
+// Flowers - Cart View
+.cms-obit-flowers-cart {
+    padding: 30px;
+    font-size: @obit-flowers-cart-font-size;
+    line-height: @line-height-computed;
+    
+    & when (@is-mobile = true) {
+        padding-left: 0;
+        padding-right: 0;
+        font-size: (@obit-flowers-cart-font-size - 2);
+        line-height: 1.25;
+        
+        .grid-4,
+        .grid-6 {
+            width: 100%;
+        }
+    }
+    
+    .cms-obit-flowers-cart-items {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid @obit-item-border-color;
+    }
+    
+    .cms-obit-flowers-cart-item {
+        & when (@is-mobile = false) {
+            .make-grid-row();
+        }
+        & when (@is-mobile = true) {
+            .make-grid-row(10px);
+        }
+        
+        margin-bottom: 20px;
+    }
+    
+    .cms-obit-flowers-cart-item-thumb,
+    .cms-obit-flowers-cart-item-name,
+    .cms-obit-flowers-cart-item-price,
+    .cms-obit-flowers-cart-item-remove {
+        & when (@is-mobile = false) {
+            .make-grid-column-default();
+        }
+        & when (@is-mobile = true) {
+            .make-grid-column-default(10px);
+        }
+        
+        float: left;
+    }
+    
+    .cms-obit-flowers-cart-item-thumb {
+        width: 20%;
+        
+        img {
+            .img-responsive();
+        }
+    }
+    
+    .cms-obit-flowers-cart-item-name {
+        width: 50%;
+    }
+    
+    .cms-obit-flowers-cart-item-price {
+        width: 20%;
+        text-align: right;
+    }
+    
+    .cms-obit-flowers-cart-item-remove {
+        width: 10%;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: @line-height-computed;
+        text-align: right;
+        
+        & when (@is-mobile = true) {
+            line-height: 1;
+        }
+    }
+    
+    .cms-obit-flowers-cart-subtotal {
+        margin-bottom: 30px;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: right;
+    }
+    
+    .cms-obit-flowers-actions {
+        & when (@is-mobile = true) {
+            .float-left {
+                margin-bottom: 20px;
+                float: none !important;
+                clear: both;
+                
+                .btn {
+                    .btn-block();
+                }
+            }
+            
+            .float-right {
+                text-align: center;
+                float: none !important;
+                clear: both;
+            }
+        }
+    }
+}
+
+
+// Flowers - Checkout View
+.cms-obit-flowers-checkout {
+    padding: 30px;
+    
+    .cms-obit-flowers-actions {
+        
+    }
+}

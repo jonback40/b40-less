@@ -1,0 +1,52 @@
+//
+// Mixin: Lists
+// ----------------------------------------------------------------------------------------------------
+
+
+// Inline List
+.list-inline(@offset-horz: 0) {
+    li {
+        vertical-align: middle;
+        list-style: none;
+        display: inline-block;
+    }
+    
+    & when (@offset-horz > 0) {
+        .list-inline-spacing(@offset-horz);
+    }
+}
+
+
+// Set spacing between items in an inline list
+.list-inline-spacing(@offset-horz) {
+    li {
+        margin-left: @offset-horz;
+        margin-right: @offset-horz;
+        
+        &:first-child {
+            margin-left: 0;
+        }
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+
+// Unstyled List
+.list-unstyled(@deep: false) {
+    margin-left: 0;
+    
+    & when (@deep = false) {
+        > li {
+            list-style: none;
+        }
+    }
+    
+    & when (@deep = true) {
+        li {
+            list-style: none;
+        }
+    }
+}

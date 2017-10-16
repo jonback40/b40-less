@@ -1,0 +1,49 @@
+//
+// Simple Modal
+// ----------------------------------------------------------------------------------------------------
+
+
+// Required Script:  /public/scripts/less/less.simplemodal-video.min.js
+
+
+.simplemodal-container {
+    display: none;
+    
+    iframe {
+        display: block;
+    }
+}
+
+.simplemodal-data {
+    box-shadow: @simplemodal-box-shadow;
+}
+
+.simplemodal-close {
+    width: @simplemodal-close-size;
+    height: @simplemodal-close-size;
+    background-color: @simplemodal-close-bg;
+    border-radius: 50%;
+    box-shadow: @simplemodal-close-box-shadow;
+    color: @simplemodal-close-color;
+    font-size: @simplemodal-close-font-size;
+    line-height: @simplemodal-close-size;
+    text-align: center;
+    text-indent: 1px;
+    
+    & when (@is-mobile = false) {
+        position: absolute;
+        top: -@simplemodal-close-size;
+        right: -@simplemodal-close-size;
+    }
+    
+    & when (@is-mobile = true) {
+        position: fixed;
+        top: floor(@simplemodal-close-size / 2);
+        right: floor(@simplemodal-close-size / 2);
+    }
+    
+    &:hover,
+    &:focus {
+        color: @simplemodal-close-hover-color;
+    }
+}

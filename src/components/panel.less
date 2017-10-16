@@ -1,0 +1,194 @@
+//
+// Panel
+// ----------------------------------------------------------------------------------------------------
+
+
+.panel {
+    &:extend(.border-box-sizing all);
+    
+    min-height: @line-height-computed;
+    margin-bottom: @grid-gutter-width;
+    background-color: @panel-bg;
+    border: @panel-border;
+    border-radius: @panel-border-radius;
+}
+
+.panel-header {
+    padding: @panel-header-padding;
+    background-color: @panel-header-bg;
+    border-radius: @panel-header-border-radius;
+}
+
+.panel-title {
+    margin-bottom: 0;
+    color: @panel-title-color;
+    font-weight: @panel-title-font-weight;
+    font-size: @panel-title-font-size;
+    line-height: @panel-title-line-height;
+    font-family: @panel-title-font-family;
+}
+
+.panel-media {
+    p {
+        margin-bottom: 0;
+    }
+    
+    > img,
+    p img {
+        .img-responsive();
+        .img-cover();
+    }
+    
+    iframe {
+        max-width: 100%;
+    }
+}
+
+.panel-body {
+    padding: @panel-body-padding;
+    
+    .javelin_region:last-child {
+        .javelin_module:last-child {
+            .common-blocks({
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            });
+        }
+    }
+}
+
+.panel-footer {
+    padding: @panel-footer-padding;
+    
+    p {
+        margin-bottom: 0;
+    }
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// Tables in panels
+//
+// Place a non-bordered `.table` within a panel (not within a `.panel-body`) and
+// watch it go full width.
+.panel {
+    > .table,
+    > .table-responsive > .table {
+        margin-bottom: 0;
+    }
+    
+    // Handle top and bottom border radius
+    & when not (@panel-border-radius = 0) {
+        // first
+        > .table:first-child,
+        > .table-responsive:first-child > .table:first-child {
+                border-top-left-radius: @panel-inner-border-radius;
+                border-top-right-radius: @panel-inner-border-radius;
+            
+            > thead:first-child,
+            > tbody:first-child {
+                > tr:first-child {
+                    border-top-left-radius: @panel-inner-border-radius;
+                    border-top-right-radius: @panel-inner-border-radius;
+                    
+                    td:first-child,
+                    th:first-child {
+                        border-top-left-radius: @panel-inner-border-radius;
+                    }
+                    
+                    td:last-child,
+                    th:last-child {
+                        border-top-right-radius: @panel-inner-border-radius;
+                    }
+                }
+            }
+        }
+        
+        // last
+        > .table:last-child,
+        > .table-responsive:last-child > .table:last-child {
+            border-bottom-left-radius: @panel-inner-border-radius;
+            border-bottom-right-radius: @panel-inner-border-radius;
+            
+            > tbody:last-child,
+            > tfoot:last-child {
+                > tr:last-child {
+                    border-bottom-left-radius: @panel-inner-border-radius;
+                    border-bottom-right-radius: @panel-inner-border-radius;
+                    
+                    td:first-child,
+                    th:first-child {
+                        border-bottom-left-radius: @panel-inner-border-radius;
+                    }
+                    
+                    td:last-child,
+                    th:last-child {
+                        border-bottom-right-radius: @panel-inner-border-radius;
+                    }
+                }
+            }
+        }
+    }
+    
+    > .table > tbody:first-child > tr:first-child th,
+    > .table > tbody:first-child > tr:first-child td {
+        border-top: 0;
+    }
+    
+    > .table-bordered,
+    > .table-responsive > .table-bordered {
+        border: 0;
+        
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    &:first-child {
+                        border-left: 0;
+                    }
+                }
+                
+                > th,
+                > td {
+                    &:last-child {
+                        border-right: 0;
+                    }
+                }
+            }
+        }
+        
+        > thead,
+        > tbody {
+            > tr:first-child {
+                > td,
+                > th {
+                    border-bottom: 0;
+                }
+            }
+        }
+        
+        > tbody,
+        > tfoot {
+            > tr:last-child {
+                > td,
+                > th {
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+    
+    > .table-responsive {
+        margin-bottom: 0;
+        border: 0;
+    }
+}

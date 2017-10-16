@@ -1,0 +1,112 @@
+//
+// Forms
+// ----------------------------------------------------------------------------------------------------
+
+
+// Reset font settings for relevant form elements
+input,
+button,
+select,
+textarea {
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+}
+
+
+// Normalize non-control form elements
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    
+    // Chrome and Firefox set a 'min-width: min-content;' on fieldsets,
+    // so we reset that to ensure it behaves more like a standard block element.
+    // See https://github.com/twbs/bootstrap/issues/12359.
+    min-width: 0;
+}
+legend {
+    width: 100%;
+    margin-bottom: @line-height-computed;
+    padding: 0;
+    border: 0;
+    border-bottom: @legend-border;
+    color: @legend-color;
+    font-size: @legend-font-size;
+    line-height: inherit;
+    display: block;
+    
+    & when not (@legend-font-family = inherit) {
+        font-family: @legend-font-family;
+    }
+}
+label {
+    max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
+// Make multiple select elements height not fixed
+select[multiple],
+select[size] {
+    height: auto;
+}
+
+
+// Normalize search inputs
+input[type="search"] {
+    // Override content-box in Normalize (* isn't specific enough)
+    .box-sizing(border-box);
+    
+    // Search inputs in iOS
+    //
+    // This overrides the extra rounded corners on search inputs in iOS so that our
+    // '.form-control' class can properly style them. Note that this cannot simply
+    // be added to '.form-control' as it's not specific enough. For details, see
+    // https://github.com/twbs/bootstrap/issues/11586.
+    -webkit-appearance: none;
+}
+
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+    margin: 0;
+    margin-top: 1px \9; // IE8-9
+    line-height: normal;
+}
+
+
+// 1. Prevent unwanted overflow
+// 2. Set the height of file controls to match text inputs
+input[type="file"] {
+    width: 100%; // 1
+    display: block; // 2
+}
+
+
+// Make range inputs behave like textual form controls
+input[type="range"] {
+    width: 100%;
+    display: block;
+}
+
+
+// Special styles for iOS temporal inputs
+//
+// In Mobile Safari, setting 'display: block' on temporal inputs causes the
+// text within the input to become vertically misaligned.
+// As a workaround, we set a pixel line-height that matches the
+// given height of the input. Since this messes up everything else, we have to
+// appropriately reset it for Internet Explorer.
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
+    line-height: @input-height-base;
+    
+    // IE8+ misaligns the text within date inputs, so we reset
+    line-height: @line-height-base ~"\0";
+}

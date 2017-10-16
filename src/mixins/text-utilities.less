@@ -1,0 +1,71 @@
+//
+// Mixin: Text Utilities
+// ----------------------------------------------------------------------------------------------------
+
+
+// Custom fonts look wrong when they have either bold or italic styling applied
+//
+// As a workaround, we redefine this look behavior on b, i, strong and em tags
+.custom-bold(@family) {
+    b,
+    strong {
+        font-family: @family;
+        font-weight: normal;
+    }
+}
+.custom-italic(@family) {
+    i,
+    em {
+        font-family: @family;
+        font-style: normal;
+    }
+}
+.custom-bolditalic(@bold; @italic; @bolditalic) {
+    .custom-bold(@bold);
+    .custom-italic(@italic);
+    
+    b i,
+    b em,
+    strong i,
+    strong em,
+    i b,
+    i strong,
+    em b,
+    em strong {
+        font-family: @bolditalic;
+        font-weight: normal;
+        font-style: normal;
+    }
+}
+
+
+// Hide Text
+// 
+// Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+.text-hide() {
+    background-color: transparent;
+    border: 0;
+    color: transparent;
+    font: ~"0/0" a;
+    text-shadow: none;
+}
+
+
+// Text Overflow
+// 
+// Note: Requires inline-block or block for proper styling
+.text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+// Help alleviate the drastic difference in font sizing while custom fonts are being loaded through Typekit
+.defer-typekit-styles(@beforeRules; @afterRules) {
+    @beforeRules();
+    
+    .wf-active & {
+        @afterRules();
+    }
+}

@@ -1,0 +1,88 @@
+//
+// Javelin: User bar
+// ----------------------------------------------------------------------------------------------------
+
+
+#javelin-adminbar {
+    
+    .self(@rules) {
+        #javelin_adminBar {
+            @rules();
+        }
+    }
+    
+    .spacer(@rules) {
+        #javelin_adminBarSpacer {
+            @rules();
+        }
+    }
+    
+    .wrapper(@rules) {
+        #javelin_adminBarWrapper {
+            @rules();
+        }
+    }
+    
+}
+
+#javelin-userbar {
+    
+    .self(@rules) {
+        body > #javelin_userBar {
+            @rules();
+        }
+    }
+    
+    .spacer(@rules) {
+        body > #javelin_userBarSpacer {
+            @rules();
+        }
+    }
+    
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
+
+
+// We select the Javelin user bar as an immediate child of the body element because the selector IDs
+// for the userbar are also found nested inside of the admin bar.
+
+body {
+    > #javelin_userBar {
+        &:extend(.border-box-sizing all);
+        
+        height: @userbar-height;
+        padding: 10px 20px;
+        background-color: @userbar-bg;
+        box-shadow: @box-shadow-base;
+        color: @userbar-item-color;
+        
+        > ul {
+            margin: 0;
+            line-height: 20px;
+            float: right;
+            
+            li {
+                padding: 0 @userbar-item-padding-horz;
+                border-right-color: @userbar-divider-color;
+                font-size: @userbar-item-font-size;
+                float: left;
+            }
+            
+            a {
+                font-size: @userbar-item-font-size;
+                display: inline-block;
+            }
+        }
+    }
+    
+    > #javelin_userBarSpacer {
+        width: auto;
+        height: @userbar-height;
+    }
+}
