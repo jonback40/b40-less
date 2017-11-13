@@ -23,11 +23,11 @@
 .search-bar-input {
     .form-control();
     .form-control-size(
-        (@search-bar-height - (@search-bar-border-size * 2)); // accounting for top and bottom borders
+        (@search-bar-height - (@search-bar-border-size * 2)); // accounting for top/bottom borders
         @search-bar-padding-vert;
         @search-bar-padding-horz;
         @search-bar-font-size;
-        @search-bar-height;
+        (@search-bar-height - (@search-bar-padding-vert * 2) - (@search-bar-border-size * 2)); // accounting for padding and top/bottom borders
         @search-bar-border-radius
     );
     .placeholder(fade(@search-bar-color, 50%));
@@ -44,7 +44,7 @@
 
 .search-bar-btn {
     width: @search-bar-btn-width;
-    height: (@search-bar-btn-height - (@search-bar-border-size * 2)); // accounting for top and bottom borders
+    height: (@search-bar-btn-height - (@search-bar-border-size * 2)); // accounting for top/bottom borders
     padding: 0;
     background: @search-bar-btn-bg; // we actually want to nuke the entire background property here, but still apply a color
     border: 0;
