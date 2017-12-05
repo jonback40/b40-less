@@ -360,7 +360,14 @@
 
 // Easily maintain which element controls the minimum height of the default content area on the page
 .default-region {
-    min-height: @page-height-buffer;
+    & when (@is-responsive = false) {
+        min-height: @page-height-buffer;
+    }
+    & when (@is-responsive = true) {
+        @media (@page-nav-breakpoint-up) {
+            min-height: @page-height-buffer;
+        }
+    }
 }
 
 
